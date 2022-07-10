@@ -1,6 +1,11 @@
+<script setup>
+import { metaData } from '~/composables/floating'
+</script>
+
 <template>
-  <div>
-    float container
-    <slot />
-  </div>
+  <slot v-bind="metaData.attrs ? metaData.attrs : {}" />
 </template>
+
+<style scoped>
+
+</style>

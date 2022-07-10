@@ -34,6 +34,9 @@
     "vue-tsc": "^0.38.2"
   },
   "eslintConfig": {
-    "extends": "@antfu"
+    "extends": "@antfu",
+    "rules": {
+      "no-console": "off"
+    }
   }
 }
