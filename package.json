@@ -11,12 +11,14 @@
   },
   "dependencies": {
     "@vueuse/core": "^8.7.5",
+    "nprogress": "^0.2.0",
     "vue": "^3.2.37",
     "vue-router": "^4.0.16"
   },
   "devDependencies": {
     "@antfu/eslint-config": "^0.25.2",
     "@iconify-json/carbon": "^1.1.6",
+    "@types/nprogress": "^0.2.0",
     "@types/node": "^18.0.0",
     "@unocss/reset": "^0.42.0",
     "@vitejs/plugin-vue": "^2.3.3",
