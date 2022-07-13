@@ -1,4 +1,4 @@
-import type { Component } from 'vue'
+// import type { Component } from 'vue'
 
 export const metaData = reactive<any>({
   props: {},
@@ -7,23 +7,23 @@ export const metaData = reactive<any>({
 
 export const proxyEl = ref<HTMLElement | null>()
 
-export function createFloating<T extends Component>(component: T) {
-  const metaData = reactive<any>({
-    props: {},
-    attrs: {},
-  })
-  const proxyEl = ref<HTMLElement | null>()
+// export function createFloating<T extends Component>(component: T) {
+//   const metaData = reactive<any>({
+//     props: {},
+//     attrs: {},
+//   })
+//   const proxyEl = ref<HTMLElement | null>()
 
-  const container = defineComponent({
-      setup() {
-          
-      }
-  })
+//   const container = defineComponent({
+//     setup() {
 
-  const proxy = defineComponent({})
+//     },
+//   })
 
-  return {
-    container,
-    proxy,
-  }
-}
+//   const proxy = defineComponent({})
+
+//   return {
+//     container,
+//     proxy,
+//   }
+// }
