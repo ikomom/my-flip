@@ -1,4 +1,6 @@
 <script setup lang="ts">
+import { TheImageProxy } from '~/composables/image'
+
 const [value, toggle] = useToggle(true)
 </script>
 
@@ -13,7 +15,6 @@ const [value, toggle] = useToggle(true)
         toggle {{ value }}
       </button>
     </div>
-
-    <float-proxy :class="value ? 'w-80 h-50' : 'h-100 w-60' " rounded-xl />
+    <TheImageProxy :class="value ? 'w-80 h-50' : 'h-100 w-60' " rounded-xl />
   </div>
 </template>

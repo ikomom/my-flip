@@ -38,6 +38,7 @@
   "eslintConfig": {
     "extends": "@antfu",
     "rules": {
+      "vue/one-component-per-file": "off",
       "no-console": "off",
       "no-unused-vars": "off"
     }
