@@ -16,12 +16,6 @@ function reset() {
   <div flex="~ col" items-center>
     <div>Foo</div>
     <div class="space-x-1" mb-10>
-      <RouterLink to="/" btn text-sm>
-        back
-      </RouterLink>
-      <RouterLink to="/bar" btn text-sm>
-        bar
-      </RouterLink>
       <button btn text-sm @click="enLarge()">
         变大
       </button>

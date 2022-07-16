@@ -8,9 +8,6 @@ const [value, toggle] = useToggle(true)
   <div>
     <div>Index</div>
     <div>
-      <RouterLink class="m-3 text-sm btn" to="/foo">
-        Foo
-      </RouterLink>
       <button m-3 text-sm btn @click="toggle()">
         toggle {{ value }}
       </button>

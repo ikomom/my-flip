@@ -1,14 +1,23 @@
 import type { Component, StyleValue } from 'vue'
-import { h } from 'vue'
+import { KeepAlive, Teleport, h } from 'vue'
 
 export const metaData = reactive<any>({
   props: {},
   attrs: {},
 })
 
+export interface floatingOptions {
+  duration?: number
+}
+
 export const proxyEl = ref<HTMLElement | null>()
 
-export function createFloating<T extends Component>(component: T) {
+const defaultOptions = {
+  duration: 1000,
+}
+
+export function createFloating<T extends Component>(component: T, options?: floatingOptions) {
+  const _options = { ...defaultOptions, options }
   const metaData = reactive<any>({
     props: {},
     attrs: {},
@@ -20,8 +29,9 @@ export function createFloating<T extends Component>(component: T) {
       let rect = $ref<DOMRect | undefined>()
 
       const fixed: StyleValue = {
-        transition: 'all .5s ease-in-out',
-        position: 'fixed',
+        'transition': 'all',
+        'transition-duration': `${_options.duration}ms`,
+        'position': 'fixed',
       }
 
       const style = computed((): StyleValue => {
@@ -52,13 +62,43 @@ export function createFloating<T extends Component>(component: T) {
         attributes: true,
       })
       useEventListener('resize', update)
-      watchEffect(update)
 
-      return () => h('div', { style: style.value }, [
-        h(component, metaData.attrs),
-      ])
+      let landed = $ref(false)
+      let landing: any
+
+      async function liftOff() {
+        console.log('liftOff')
+        landed = false
+      }
+      async function land() {
+        console.log('land')
+        landing = setTimeout(() => {
+          landed = true
+        }, _options.duration)
+      }
+
+      watch(proxyEl, (el, prev) => {
+        update()
+        clearTimeout(landing)
+
+        if (prev)
+          liftOff()
+        if (el)
+          land()
+      })
+      // TODO
+      return () => {
+        const children = [h(component, metaData.attrs)]
+        return (
+          h(KeepAlive, {}, [
+            landed && proxyEl.value
+              ? h(Teleport, { to: proxyEl.value }, children)
+              : h('div', { style: style.value }, children),
+          ])
+        )
+      }
     },
-  })
+  }) as T
 
   const proxy = defineComponent({
     setup(props, ctx) {
@@ -79,7 +119,7 @@ export function createFloating<T extends Component>(component: T) {
         ctx.slots.default ? h(ctx.slots.default) : null,
       ])
     },
-  })
+  }) as T
 
   return {
     container,
