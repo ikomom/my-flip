@@ -59,6 +59,7 @@ export function createFloating<T extends Component>(component: T, options?: floa
           // console.log('getStyle:reset', params)
           return {
             ...params,
+            display: 'none',
             opacity: 0,
           }
         }
