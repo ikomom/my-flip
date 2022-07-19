@@ -25,6 +25,7 @@
     "@vue/test-utils": "^2.0.1",
     "eslint": "^8.18.0",
     "jsdom": "^20.0.0",
+    "msw": "^0.44.2",
     "pnpm": "^7.4.0",
     "typescript": "^4.7.4",
     "unocss": "^0.42.0",
@@ -42,5 +43,8 @@
       "no-console": "off",
       "no-unused-vars": "off"
     }
+  },
+  "msw": {
+    "workerDirectory": "public"
   }
 }

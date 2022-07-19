@@ -1,5 +1,5 @@
 import type { Component, StyleValue } from 'vue'
-import { KeepAlive, Teleport, h } from 'vue'
+import { Teleport, h } from 'vue'
 
 export const metaData = reactive<any>({
   props: {},
@@ -13,7 +13,7 @@ export interface floatingOptions {
 export const proxyEl = ref<HTMLElement | null>()
 
 const defaultOptions = {
-  duration: 1000,
+  duration: 800,
 }
 
 export function createFloating<T extends Component>(component: T, options?: floatingOptions) {
@@ -23,106 +23,95 @@ export function createFloating<T extends Component>(component: T, options?: floa
     attrs: {},
   })
   const proxyEl = ref<HTMLElement | null>()
+  const isFly = ref(true)
+  const { left, top } = useElementBounding(proxyEl)
 
-  const container = defineComponent({
+  const Container = defineComponent({
     setup() {
-      let rect = $ref<DOMRect | undefined>()
+      const router = useRouter()
+      const cleanRouterGuard = router.beforeEach(async () => {
+        isFly.value = true
+        await nextTick()
+        console.log('起飞')
+      })
+
+      onBeforeUnmount(() => {
+        console.warn('clean Guard')
+        cleanRouterGuard()
+      })
 
       const fixed: StyleValue = {
-        'transition': 'all',
+        'transition-property': 'all',
+        'transition-timing-function': 'ease-in-out',
+        'transition-delay': '0s',
         'transition-duration': `${_options.duration}ms`,
         'position': 'fixed',
       }
 
-      const style = computed((): StyleValue => {
+      const getStyle = computed((): StyleValue => {
         const params = {
           ...fixed,
-          left: `${rect?.left}px`,
-          top: `${rect?.top}px`,
+          left: `${left.value}px`,
+          top: `${top.value}px`,
+          // display: isFly.value ? 'block' : 'none',
         }
-        if (!rect || !proxyEl.value) {
+        if (!proxyEl.value) {
+          // console.log('getStyle:reset', params)
           return {
             ...params,
             opacity: 0,
           }
         }
-
+        // console.log('getStyle:block', params)
         return params
       })
 
-      function update() {
-        console.log('update', rect)
-        rect = proxyEl.value?.getBoundingClientRect()
-      }
+      let transition: any
 
-      useMutationObserver(proxyEl, update, {
-        characterData: true,
-        childList: true,
-        subtree: true,
-        attributes: true,
-      })
-      useEventListener('resize', update)
-
-      let landed = $ref(false)
-      let landing: any
-
-      async function liftOff() {
-        console.log('liftOff')
-        landed = false
-      }
-      async function land() {
-        console.log('land')
-        landing = setTimeout(() => {
-          landed = true
-        }, _options.duration)
-      }
-
-      watch(proxyEl, (el, prev) => {
-        update()
-        clearTimeout(landing)
-
-        if (prev)
-          liftOff()
-        if (el)
-          land()
-      })
-      // TODO
       return () => {
-        const children = [h(component, metaData.attrs)]
         return (
-          h(KeepAlive, {}, [
-            landed && proxyEl.value
-              ? h(Teleport, { to: proxyEl.value }, children)
-              : h('div', { style: style.value }, children),
-          ])
+          h('div',
+            {
+              style: getStyle.value,
+              // onTransitionstart: () => {
+              //   console.log('onTransitionstart')
+              // },
+              onTransitionend: async () => {
+                // console.log('onTransitionend')
+                await nextTick()
+                // isFly.value = false
+                // console.log('降落', proxyEl.value)
+                clearTimeout(transition)
+                transition = setTimeout(() => {
+                  isFly.value = false
+                  console.log('降落', proxyEl.value)
+                }, 200)
+              },
+            },
+            h(
+              Teleport,
+              { to: (isFly.value || !proxyEl.value) ? 'body' : proxyEl.value, disabled: isFly.value },
+              h(component, metaData.attrs),
+            ),
+          )
         )
       }
     },
   }) as T
 
-  const proxy = defineComponent({
+  const Proxy = defineComponent({
     setup(props, ctx) {
-      const attrs = useAttrs()
-      const el = ref<HTMLElement>()
-
-      metaData.attrs = attrs
-
-      onMounted(() => {
-        proxyEl.value = el.value
+      metaData.attrs = ctx.attrs
+      onBeforeUnmount(() => {
+        console.log('Proxy unmounted')
+        isFly.value = true
       })
-
-      onUnmounted(() => {
-        proxyEl.value = undefined
-      })
-
-      return () => h('div', { ref: el }, [
-        ctx.slots.default ? h(ctx.slots.default) : null,
-      ])
+      return () => h('div', { ref: proxyEl, id: 'container' })
     },
   }) as T
 
   return {
-    container,
-    proxy,
+    container: Container,
+    proxy: Proxy,
   }
 }
