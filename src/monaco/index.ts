@@ -2,7 +2,7 @@ import { createSingletonPromise } from '@vueuse/core'
 import * as monaco from 'monaco-editor'
 import vueuseTypes from '@vueuse/core/index.d.ts?raw'
 
-const setup = createSingletonPromise(async () => {
+const setupMonaco = createSingletonPromise(async () => {
   const monacoTypescriptJs = monaco.languages.typescript.javascriptDefaults
   // 设置ts编译选项
   monacoTypescriptJs.setCompilerOptions({
@@ -32,8 +32,29 @@ const setup = createSingletonPromise(async () => {
         import('./languages/html/html.worker?worker'),
         import('monaco-editor/esm/vs/language/typescript/ts.worker?worker'),
       ])
+      console.log('worker', { EditorWorker, HtmlWorker, TsWorker })
+      // @ts-expect-error
+      window.MonacoEnvironment = {
+        getWorker(_: any, label: string) {
+          console.log('MonacoEnvironment getWorker', { _, label })
+          if (['html', 'handlebars', 'razor'].includes(label))
+            return new HtmlWorker()
+          if (['typescript', 'javascript'].includes(label))
+            return new TsWorker()
+          return new EditorWorker()
+        },
+      }
     })(),
   ])
+
+  const injection_arg = monaco
+
+  if (getCurrentInstance())
+  // await new Promise<void>(resolve => onMounted(resolve))
+
+    console.log('getCurrentInstance()', getCurrentInstance())
+
+  return { monaco }
 })
 
-export default setup
+export default setupMonaco

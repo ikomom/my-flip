@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import { createSingletonPromise } from '@vueuse/shared'
+import { invoke } from '@vueuse/core'
 import SimpleWorker from '~/composables/simpleWorker/index.ts?worker'
 import SimpleShareWorker from '~/composables/simpleWorker/ShareWorkerTest.ts?sharedworker'
 
@@ -18,25 +19,6 @@ const mockReq = () => {
   })
 }
 
-const f = async () => {
-  let res: Response
-  res = await fetch('/login', {
-    method: 'post',
-  })
-  console.log('cc=cc')
-  res = await fetch('/user')
-
-  return res.json()
-}
-
-const fPromise = createSingletonPromise(f)
-// 创建单例的promise, 之后调用直接返回结果, 不会重新运行逻辑
-const testCreateSingletonPromise = async () => {
-  console.log('createSingletonPromise', await fPromise())
-  console.log('createSingletonPromise', await fPromise())
-  console.log('createSingletonPromise', await fPromise())
-  // console.log('async', await f())
-}
 let myWorker = $ref<any>()
 const testSimpleWorker = () => {
   if (myWorker)
@@ -92,6 +74,35 @@ useEventListener('beforeunload', () => {
 onBeforeUnmount(() => {
   shareWorkerClose()
 })
+
+// vue-use 测试
+const f = async () => {
+  let res: Response
+  res = await fetch('/login', {
+    method: 'post',
+  })
+  console.log('cc=cc')
+  res = await fetch('/user')
+
+  return res.json()
+}
+const fPromise = createSingletonPromise(f)
+// 创建单例的promise, 之后调用直接返回结果, 不会重新运行逻辑
+const testCreateSingletonPromise = async () => {
+  console.log('createSingletonPromise', await fPromise())
+  console.log('createSingletonPromise', await fPromise())
+  console.log('createSingletonPromise', await fPromise())
+  // console.log('async', await f())
+}
+
+const { count, inc, dec } = useCounter()
+invoke(async () => {
+  console.log('until before')
+  await until(count).toBe(3)
+  console.log('until after 3')
+  await until(count).toBe(4)
+  console.log('until after 4')
+})
 </script>
 
 <template>
@@ -103,11 +114,24 @@ onBeforeUnmount(() => {
   >
     <div>Bar</div>
     <div class="space-x-1" mb-10>
-      <button btn text-sm @click="mockReq">
-        mock
+      <button btn text-sm @click="inc()">
+        +
       </button>
+      <button btn text-sm>
+        {{ count }}
+      </button>
+      <button btn text-sm @click="dec()">
+        -
+      </button>
+
+      |
       <button btn text-sm @click="testCreateSingletonPromise">
         createSingletonPromise
+      </button>
+    </div>
+    <div class="space-x-1" mb-10>
+      <button btn text-sm @click="mockReq">
+        mock
       </button>
     </div>
     <div class="space-x-1" mb-10>

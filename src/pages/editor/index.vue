@@ -9,7 +9,7 @@ import 'splitpanes/dist/splitpanes.css'
       <splitpanes horizontal :push-other-panes="false">
         <pane>
           <e-container title="scirpt setup">
-            xxx
+            <e-editor />
           </e-container>
         </pane>
         <pane>
