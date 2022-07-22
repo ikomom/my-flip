@@ -11,7 +11,10 @@
   },
   "dependencies": {
     "@vueuse/core": "^8.7.5",
+    "monaco-editor": "^0.33.0",
+    "monaco-editor-core": "^0.33.0",
     "nprogress": "^0.2.0",
+    "splitpanes": "^3.1.1",
     "vue": "^3.2.37",
     "vue-router": "^4.0.16"
   },
@@ -20,7 +23,9 @@
     "@iconify-json/carbon": "^1.1.6",
     "@types/node": "^18.0.0",
     "@types/nprogress": "^0.2.0",
+    "@types/splitpanes": "^2.2.1",
     "@unocss/reset": "^0.42.0",
+    "@unocss/transformer-directives": "^0.44.5",
     "@vitejs/plugin-vue": "^2.3.3",
     "@vue/test-utils": "^2.0.1",
     "eslint": "^8.18.0",

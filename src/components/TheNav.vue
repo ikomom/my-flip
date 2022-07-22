@@ -20,6 +20,9 @@ const route = useRoute()
       <router-link btn to="/tableTest">
         /table
       </router-link>
+      <router-link btn to="/editor">
+        /editor
+      </router-link>
     </div>
   </div>
 </template>

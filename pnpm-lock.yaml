@@ -5,16 +5,21 @@ specifiers:
   '@iconify-json/carbon': ^1.1.6
   '@types/node': ^18.0.0
   '@types/nprogress': ^0.2.0
+  '@types/splitpanes': ^2.2.1
   '@unocss/reset': ^0.42.0
+  '@unocss/transformer-directives': ^0.44.5
   '@vitejs/plugin-vue': ^2.3.3
   '@vue/test-utils': ^2.0.1
   '@vueuse/core': ^8.7.5
   eslint: ^8.18.0
   jsdom: ^20.0.0
+  monaco-editor: ^0.33.0
+  monaco-editor-core: ^0.33.0
   msw: ^0.44.2
   nprogress: ^0.2.0
   pnpm: ^7.4.0
   sass: ^1.53.0
+  splitpanes: ^3.1.1
   typescript: ^4.7.4
   unocss: ^0.42.0
   unplugin-auto-import: ^0.9.2
@@ -28,7 +33,10 @@ specifiers:
 
 dependencies:
   '@vueuse/core': 8.7.5_vue@3.2.37
+  monaco-editor: registry.npmmirror.com/monaco-editor/0.33.0
+  monaco-editor-core: registry.npmmirror.com/monaco-editor-core/0.33.0
   nprogress: registry.npmmirror.com/nprogress/0.2.0
+  splitpanes: registry.npmmirror.com/splitpanes/3.1.1
   vue: 3.2.37
   vue-router: 4.0.16_vue@3.2.37
 
@@ -37,7 +45,9 @@ devDependencies:
   '@iconify-json/carbon': 1.1.6
   '@types/node': 18.0.0
   '@types/nprogress': registry.npmmirror.com/@types/nprogress/0.2.0
+  '@types/splitpanes': registry.npmmirror.com/@types/splitpanes/2.2.1
   '@unocss/reset': 0.42.0
+  '@unocss/transformer-directives': registry.npmmirror.com/@unocss/transformer-directives/0.44.5
   '@vitejs/plugin-vue': 2.3.3_vite@2.9.13+vue@3.2.37
   '@vue/test-utils': 2.0.1_vue@3.2.37
   eslint: 8.18.0
@@ -466,7 +476,7 @@ packages:
     hasBin: true
     dependencies:
       '@unocss/config': 0.42.0
-      '@unocss/core': 0.42.0
+      '@unocss/core': registry.npmmirror.com/@unocss/core/0.42.0
       '@unocss/preset-uno': 0.42.0
       cac: 6.7.12
       chokidar: registry.npmmirror.com/chokidar/3.5.3
@@ -481,7 +491,7 @@ packages:
     resolution: {integrity: sha512-K7SnTryQComE8l78BYWaAEjb3k2UKz+Cwi6DBiY4UdrkK4Ulsv2gWhFewcXc4EdNClnqhXKfF4S40CULub+4LQ==}
     engines: {node: '>=14'}
     dependencies:
-      '@unocss/core': 0.42.0
+      '@unocss/core': registry.npmmirror.com/@unocss/core/0.42.0
       unconfig: 0.3.4
     dev: true
 
@@ -499,14 +509,14 @@ packages:
   /@unocss/preset-attributify/0.42.0:
     resolution: {integrity: sha512-h8j4DUH3cra/w07/wx6sXK8pK7cX7uBVt7BwjcygJL4wR0tZQyBwRRzQPEIJVEM4YLLhD94gKTxiNnRVG77IPA==}
     dependencies:
-      '@unocss/core': 0.42.0
+      '@unocss/core': registry.npmmirror.com/@unocss/core/0.42.0
     dev: true
 
   /@unocss/preset-icons/0.42.0:
     resolution: {integrity: sha512-KGZOZkj0XI6WfH+UgaB8o7O0akTG9nWrL/aFqsHQHIHxwfTpcM2iooTTY+4rYr377Lt92PgV0SEotztmbxIGsQ==}
     dependencies:
       '@iconify/utils': 1.0.33
-      '@unocss/core': 0.42.0
+      '@unocss/core': registry.npmmirror.com/@unocss/core/0.42.0
       ohmyfetch: 0.4.18
     transitivePeerDependencies:
       - supports-color
@@ -515,25 +525,25 @@ packages:
   /@unocss/preset-mini/0.42.0:
     resolution: {integrity: sha512-I+ovLR5WIsHouwSunkc071RGUc151EYMVNxf3jcTgVIdVwIfanPwrLxKIptYSFVKGzwUDU2pJPTAyAF1enlKqg==}
     dependencies:
-      '@unocss/core': 0.42.0
+      '@unocss/core': registry.npmmirror.com/@unocss/core/0.42.0
     dev: true
 
   /@unocss/preset-tagify/0.42.0:
     resolution: {integrity: sha512-tFhwaP/J2DpsdIz5RZtIn05VZbDsUHUbuTXWKUCYwziczAMVvGxrstzEKOlmdYRXfKQQDmc8oYfP9Y1/AALCRw==}
     dependencies:
-      '@unocss/core': 0.42.0
+      '@unocss/core': registry.npmmirror.com/@unocss/core/0.42.0
     dev: true
 
   /@unocss/preset-typography/0.42.0:
     resolution: {integrity: sha512-wjba347HOKwFdrTM9lV7YUVSrzSIcvk4AXNVn9ZFrEy/3wuYAcZ6H9G9XR8hUK4HKmlIvYAOTA+kST01GcR+7Q==}
     dependencies:
-      '@unocss/core': 0.42.0
+      '@unocss/core': registry.npmmirror.com/@unocss/core/0.42.0
     dev: true
 
   /@unocss/preset-uno/0.42.0:
     resolution: {integrity: sha512-9boH1ysjUOAIzMtlm7zRtWQ0lPGqldnkJb26UgOVjLZgdvS986r8IhOg6oJtMUkxQ5rUfcgdxbXCik2XK0XqQg==}
     dependencies:
-      '@unocss/core': 0.42.0
+      '@unocss/core': registry.npmmirror.com/@unocss/core/0.42.0
       '@unocss/preset-mini': 0.42.0
       '@unocss/preset-wind': 0.42.0
     dev: true
@@ -541,14 +551,14 @@ packages:
   /@unocss/preset-web-fonts/0.42.0:
     resolution: {integrity: sha512-UIQ/ihC8a4+Yg+pZW0JCofaqYLxDQ4t0hV9v0gU6SEKsQCBxfL3F4MbKZb40F0zKAyp75na2wizXZ48gPgCMUw==}
     dependencies:
-      '@unocss/core': 0.42.0
+      '@unocss/core': registry.npmmirror.com/@unocss/core/0.42.0
       ohmyfetch: 0.4.18
     dev: true
 
   /@unocss/preset-wind/0.42.0:
     resolution: {integrity: sha512-urGqAuxZOTzq1wyAneoUVaQwwd8M5L101HGxHGt2wdXn63IrZHgEKjqB2yET0+DCoiQNA0wxsJ+lxAKil64YwQ==}
     dependencies:
-      '@unocss/core': 0.42.0
+      '@unocss/core': registry.npmmirror.com/@unocss/core/0.42.0
       '@unocss/preset-mini': 0.42.0
     dev: true
 
@@ -563,20 +573,13 @@ packages:
   /@unocss/transformer-compile-class/0.42.0:
     resolution: {integrity: sha512-TRvKqc2vRXB9YBxh+AQy1HxofrDIzsxWXem2l3GbhNJD21Bng3fpdHhUDO8oELe3C8c8lu2Vgttrn8/eVXDC0A==}
     dependencies:
-      '@unocss/core': 0.42.0
-    dev: true
-
-  /@unocss/transformer-directives/0.42.0:
-    resolution: {integrity: sha512-c2lWy84vzYVU0qumMQvyCCQZRVn2i77F5/KCLBED+IpsIYru2uKP6hZ1q7cZ0uCvdapi7vXy3DwX7Ego7iaeAw==}
-    dependencies:
-      '@unocss/core': 0.42.0
-      css-tree: 2.1.0
+      '@unocss/core': registry.npmmirror.com/@unocss/core/0.42.0
     dev: true
 
   /@unocss/transformer-variant-group/0.42.0:
     resolution: {integrity: sha512-GU4rsronsxd4VHkpYwfGtJLzndGr2rfezo7vn2oYF+ObGHaoKWJvWUNaiWM8IksVG27j6i+9o78NJWe3hR9zyA==}
     dependencies:
-      '@unocss/core': 0.42.0
+      '@unocss/core': registry.npmmirror.com/@unocss/core/0.42.0
     dev: true
 
   /@unocss/vite/0.42.0_vite@2.9.13:
@@ -586,10 +589,10 @@ packages:
     dependencies:
       '@rollup/pluginutils': 4.2.1
       '@unocss/config': 0.42.0
-      '@unocss/core': 0.42.0
+      '@unocss/core': registry.npmmirror.com/@unocss/core/0.42.0
       '@unocss/inspector': 0.42.0
       '@unocss/scope': 0.42.0
-      '@unocss/transformer-directives': 0.42.0
+      '@unocss/transformer-directives': registry.npmmirror.com/@unocss/transformer-directives/0.42.0
       magic-string: 0.26.2
       vite: 2.9.13_sass@1.53.0
     dev: true
@@ -638,7 +641,7 @@ packages:
   /@vue/compiler-core/3.2.37:
     resolution: {integrity: sha512-81KhEjo7YAOh0vQJoSmAD68wLfYqJvoiD4ulyedzF+OEk/bk6/hx3fTNVfuzugIIaTrOx4PGx6pAiBRe5e9Zmg==}
     dependencies:
-      '@babel/parser': 7.16.6
+      '@babel/parser': registry.npmmirror.com/@babel/parser/7.18.9
       '@vue/shared': 3.2.37
       estree-walker: 2.0.2
       source-map: registry.npmmirror.com/source-map/0.6.1
@@ -676,7 +679,7 @@ packages:
   /@vue/reactivity-transform/3.2.37:
     resolution: {integrity: sha512-IWopkKEb+8qpu/1eMKVeXrK0NLw9HicGviJzhJDEyfxTR9e1WtpnnbYkJWurX6WwoFP0sz10xQg8yL8lgskAZg==}
     dependencies:
-      '@babel/parser': 7.16.6
+      '@babel/parser': registry.npmmirror.com/@babel/parser/7.18.9
       '@vue/compiler-core': 3.2.37
       '@vue/shared': 3.2.37
       estree-walker: 2.0.2
@@ -1020,14 +1023,6 @@ packages:
       path-key: 3.1.1
       shebang-command: 2.0.0
       which: 2.0.2
-    dev: true
-
-  /css-tree/2.1.0:
-    resolution: {integrity: sha512-PcysZRzToBbrpoUrZ9qfblRIRf8zbEAkU0AIpQFtgkFK0vSbzOmBCvdSAx2Zg7Xx5wiYJKUKk0NMP7kxevie/A==}
-    engines: {node: ^10 || ^12.20.0 || ^14.13.0 || >=15.0.0, npm: '>=7.0.0'}
-    dependencies:
-      mdn-data: 2.0.27
-      source-map-js: registry.npmmirror.com/source-map-js/1.0.2
     dev: true
 
   /cssesc/3.0.0:
@@ -2310,10 +2305,6 @@ packages:
     resolution: {integrity: sha512-AW4DRS3QbBayY/jJmD8437V1Gombjf8RSOUCMFBuo5iHi58AGEgVCKQ+ezHkZZDpAQS75hcBMpLqjpJTjtUL7w==}
     dev: true
 
-  /mdn-data/2.0.27:
-    resolution: {integrity: sha512-kwqO0I0jtWr25KcfLm9pia8vLZ8qoAKhWZuZMbneJq3jjBD3gl5nZs8l8Tu3ZBlBAHVQtDur9rdDGyvtfVraHQ==}
-    dev: true
-
   /merge-stream/2.0.0:
     resolution: {integrity: sha512-abv/qOcuPfk3URPfDzmZU1LKmuw8kT+0nIHvKrKgFrwifol/doWcdA4ZqsWQ8ENrFKkd67Mfpo/LovbIUsbt3w==}
     dev: true
@@ -3164,7 +3155,7 @@ packages:
       '@unocss/preset-wind': 0.42.0
       '@unocss/reset': 0.42.0
       '@unocss/transformer-compile-class': 0.42.0
-      '@unocss/transformer-directives': 0.42.0
+      '@unocss/transformer-directives': registry.npmmirror.com/@unocss/transformer-directives/0.42.0
       '@unocss/transformer-variant-group': 0.42.0
       '@unocss/vite': 0.42.0_vite@2.9.13
     transitivePeerDependencies:
@@ -3551,6 +3542,13 @@ packages:
     engines: {node: '>=10'}
     dev: true
 
+  registry.npmmirror.com/@babel/parser/7.18.9:
+    resolution: {integrity: sha512-9uJveS9eY9DJ0t64YbIBZICtJy8a5QrDEVdiLCG97fVLpDTpGX7t8mMSb6OWw6Lrnjqj4O8zwjELX3dhoMgiBg==, registry: https://registry.npm.taobao.org/, tarball: https://registry.npmmirror.com/@babel/parser/-/parser-7.18.9.tgz}
+    name: '@babel/parser'
+    version: 7.18.9
+    engines: {node: '>=6.0.0'}
+    hasBin: true
+
   registry.npmmirror.com/@mswjs/cookies/0.2.2:
     resolution: {integrity: sha512-mlN83YSrcFgk7Dm1Mys40DLssI1KdJji2CMKN8eOlBqsTADYzj2+jWzsANsUTFbxDMWPD5e9bfA1RGqBpS3O1g==, registry: https://registry.npm.taobao.org/, tarball: https://registry.npmmirror.com/@mswjs/cookies/-/cookies-0.2.2.tgz}
     name: '@mswjs/cookies'
@@ -3629,6 +3627,54 @@ packages:
     version: 2.4.2
     dependencies:
       '@types/node': registry.npmmirror.com/@types/node/18.0.0
+    dev: true
+
+  registry.npmmirror.com/@types/splitpanes/2.2.1:
+    resolution: {integrity: sha512-H5BgO6UdJRzz5ddRzuGvLBiPSPEuuHXb5ET+7avLLrEx1uc7f5Ut5oLMDQsfvGtHBBAFczt1QNYuDf27wHbvDQ==, registry: https://registry.npm.taobao.org/, tarball: https://registry.npmmirror.com/@types/splitpanes/-/splitpanes-2.2.1.tgz}
+    name: '@types/splitpanes'
+    version: 2.2.1
+    dependencies:
+      vue: registry.npmmirror.com/vue/2.7.7
+    dev: true
+
+  registry.npmmirror.com/@unocss/core/0.42.0:
+    resolution: {integrity: sha512-oMPNxUosAZsLFFcKv2d7/E6z6k1pMyuK8vpfykrbULJruEm1kKUSnu13qk4Dz8Wk/wv0p+z6ptDsoSCJ7YQrvg==, registry: https://registry.npm.taobao.org/, tarball: https://registry.npmmirror.com/@unocss/core/-/core-0.42.0.tgz}
+    name: '@unocss/core'
+    version: 0.42.0
+    dev: true
+
+  registry.npmmirror.com/@unocss/core/0.44.5:
+    resolution: {integrity: sha512-IxFg0b0Exudko5akYLA4kfdv2MNYpQlgrB33N+UcHb8z0eGENBStq/ZKjwneplHV9RiSOM4d7nPYkK7Id1RgPA==, registry: https://registry.npm.taobao.org/, tarball: https://registry.npmmirror.com/@unocss/core/-/core-0.44.5.tgz}
+    name: '@unocss/core'
+    version: 0.44.5
+    dev: true
+
+  registry.npmmirror.com/@unocss/transformer-directives/0.42.0:
+    resolution: {integrity: sha512-c2lWy84vzYVU0qumMQvyCCQZRVn2i77F5/KCLBED+IpsIYru2uKP6hZ1q7cZ0uCvdapi7vXy3DwX7Ego7iaeAw==, registry: https://registry.npm.taobao.org/, tarball: https://registry.npmmirror.com/@unocss/transformer-directives/-/transformer-directives-0.42.0.tgz}
+    name: '@unocss/transformer-directives'
+    version: 0.42.0
+    dependencies:
+      '@unocss/core': registry.npmmirror.com/@unocss/core/0.42.0
+      css-tree: registry.npmmirror.com/css-tree/2.1.0
+    dev: true
+
+  registry.npmmirror.com/@unocss/transformer-directives/0.44.5:
+    resolution: {integrity: sha512-uLHn0u0c65nGDy5UY7GCDfN/XqzPWbzEtQAp3LOTGTB7iLvuPF7GAzwQIrMINJG41SccDSqT54qmKLJW+gpmlg==, registry: https://registry.npm.taobao.org/, tarball: https://registry.npmmirror.com/@unocss/transformer-directives/-/transformer-directives-0.44.5.tgz}
+    name: '@unocss/transformer-directives'
+    version: 0.44.5
+    dependencies:
+      '@unocss/core': registry.npmmirror.com/@unocss/core/0.44.5
+      css-tree: registry.npmmirror.com/css-tree/2.1.0
+    dev: true
+
+  registry.npmmirror.com/@vue/compiler-sfc/2.7.7:
+    resolution: {integrity: sha512-Ah8dIuo6ZVPHTq9+s4rBU/YpJu3vGSNyeOTCrPrVPQnkUfnT5Ig+IKBhePuQWFXguYb2TuEWrEfiiX9DZ3aJlA==, registry: https://registry.npm.taobao.org/, tarball: https://registry.npmmirror.com/@vue/compiler-sfc/-/compiler-sfc-2.7.7.tgz}
+    name: '@vue/compiler-sfc'
+    version: 2.7.7
+    dependencies:
+      '@babel/parser': registry.npmmirror.com/@babel/parser/7.18.9
+      postcss: registry.npmmirror.com/postcss/8.4.14
+      source-map: registry.npmmirror.com/source-map/0.6.1
     dev: true
 
   registry.npmmirror.com/@xmldom/xmldom/0.7.5:
@@ -3875,6 +3921,22 @@ packages:
     name: cookie
     version: 0.4.2
     engines: {node: '>= 0.6'}
+    dev: true
+
+  registry.npmmirror.com/css-tree/2.1.0:
+    resolution: {integrity: sha512-PcysZRzToBbrpoUrZ9qfblRIRf8zbEAkU0AIpQFtgkFK0vSbzOmBCvdSAx2Zg7Xx5wiYJKUKk0NMP7kxevie/A==, registry: https://registry.npm.taobao.org/, tarball: https://registry.npmmirror.com/css-tree/-/css-tree-2.1.0.tgz}
+    name: css-tree
+    version: 2.1.0
+    engines: {node: ^10 || ^12.20.0 || ^14.13.0 || >=15.0.0, npm: '>=7.0.0'}
+    dependencies:
+      mdn-data: registry.npmmirror.com/mdn-data/2.0.27
+      source-map-js: registry.npmmirror.com/source-map-js/1.0.2
+    dev: true
+
+  registry.npmmirror.com/csstype/3.1.0:
+    resolution: {integrity: sha512-uX1KG+x9h5hIJsaKR9xHUeUraxf8IODOwq9JLNPq6BwB04a/xgpq3rcx47l5BZu5zBPlgD342tdke3Hom/nJRA==, registry: https://registry.npm.taobao.org/, tarball: https://registry.npmmirror.com/csstype/-/csstype-3.1.0.tgz}
+    name: csstype
+    version: 3.1.0
     dev: true
 
   registry.npmmirror.com/debug/3.2.7:
@@ -4646,6 +4708,12 @@ packages:
       is-unicode-supported: registry.npmmirror.com/is-unicode-supported/0.1.0
     dev: true
 
+  registry.npmmirror.com/mdn-data/2.0.27:
+    resolution: {integrity: sha512-kwqO0I0jtWr25KcfLm9pia8vLZ8qoAKhWZuZMbneJq3jjBD3gl5nZs8l8Tu3ZBlBAHVQtDur9rdDGyvtfVraHQ==, registry: https://registry.npm.taobao.org/, tarball: https://registry.npmmirror.com/mdn-data/-/mdn-data-2.0.27.tgz}
+    name: mdn-data
+    version: 2.0.27
+    dev: true
+
   registry.npmmirror.com/mimic-fn/2.1.0:
     resolution: {integrity: sha512-OqbOk5oEQeAZ8WXWydlu9HJjz9WVdEIvamMCcXmuqUYjTknH/sqsWvhQ3vgwKFRR1HpjvNBKQ37nbJgYzGqGcg==, registry: https://registry.npm.taobao.org/, tarball: https://registry.npmmirror.com/mimic-fn/-/mimic-fn-2.1.0.tgz}
     name: mimic-fn
@@ -4658,6 +4726,18 @@ packages:
     name: minimist
     version: 1.2.6
     dev: true
+
+  registry.npmmirror.com/monaco-editor-core/0.33.0:
+    resolution: {integrity: sha512-Kzxak8jnMS8vI08DcseBuOfeQlcVPpGXO210D8M+QnaNR92s4IYzgUeiow/Hld9Gi5pGvjDbPsdUXkPewoTA5g==, registry: https://registry.npm.taobao.org/, tarball: https://registry.npmmirror.com/monaco-editor-core/-/monaco-editor-core-0.33.0.tgz}
+    name: monaco-editor-core
+    version: 0.33.0
+    dev: false
+
+  registry.npmmirror.com/monaco-editor/0.33.0:
+    resolution: {integrity: sha512-VcRWPSLIUEgQJQIE0pVT8FcGBIgFoxz7jtqctE+IiCxWugD0DwgyQBcZBhdSrdMC84eumoqMZsGl2GTreOzwqw==, registry: https://registry.npm.taobao.org/, tarball: https://registry.npmmirror.com/monaco-editor/-/monaco-editor-0.33.0.tgz}
+    name: monaco-editor
+    version: 0.33.0
+    dev: false
 
   registry.npmmirror.com/ms/2.0.0:
     resolution: {integrity: sha512-Tpp60P6IUJDTuOq/5Z8cdskzJujfwqfOTkrwIwj7IRISpnkJnT6SyJ4PCPnGMoFjC9ddhal5KVIYtAt97ix05A==, registry: https://registry.npm.taobao.org/, tarball: https://registry.npmmirror.com/ms/-/ms-2.0.0.tgz}
@@ -4721,6 +4801,14 @@ packages:
     resolution: {integrity: sha512-nnbWWOkoWyUsTjKrhgD0dcz22mdkSnpYqbEjIm2nhwhuxlSkpywJmBo8h0ZqJdkp73mb90SssHkN4rsRaBAfAA==, registry: https://registry.npm.taobao.org/, tarball: https://registry.npmmirror.com/mute-stream/-/mute-stream-0.0.8.tgz}
     name: mute-stream
     version: 0.0.8
+    dev: true
+
+  registry.npmmirror.com/nanoid/3.3.4:
+    resolution: {integrity: sha512-MqBkQh/OHTS2egovRtLk45wEyNXwF+cokD+1YPf9u5VfJiRdAiRwB2froX5Co9Rh20xs4siNPm8naNotSD6RBw==, registry: https://registry.npm.taobao.org/, tarball: https://registry.npmmirror.com/nanoid/-/nanoid-3.3.4.tgz}
+    name: nanoid
+    version: 3.3.4
+    engines: {node: ^10 || ^12 || ^13.7 || ^14 || >=15.0.1}
+    hasBin: true
     dev: true
 
   registry.npmmirror.com/node-fetch/2.6.7:
@@ -4820,11 +4908,28 @@ packages:
     version: 6.2.1
     dev: true
 
+  registry.npmmirror.com/picocolors/1.0.0:
+    resolution: {integrity: sha512-1fygroTLlHu66zi26VoTDv8yRgm0Fccecssto+MhsZ0D/DGW2sm8E8AjW7NU5VVTRt5GxbeZ5qBuJr+HyLYkjQ==, registry: https://registry.npm.taobao.org/, tarball: https://registry.npmmirror.com/picocolors/-/picocolors-1.0.0.tgz}
+    name: picocolors
+    version: 1.0.0
+    dev: true
+
   registry.npmmirror.com/picomatch/2.3.0:
     resolution: {integrity: sha512-lY1Q/PiJGC2zOv/z391WOTD+Z02bCgsFfvxoXXf6h7kv9o+WmsmzYqrAwY63sNgOxE4xEdq0WyUnXfKeBrSvYw==, registry: https://registry.npm.taobao.org/, tarball: https://registry.npmmirror.com/picomatch/-/picomatch-2.3.0.tgz}
     name: picomatch
     version: 2.3.0
     engines: {node: '>=8.6'}
+    dev: true
+
+  registry.npmmirror.com/postcss/8.4.14:
+    resolution: {integrity: sha512-E398TUmfAYFPBSdzgeieK2Y1+1cpdxJx8yXbK/m57nRhKSmk1GB2tO4lbLBtlkfPQTDKfe4Xqv1ASWPpayPEig==, registry: https://registry.npm.taobao.org/, tarball: https://registry.npmmirror.com/postcss/-/postcss-8.4.14.tgz}
+    name: postcss
+    version: 8.4.14
+    engines: {node: ^10 || ^12 || >=14}
+    dependencies:
+      nanoid: registry.npmmirror.com/nanoid/3.3.4
+      picocolors: registry.npmmirror.com/picocolors/1.0.0
+      source-map-js: registry.npmmirror.com/source-map-js/1.0.2
     dev: true
 
   registry.npmmirror.com/readable-stream/3.6.0:
@@ -4947,6 +5052,12 @@ packages:
     name: source-map
     version: 0.6.1
     engines: {node: '>=0.10.0'}
+
+  registry.npmmirror.com/splitpanes/3.1.1:
+    resolution: {integrity: sha512-VUkxDJfIGSvTM/fm/+OSrx8ha9URwE/9B8FPvfzoBuAxVELIHBWpsfnJXIXv77zVwuex//QQL4kTU9SDBPeHjA==, registry: https://registry.npm.taobao.org/, tarball: https://registry.npmmirror.com/splitpanes/-/splitpanes-3.1.1.tgz}
+    name: splitpanes
+    version: 3.1.1
+    dev: false
 
   registry.npmmirror.com/statuses/2.0.1:
     resolution: {integrity: sha512-RwNA9Z/7PrK06rYLIzFMlaF+l73iwpzsqRIFgbMLbTcLD6cOao82TaWefPXQvB2fOC4AjuYSEndS7N/mTCbkdQ==, registry: https://registry.npm.taobao.org/, tarball: https://registry.npmmirror.com/statuses/-/statuses-2.0.1.tgz}
@@ -5121,6 +5232,15 @@ packages:
       is-typed-array: registry.npmmirror.com/is-typed-array/1.1.7
       safe-buffer: registry.npmmirror.com/safe-buffer/5.2.1
       which-typed-array: registry.npmmirror.com/which-typed-array/1.1.6
+    dev: true
+
+  registry.npmmirror.com/vue/2.7.7:
+    resolution: {integrity: sha512-osfkncsGCWqtch+YWYxbqTNQ9hl/UQ6TFRkdmK/VqAjuMpxzr5QotFsYpmJ1AB1ez2LJeIKXDmtMkXUotMOTsA==, registry: https://registry.npm.taobao.org/, tarball: https://registry.npmmirror.com/vue/-/vue-2.7.7.tgz}
+    name: vue
+    version: 2.7.7
+    dependencies:
+      '@vue/compiler-sfc': registry.npmmirror.com/@vue/compiler-sfc/2.7.7
+      csstype: registry.npmmirror.com/csstype/3.1.0
     dev: true
 
   registry.npmmirror.com/wcwidth/1.0.1:
