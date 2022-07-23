@@ -48,11 +48,11 @@ const setupMonaco = createSingletonPromise(async () => {
   ])
 
   const injection_arg = monaco
-
+  // 等待到mounted后
   if (getCurrentInstance())
-  // await new Promise<void>(resolve => onMounted(resolve))
+    await new Promise<void>(resolve => onMounted(resolve))
 
-    console.log('getCurrentInstance()', getCurrentInstance())
+  console.log('getCurrentInstance()', getCurrentInstance())
 
   return { monaco }
 })

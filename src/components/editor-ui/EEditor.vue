@@ -12,7 +12,5 @@ useMonaco(target, {
 </script>
 
 <template>
-  <div ref="target" class="h-full w-full">
-    not init editor
-  </div>
+  <div ref="target" class="h-full w-full" />
 </template>
