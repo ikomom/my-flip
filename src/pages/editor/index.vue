@@ -9,12 +9,12 @@ import 'splitpanes/dist/splitpanes.css'
       <splitpanes horizontal :push-other-panes="false">
         <pane>
           <e-container title="scirpt setup">
-            <e-editor />
+            <!-- <e-editor language="javascript" /> -->
           </e-container>
         </pane>
         <pane>
           <e-container title="templeta">
-            templeta
+            <e-editor language="html" />
           </e-container>
         </pane>
       </splitpanes>

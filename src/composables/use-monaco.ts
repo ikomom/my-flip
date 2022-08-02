@@ -3,6 +3,7 @@ import type { editor } from 'monaco-editor'
 import darktheme from 'theme-vitesse/themes/vitesse-dark.json'
 import lightTheme from 'theme-vitesse/themes/vitesse-light.json'
 import { watch } from 'vue'
+import { editorPlugins } from './../monaco/plugins/editor'
 import setupMonaco from '~/monaco'
 
 enum LANGUAGE {
@@ -15,10 +16,10 @@ enum EDITOR_THEME {
   LIGHT = 'vitesse-light',
   DARK = 'vitesse-dark',
 }
-
+export type languageType = keyof typeof LANGUAGE
 interface Options {
   code: string
-  language: keyof typeof LANGUAGE
+  language: languageType
 }
 
 /**
@@ -31,6 +32,12 @@ const useMonaco = (target: Ref, options: Options) => {
   const isSetup = ref(false)
 
   let editor: editor.IStandaloneCodeEditor
+
+  const setContent = async (content: string) => {
+    await until(isSetup).toBeTruthy()
+    if (editor)
+      editor.setValue(content)
+  }
 
   const init = async () => {
     const { monaco } = await setupMonaco()
@@ -65,9 +72,18 @@ const useMonaco = (target: Ref, options: Options) => {
         monaco.editor.setTheme(isDark.value ? EDITOR_THEME.DARK : EDITOR_THEME.LIGHT)
       }, { immediate: true })
 
+      const plugins = editorPlugins.filter(({ language }) => language === options.language)
+
+      editor.getModel()?.onDidChangeContent(() => {
+        console.log('onChangeContent', editor.getValue())
+        changeEventHook.trigger(editor.getValue())
+        plugins.forEach(({ onContentChanged }) => onContentChanged(editor))
+      })
+
       console.log('use-monaco', {
         model,
         editor,
+        plugins,
         uri,
       })
     }, {
@@ -79,7 +95,10 @@ const useMonaco = (target: Ref, options: Options) => {
 
   tryOnUnmounted(() => stop())
 
-  return {}
+  return {
+    onChange: changeEventHook.on,
+    setContent,
+  }
 }
 
 export default useMonaco

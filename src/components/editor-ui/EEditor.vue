@@ -1,13 +1,14 @@
 <script setup lang="ts">
+import type { languageType } from '~/composables/use-monaco'
 import useMonaco from '~/composables/use-monaco'
 
-// const props = defineProps<{ language: string; value: string }>()
+const props = defineProps<{ language: languageType }>()
 const emit = defineEmits<(e: 'change', content: string) => void>()
 const target = ref()
 
-useMonaco(target, {
+const { onChange, setContent } = useMonaco(target, {
   code: '',
-  language: 'javascript',
+  language: props.language,
 })
 </script>
 

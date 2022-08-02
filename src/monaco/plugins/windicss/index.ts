@@ -20,7 +20,12 @@ function attrKey(label: string, kind: CompletionItemKind, order: number): Comple
     insertText: `${label}=""`,
   }
 }
-
+/**
+ * 解析变量
+ * @param document
+ * @param position
+ * @returns
+ */
 const resolveVariants = (document: TextDocument, position: Position) => {
   const text = document.getText({
     start: { line: 0, character: 0 },
@@ -67,7 +72,12 @@ const resolveVariants = (document: TextDocument, position: Position) => {
     })),
   ]
 }
-
+/**
+ * 解析属性
+ * @param document
+ * @param position
+ * @returns
+ */
 const resolveAttrKeys = (document: TextDocument, position: Position) => {
   const text = document.getText({
     start: { line: 0, character: 0 },
@@ -88,7 +98,12 @@ const resolveAttrKeys = (document: TextDocument, position: Position) => {
 
   return []
 }
-
+/**
+ * 解析属性值
+ * @param document
+ * @param position
+ * @returns
+ */
 const resolveAttrValues = (document: TextDocument, position: Position) => {
   const text = document.getText({
     start: { line: 0, character: 0 },

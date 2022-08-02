@@ -26,10 +26,12 @@ const setupMonaco = createSingletonPromise(async () => {
       const [
         { default: EditorWorker },
         { default: HtmlWorker },
+        // { default: OriginHtmlWorker },
         { default: TsWorker },
       ] = await Promise.all([
         import('monaco-editor/esm/vs/editor/editor.worker?worker'),
         import('./languages/html/html.worker?worker'),
+        // import('monaco-editor/esm/vs/language/html/html.worker?worker'),
         import('monaco-editor/esm/vs/language/typescript/ts.worker?worker'),
       ])
       console.log('worker', { EditorWorker, HtmlWorker, TsWorker })

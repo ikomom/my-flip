@@ -31,7 +31,7 @@ defineProps<{
         <slot name="controls" />
       </div>
     </div>
-    <div bg="dark:dark-800 light-300" overflow="auto" relative rounded-b-md>
+    <div bg="dark:dark-800 light-300" overflow="hidden" relative rounded-b-md>
       <slot />
     </div>
   </div>
