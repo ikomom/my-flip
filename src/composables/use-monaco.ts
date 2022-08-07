@@ -75,7 +75,7 @@ const useMonaco = (target: Ref, options: Options) => {
       const plugins = editorPlugins.filter(({ language }) => language === options.language)
 
       editor.getModel()?.onDidChangeContent(() => {
-        console.log('onChangeContent', editor.getValue())
+        // console.log('onChangeContent', editor.getValue())
         changeEventHook.trigger(editor.getValue())
         plugins.forEach(({ onContentChanged }) => onContentChanged(editor))
       })

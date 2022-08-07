@@ -1,5 +1,5 @@
-export type Attr = { raw: string; key: string; value: { raw: string; start: number }; start: number; end: number }
-export type ClassName = { result: string; start: number; end: number }
+export interface Attr { raw: string; key: string; value: { raw: string; start: number }; start: number; end: number }
+export interface ClassName { result: string; start: number; end: number }
 
 export class HTMLParser {
   html?: string
@@ -9,9 +9,11 @@ export class HTMLParser {
   }
 
   removeComments() {
-    if (!this.html) return []
+    if (!this.html)
+      return
     const regex = /\/\*[\s\S]*?\*\/|\/\*[\s\S]*$|([^\\:]|^)\/\/.*|<!--[\s\S]*?-->$/igm
     let match
+    // eslint-disable-next-line no-cond-assign
     while ((match = regex.exec(this.html as string))) {
       if (match)
         this.html = (this.html as string).slice(0, match.index) + ' '.repeat(regex.lastIndex - match.index) + this.html.slice(regex.lastIndex)
@@ -19,16 +21,18 @@ export class HTMLParser {
   }
 
   parseAttrs(): Attr[] {
-    if (!this.html) return []
+    if (!this.html)
+      return []
     const output: Attr[] = []
     const regex = /\S+\s*=\s*"[^"]+"|\S+\s*=\s*'[^']+'|\S+\s*=\s*[^>\s]+/igm
     let match
+    // eslint-disable-next-line no-cond-assign
     while ((match = regex.exec(this.html as string))) {
       if (match) {
         const raw = match[0]
         const sep = raw.indexOf('=')
         const key = raw.slice(0, sep).trim()
-        let value: string| string[] = raw.slice(sep + 1).trim()
+        let value: string | string[] = raw.slice(sep + 1).trim()
         let vstart = match.index + (sep + 1 + (raw.slice(sep + 1).match(/\S/)?.index || 0))
         if (['"', '\''].includes(value.charAt(0))) {
           vstart++
@@ -52,7 +56,8 @@ export class HTMLParser {
 
   parseClasses(): ClassName[] {
     // Match all class properties
-    if (!this.html) return []
+    if (!this.html)
+      return []
     const classRegex = /\s(?:class|className|w:dark|w:light|w:active|w:after|w:before|w:checked|w:disabled|w:focus|w:hover|w:tw)=(["'])([^{}]+)\1/
     const quoteRegex = /["']/
     const classNames = []
@@ -80,10 +85,12 @@ export class HTMLParser {
   }
 
   parseApplies(): ClassName[] {
-    if (!this.html) return []
+    if (!this.html)
+      return []
     const output: ClassName[] = []
     const regex = /(?<=@apply\s+)[^;]+(?=\s+!important)|(?<=@apply\s+)[^;]+(?=;)/igm
-    let match
+    let match: any
+    // eslint-disable-next-line no-cond-assign
     while ((match = regex.exec(this.html as string))) {
       if (match) {
         output.push({
