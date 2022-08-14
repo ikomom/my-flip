@@ -90,3 +90,63 @@ watchEffect(() => {
   if (orchestrator.activeFile)
     compileFile(orchestrator.activeFile)
 })
+const initialPackages = [
+  {
+    name: 'vue-demi',
+    source: 'unpkg',
+    description: 'Vue Demi (half in French) is a developing utility allows you to write Universal Vue Libraries for Vue 2 & 3',
+    url: 'https://unpkg.com/vue-demi/lib/index.mjs',
+  },
+  {
+    name: '@vueuse/shared',
+    source: 'unpkg',
+    description: 'Shared VueUse utilities.',
+    url: 'https://unpkg.com/@vueuse/shared@9.0.0/index.mjs',
+  },
+  {
+    name: '@vueuse/core',
+    source: 'unpkg',
+    description: 'Collection of essential Vue Composition Utilities',
+    url: 'https://unpkg.com/@vueuse/core@9.0.0/index.mjs',
+  },
+]
+/**
+ * Add a file to the orchestrator
+ *
+ * @param file File content
+ */
+export function addFile(file: OrchestratorFile) {
+  orchestrator.files = {
+    ...orchestrator.files,
+    [file.filename]: file,
+  }
+
+  compileFile(orchestrator.files[file.filename])
+}
+const appTemplate = `
+<div
+  grid="~ flow-col gap-4"
+  place="content-center items-center"
+  h="screen"
+  font="mono"
+  >
+  hello world
+</div>
+`
+const appScript = `
+import { useMouse } from '@vueuse/core'
+
+const { x, y } = useMouse()
+`
+
+export function setActiveFile(name: string) {
+  orchestrator.activeFilename = name
+}
+
+function loadInitialState() {
+  orchestrator.packages = initialPackages
+  addFile(new OrchestratorFile('App.vue', appTemplate.trim(), appScript.trim()))
+  setActiveFile('App.vue')
+}
+
+loadInitialState()

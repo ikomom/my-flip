@@ -1,9 +1,9 @@
 import type { Ref } from 'vue'
 import type { editor } from 'monaco-editor'
-import darktheme from 'theme-vitesse/themes/vitesse-dark.json'
+import darkTheme from 'theme-vitesse/themes/vitesse-dark.json'
 import lightTheme from 'theme-vitesse/themes/vitesse-light.json'
 import { watch } from 'vue'
-import { editorPlugins } from './../monaco/plugins/editor'
+import { editorPlugins } from '~/monaco/plugins/editor'
 import setupMonaco from '~/monaco'
 
 enum LANGUAGE {
@@ -42,7 +42,7 @@ const useMonaco = (target: Ref, options: Options) => {
   const init = async () => {
     const { monaco } = await setupMonaco()
 
-    monaco.editor.defineTheme(EDITOR_THEME.DARK, darktheme as any)
+    monaco.editor.defineTheme(EDITOR_THEME.DARK, darkTheme as any)
     monaco.editor.defineTheme(EDITOR_THEME.LIGHT, lightTheme as any)
 
     watch(target, () => {

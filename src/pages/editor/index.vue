@@ -29,7 +29,7 @@ const onContentChanged = (source: string, content: string) => {
   console.log('onContentChanged', source, content)
 }
 
-// compileFile(orchestrator.activeFile)
+console.log('activeFile', orchestrator.activeFile.script)
 </script>
 
 <template>

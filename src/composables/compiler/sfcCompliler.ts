@@ -22,11 +22,31 @@ export async function compileFile({ filename, code, compiled }: OrchestratorFile
   }
 
   const id = await hashId(filename)
-  const compiler = SFCCompiler.parse(code, {
+  const { errors, descriptor } = SFCCompiler.parse(code, {
     filename,
     sourceMap: true,
   })
-  console.log('compileFile', id, compiler)
+  console.log('compileFile', { filename, code, compiled, id }, { errors, descriptor })
+  // 查看是否有预处理器
+  if (
+    (descriptor.script && descriptor.script.lang)
+    || (descriptor.scriptSetup && descriptor.scriptSetup.lang)
+    || descriptor.styles.some(s => s.lang)
+    || (descriptor.template && descriptor.template.lang)
+  ) {
+    store.errors = [
+      'lang="x" pre-processors are not supported in the in-browser playground.',
+    ]
+    return
+  }
+  const hasScoped = descriptor.styles.some(s => s.scoped)
+  let clientCode = ''
+  let ssrCode = ''
+
+  const appendSharedCode = (code: string) => {
+    clientCode += code
+    ssrCode += code
+  }
   // const {errors, }
 }
 
