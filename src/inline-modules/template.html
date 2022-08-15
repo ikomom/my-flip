@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <!--  <script async src="https://unpkg.com/es-module-shims@1.5.15/dist/es-module-shims.js"></script>-->
+</head>
+<body>
+<div id="app">
+  template: {{ message }}
+</div>
+</body>
+
+<script>
+  console.log('currentScript', document.currentScript)
+</script>
+<!-- https://generator.jspm.io/#U2NhYGBkDM0rySzJSU1hKEpNTC5xMLTQM9Az0C1K1jMAAKFS5w0gAA -->
+<!--      "react": "https://unpkg.com/react@18/umd/react.development.js",-->
+<script type="inline-module-importmap">
+  {
+    "imports": {
+      "vue": "https://unpkg.com/vue@3/dist/vue.esm-browser.js",
+      "styled-components": "https://unpkg.com/@esm-bundle/styled-components/esm/styled-components.browser.min.js"
+    }
+  }
+</script>
+
+<script type="inline-module" id="foo">
+  const foo = 'i am foo';
+  export const x = 'xxxx';
+  export default {foo};
+</script>
+
+<script type="inline-module" name="hello" loader="react">
+  import React from 'react';
+  import styled from 'styled-components';
+
+  const Title = styled.h1`
+    font-size: 1.5em;
+    text-align: center;
+    color: palevioletred;
+  `;
+
+  const name = 'Akira';
+  class Hello extends React.Component {
+    render() {
+      return (
+        <Title>
+          Hello~~ {name}
+        </Title>
+      );
+    }
+  }
+  export default Hello;
+</script>
+
+<script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+<script src="loader.js"></script>
+<script src="inline-module.js" setup></script>
+
+
+<script type="module">
+  import Hello from 'hello';
+  import React from 'react';
+  import ReactDOM from 'react-dom';
+  console.log('react', React)
+  ReactDOM.render(React.createElement(Hello), document.getElementById('app'));
+</script>
+
+<!--<script type="module">-->
+<!--  import {createApp} from 'vue'-->
+<!--  import * as vue from 'vue'-->
+<!--  import foo, {x} from '#foo';-->
+
+<!--  console.log('vue', vue)-->
+<!--  console.log(import.meta, document.currentScript)-->
+<!--  console.log('foo', foo, x)-->
+
+<!--  createApp({-->
+<!--    data() {-->
+<!--      return {-->
+<!--        message: foo,-->
+<!--      }-->
+<!--    },-->
+<!--  }).mount('#app')-->
+
+<!--</script>-->
+
+</html>

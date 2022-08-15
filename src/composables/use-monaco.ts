@@ -17,6 +17,7 @@ enum EDITOR_THEME {
   DARK = 'vitesse-dark',
 }
 export type languageType = keyof typeof LANGUAGE
+
 interface Options {
   code: string
   language: languageType
