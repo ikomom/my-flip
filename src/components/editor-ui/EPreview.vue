@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import PreviewPage from './Preview.html?raw'
+import PreviewPage from '../../pages/editor/Preview.html?raw'
 import { createBlobURL } from '~/utils/utils'
 const frame = ref()
 

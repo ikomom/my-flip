@@ -2,6 +2,7 @@ function requireBabel() {
   if (typeof Babel === 'undefined')
     throw new Error('React transform requires babel-standalone(https://unpkg.com/@babel/standalone/babel.min.js).')
 
+  // eslint-disable-next-line no-undef
   return Babel
 }
 

@@ -16,7 +16,7 @@ const setupMonaco = createSingletonPromise(async () => {
   })
 
   const registered: string[] = ['vue', '@vueuse/core']
-  // 添加外部定义 TODO: 注册第三方包
+  // 添加外部定义 TODO: 注册第三方包标记
   monacoTypescriptJs.addExtraLib(`declare module '@vueuse/core' { ${vueuseTypes} }`, 'ts:vueuse')
   monacoTypescriptJs.addExtraLib(`declare module 'vue' { ${vueuseTypes} }`, 'ts:vue')
 

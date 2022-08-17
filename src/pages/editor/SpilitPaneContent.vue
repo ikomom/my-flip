@@ -1,0 +1,91 @@
+<script setup lang="ts">
+import { Pane, Splitpanes } from 'splitpanes'
+import 'splitpanes/dist/splitpanes.css'
+import TabBar from './TabBar.vue'
+import { EEditorProvider } from '~/composables/editor/EditorCore'
+
+const appTemplate = `
+<div
+  grid="~ flow-col gap-4"
+  place="content-center items-center"
+  h="screen"
+  font="mono"
+  >
+  <Coordinate label="X" :value="x" />
+  <Coordinate label="Y" :value="y" />
+</div>
+`
+const appScript = `
+import { useMouse } from '@vueuse/core'
+import Coordinate from './Coordinate.vue'
+
+const { x, y } = useMouse()
+`
+
+const initialScript = ref(appScript)
+const initialTemplate = ref(appTemplate)
+
+const onContentChanged = (source: string, content: string) => {
+  console.log('onContentChanged', source, content)
+}
+</script>
+
+<template>
+  <e-editor-provider>
+    <splitpanes
+      class="default-theme ediotr-content"
+      :push-other-panes="false"
+      style="height: 500px"
+    >
+      <pane>
+        <splitpanes horizontal :push-other-panes="false">
+          <pane>
+            <tab-bar />
+            <e-container style="height: calc(100% - 34px)" title="scirpt setup" no-rounding>
+              <e-editor :value="initialScript" language="javascript" @change="content => onContentChanged('script', content)" />
+            </e-container>
+          </pane>
+          <pane>
+            <e-container title="templeta">
+              <e-editor :value="initialTemplate" language="html" @change="content => onContentChanged('template', content)" />
+            </e-container>
+          </pane>
+        </splitpanes>
+      </pane>
+      <pane>
+        <splitpanes horizontal :push-other-panes="false">
+          <pane size="75">
+            <e-container title="Output">
+              <e-preview />
+            </e-container>
+          </pane>
+          <pane size="25">
+            <e-container title="Console">
+              templeta
+            </e-container>
+          </pane>
+        </splitpanes>
+      </pane>
+    </splitpanes>
+  </e-editor-provider>
+</template>
+
+<style>
+
+</style>
+
+<style scoped lang="scss">
+.ediotr-content {
+  :deep(.splitpanes__pane) {
+    @apply bg-transparent;
+  }
+  :deep(.splitpanes__splitter::after),
+  :deep(.splitpanes__splitter::before) {
+      @apply bg-dark-100 bg-opacity-50 dark:bg-light;
+  }
+
+  :deep(.splitpanes__splitter) {
+     @apply bg-transparent border-transparent min-w-4 min-h-4;
+  }
+}
+</style>

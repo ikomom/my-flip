@@ -8,25 +8,6 @@ export interface EditorPackage {
   source?: string
 }
 
-// class EditorCore {
-//   files: Record<string, EditorFile>
-//   packages: EditorPackage[]
-//   activeFilename: string
-//   // errors: (string | Error)[]
-//   // runtimeErrors: (string | Error)[]
-//   // readonly activeFile: EditorFile | undefined
-//   // readonly importMap: string
-
-//   constructor(
-//     files: Record<string, EditorFile> = {},
-//     packages: EditorPackage[] = [],
-//   ) {
-//     this.files = reactive(files)
-//     this.packages = reactive(packages)
-//   }
-
-// }
-
 export interface EditorCore {
   files: Record<string, EditorFile>
   packages: EditorPackage[]
@@ -44,7 +25,7 @@ const defaultParams: EditorCore = {
   runtimeErrors: [],
 }
 
-function getEditor(
+function useEditor(
   params: Pick<EditorCore, 'files' | 'packages' | 'activeFilename'>,
 ) {
   const _params = { ...defaultParams, ...params }
@@ -69,20 +50,28 @@ function getEditor(
   }
 }
 
-function useEidtor() {
-  const { core, activeFile, importMap } = getEditor({
-    files: {
-      'App.vue': new EditorFile('App.vue'),
-    },
-    packages: [],
-    activeFilename: 'App.vue',
-  })
+export const EEditorProvider = defineComponent({
+  setup(_) {
+    const slot = useSlots()
 
-  watchEffect(() => {
+    const editor = useEditor({
+      files: {
+        'App.vue': new EditorFile('App.vue'),
+      },
+      packages: [],
+      activeFilename: 'App.vue',
+    })
 
-  })
+    provide('editor', editor)
 
-  provide('editor', {
-    core,
-  })
+    console.log('slot', slot.default())
+
+    return () => h('div', slot.default())
+  },
+})
+
+export const useEditorInject = () => {
+  const editor = inject('editor')
+  console.log('editor', editor)
+  return editor as ReturnType<typeof useEditor>
 }

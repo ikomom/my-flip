@@ -11,3 +11,15 @@ export async function hashId(filename: string) {
   const hashHex = hashArray.map(b => b.toString(16).padStart(2, '0')).join('') // convert bytes to hex string
   return hashHex.slice(0, 8)
 }
+
+/**
+ * 传建blob url
+ * @param code
+ * @param type
+ */
+export function createBlobURL(code: string, type = 'text/plain') {
+  const blob = new Blob([code], {
+    type,
+  })
+  return URL.createObjectURL(blob)
+}

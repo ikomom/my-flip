@@ -1,8 +1,8 @@
 <script setup lang="ts">
 defineProps<{
   title: string
-//   noOverflow?: boolean
-//   noRounding?: boolean
+  //   noOverflow?: boolean
+  noRounding?: boolean
 }>()
 </script>
 
@@ -10,14 +10,13 @@ defineProps<{
   <div
     h-full
     grid="~"
-    shadow-lg
-    rounded-md
+    :class="{ 'rounded-md': !noRounding }"
     class="grid-rows-[min-content_auto]"
     border="1  light-900 "
   >
     <div
       flex="~ row"
-      rounded-t-md
+      :class="{ 'rounded-t-md': !noRounding }"
       text-xs
       items-center
       h="8" p="l-2"
