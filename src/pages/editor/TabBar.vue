@@ -5,15 +5,20 @@ const { core: { files } } = useEditorInject()
 </script>
 
 <template>
-  <div flex>
+  <div flex="~ nowrap" bg="light-500 dark:dark-800" overflow-x-auto overflow-y-hidden b="1 #dde1e3" rounded-t-md>
     <div
       v-for="file in files"
       :key="file.filename"
-      rounded-t-md
-      text-xs items-center
+      text-xs
+      items-center
       h="8"
-      p="l-2" dark:border="b-1 light-200" bg="light-500 dark:dark-800"
+      p="t-1 x-2"
+      cursor-pointer
+      truncate
+      b="r-1 #dde1e3"
+      bg="hover:#dee2e6 dark:hover:#0000"
     >
+      <i w-4 h-4 relative top-1 inline-block i-vscode-icons-file-type-vue />
       {{ file.filename }}
     </div>
   </div>

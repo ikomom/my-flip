@@ -23,7 +23,7 @@ defineProps<{
       dark:border="b-1 light-200"
       bg="light-500 dark:dark-800"
     >
-      <div flex="1">
+      <div flex="1" truncate>
         {{ title }}
       </div>
       <div flex="~ row" items-center>

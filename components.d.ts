@@ -3,14 +3,14 @@
 // Read more: https://github.com/vuejs/core/pull/3399
 import '@vue/runtime-core'
 
+export {}
+
 declare module '@vue/runtime-core' {
   export interface GlobalComponents {
     Counter: typeof import('./src/components/Counter.vue')['default']
     EContainer: typeof import('./src/components/editor-ui/EContainer.vue')['default']
     EEditor: typeof import('./src/components/editor-ui/EEditor.vue')['default']
     EPreview: typeof import('./src/components/editor-ui/EPreview.vue')['default']
-    ETab: typeof import('./src/components/editor-ui/ETab.vue')['default']
-    ETabBar: typeof import('./src/components/editor-ui/ETabBar.vue')['default']
     Footer: typeof import('./src/components/Footer.vue')['default']
     RouterLink: typeof import('vue-router')['RouterLink']
     RouterView: typeof import('vue-router')['RouterView']
@@ -18,5 +18,3 @@ declare module '@vue/runtime-core' {
     TheNav: typeof import('./src/components/TheNav.vue')['default']
   }
 }
-
-export {}

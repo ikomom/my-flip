@@ -41,7 +41,7 @@ const onContentChanged = (source: string, content: string) => {
         <splitpanes horizontal :push-other-panes="false">
           <pane>
             <tab-bar />
-            <e-container style="height: calc(100% - 34px)" title="scirpt setup" no-rounding>
+            <e-container style="height: calc(100% - 34px)" rounded-b-md title="scirpt setup" no-rounding>
               <e-editor :value="initialScript" language="javascript" @change="content => onContentChanged('script', content)" />
             </e-container>
           </pane>
