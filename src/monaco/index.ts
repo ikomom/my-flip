@@ -38,7 +38,7 @@ const setupMonaco = createSingletonPromise(async () => {
       // @ts-expect-error
       window.MonacoEnvironment = {
         getWorker(_: any, label: string) {
-          console.log('MonacoEnvironment getWorker', { _, label })
+          // console.log('MonacoEnvironment getWorker', { _, label })
           if (['html', 'handlebars', 'razor'].includes(label))
             return new HtmlWorker()
           if (['typescript', 'javascript'].includes(label))

@@ -11,7 +11,7 @@ const { onChange, setContent } = useMonaco(target, {
   language: props.language,
 })
 
-watch(() => props.value, () => setContent(props.value))
+// watch(() => props.value, () => setContent(props.value))
 onChange(content => emit('change', content))
 emit('change', props.value)
 </script>

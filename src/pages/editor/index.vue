@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import SpilitPaneContent from './SpilitPaneContent.vue'
+import { EEditorProvider } from '~/composables/editor/EditorCore'
 </script>
 
 <template>

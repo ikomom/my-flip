@@ -85,11 +85,11 @@ export const orchestrator = reactive<Orchestrator>({
     `
   },
 })
-
-watchEffect(() => {
-  if (orchestrator.activeFile)
-    compileFile(orchestrator.activeFile)
-})
+//
+// watchEffect(() => {
+//   if (orchestrator.activeFile)
+//     compileFile(orchestrator.activeFile)
+// })
 const initialPackages = [
   {
     name: 'vue-demi',
@@ -143,10 +143,10 @@ export function setActiveFile(name: string) {
   orchestrator.activeFilename = name
 }
 
-function loadInitialState() {
-  orchestrator.packages = initialPackages
-  addFile(new OrchestratorFile('App.vue', appTemplate.trim(), appScript.trim()))
-  setActiveFile('App.vue')
-}
-
-loadInitialState()
+// function loadInitialState() {
+//   orchestrator.packages = initialPackages
+//   addFile(new OrchestratorFile('App.vue', appTemplate.trim(), appScript.trim()))
+//   setActiveFile('App.vue')
+// }
+//
+// loadInitialState()

@@ -48,7 +48,7 @@ const useMonaco = (target: Ref, options: Options) => {
 
     watch(target, () => {
       const el = unref(target)
-      console.log('watch', el)
+      // console.log('watch', el)
       if (!el)
         return
       const uri = monaco.Uri.parse(`file:///root/${Date.now()}.${LANGUAGE[options.language]}`)
@@ -81,12 +81,12 @@ const useMonaco = (target: Ref, options: Options) => {
         plugins.forEach(({ onContentChanged }) => onContentChanged(editor))
       })
 
-      console.log('use-monaco', {
-        model,
-        editor,
-        plugins,
-        uri,
-      })
+      // console.log('use-monaco', {
+      //   model,
+      //   editor,
+      //   plugins,
+      //   uri,
+      // })
     }, {
       flush: 'post',
       immediate: true,

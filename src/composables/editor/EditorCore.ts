@@ -32,7 +32,7 @@ function useEditor(
 
   const core = reactive<EditorCore>(_params)
 
-  const activeFile = computed(() => core.files[core.activeFilename])
+  const activeFile = computed(() => core.files[core.activeFilename] as EditorFile)
 
   // https://github.com/WICG/import-maps
   const importMap = computed(() => `
@@ -46,9 +46,27 @@ function useEditor(
   return {
     activeFile,
     core,
+    action: {
+      setActiveFile(name: string) {
+        core.activeFilename = name
+        // TODO
+      },
+      closeTab(name: string) {
+        // TODO
+      },
+    },
     importMap,
   }
 }
+
+const appTemplate = `<div>
+  {{helloWorld}}
+</div>
+`
+const appScript = `import {ref} from 'vue'
+
+const helloWorld = ref('helloWorld')
+`
 
 export const EEditorProvider = defineComponent({
   setup(_) {
@@ -56,7 +74,7 @@ export const EEditorProvider = defineComponent({
 
     const editor = useEditor({
       files: {
-        'App.vue': new EditorFile('App.vue'),
+        'App.vue': new EditorFile('App.vue', appTemplate, appScript),
       },
       packages: [],
       activeFilename: 'App.vue',
@@ -72,6 +90,6 @@ export const EEditorProvider = defineComponent({
 
 export const useEditorInject = () => {
   const editor = inject('editor')
-  console.log('editor', editor)
+  // console.log('editor', editor)
   return editor as ReturnType<typeof useEditor>
 }
