@@ -1,6 +1,6 @@
 {
-  "private": true,
   "name": "my-flip",
+  "private": true,
   "packageManager": "pnpm@7.4.0",
   "scripts": {
     "build": "vite build",
