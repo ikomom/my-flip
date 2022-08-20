@@ -88,7 +88,15 @@ export const EEditorProvider = defineComponent({
 
     const editor = useEditor({
       files: {},
-      packages: [],
+      packages: [
+        {
+          name: 'vue',
+          description: 'vue',
+          source: 'unpkg',
+          version: 'latest',
+          url: 'https://unpkg.com/vue@3/dist/vue.esm-browser.js',
+        },
+      ],
       activeFilename: null,
     })
 

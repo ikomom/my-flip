@@ -11,6 +11,7 @@ const {
   $actions,
   activeFile,
   onShouldUpdateContent,
+  importMap,
 } = useEditorInject()
 
 const script = ref('')
@@ -78,7 +79,7 @@ const onCompiler = async () => {
       <splitpanes horizontal :push-other-panes="false">
         <pane size="75">
           <e-container title="Output">
-            <e-preview :code="activeFile ? activeFile.compiled.js : ''" />
+            <e-preview :code="activeFile ? activeFile.compiled.js : ''" :import-map="importMap" />
           </e-container>
         </pane>
         <pane size="25">
