@@ -1,5 +1,5 @@
 const clients: any[] = []
-// eslint-disable-next-line @typescript-eslint/ban-ts-comment
+
 // @ts-expect-error
 self.onconnect = function (e: any) {
   const port = e.ports[0]
