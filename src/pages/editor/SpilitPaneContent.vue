@@ -2,11 +2,36 @@
 import { Pane, Splitpanes } from 'splitpanes'
 import 'splitpanes/dist/splitpanes.css'
 import TabBar from './TabBar.vue'
-import { useEditorInject } from '~/composables/editor/EditorCore'
 import EditorFile from '~/composables/editor/EditorFile'
-import { compilerVue } from '~/composables/editor/compiler/vueCompiler'
+import { useEditorInject } from '~/composables/editor/EditorCore'
 
-const { core, activeFile } = useEditorInject()
+const {
+  core,
+  $actions,
+  activeFile,
+  onShouldUpdateContent,
+} = useEditorInject()
+
+const script = ref('')
+const template = ref('')
+
+onMounted(() => {
+  $actions.addFile(new EditorFile('App.vue', '<div>{{helloWorld}}</div>', `import {ref} from 'vue'
+const helloWorld = ref('helloWorld')
+`, '', false))
+  $actions.addFile(new EditorFile('App2.vue', '<div>2</div>', `import {ref} from 'vue'
+const helloWorld2 = ref('helloWorld')
+`))
+  $actions.setActiveFile('App.vue')
+})
+
+onShouldUpdateContent(() => {
+  if (activeFile.value) {
+    console.log('update onShouldUpdateContent')
+    script.value = activeFile.value.script
+    template.value = activeFile.value.template
+  }
+})
 
 const onCompiler = async () => {
   // const file = new EditorFile('App.vue', appTemplate, appScript)
@@ -14,16 +39,12 @@ const onCompiler = async () => {
   //
   // console.log('file.code', code)
 }
-
-const onContentChanged = (source: string, content: string) => {
-  console.log('onContentChanged', source, content)
-}
 </script>
 
 <template>
-  <div mb-2>
+  <div mb-2 text-end>
     <button btn @click="onCompiler">
-      compilerVue
+      run     <i inline-block i-carbon-play-filled-alt w-4 h-4 top-1 relative />
     </button>
   </div>
 
@@ -37,12 +58,18 @@ const onContentChanged = (source: string, content: string) => {
         <pane>
           <tab-bar />
           <e-container style="height: calc(100% - 34px)" rounded-b-md title="scirpt setup" no-rounding>
-            <e-editor :value="activeFile.script" language="javascript" @change="content => activeFile.script = content" />
+            <e-editor
+              :value="script" language="javascript"
+              @change="content => activeFile && (activeFile.script = content)"
+            />
           </e-container>
         </pane>
         <pane>
           <e-container title="templeta">
-            <e-editor :value="activeFile.template" language="html" @change="content => onContentChanged('template', content)" />
+            <e-editor
+              :value="template" language="html"
+              @change="content => activeFile && (activeFile.template = content)"
+            />
           </e-container>
         </pane>
       </splitpanes>
@@ -73,13 +100,14 @@ const onContentChanged = (source: string, content: string) => {
   :deep(.splitpanes__pane) {
     @apply bg-transparent;
   }
+
   :deep(.splitpanes__splitter::after),
   :deep(.splitpanes__splitter::before) {
-      @apply bg-dark-100 bg-opacity-50 dark:bg-light;
+    @apply bg-dark-100 bg-opacity-50 dark:bg-light;
   }
 
   :deep(.splitpanes__splitter) {
-     @apply bg-transparent border-transparent min-w-4 min-h-4;
+    @apply bg-transparent border-transparent min-w-4 min-h-4;
   }
 }
 </style>

@@ -3,6 +3,7 @@ class EditorFile {
   template: string
   script: string
   style: string
+  closeable: boolean
 
   compiled = {
     js: '',
@@ -15,11 +16,13 @@ class EditorFile {
     template?: string,
     script?: string,
     style?: string,
+    closeable = true,
   ) {
     this.filename = filename
     this.template = template || ''
     this.script = script || ''
     this.style = style || ''
+    this.closeable = !!closeable
   }
 
   get code() {

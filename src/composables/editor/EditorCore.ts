@@ -34,6 +34,8 @@ function useEditor(
 
   const activeFile = computed(() => core.files[core.activeFilename] as EditorFile)
 
+  const shouldUpdateContent = createEventHook()
+
   // https://github.com/WICG/import-maps
   const importMap = computed(() => `
     {
@@ -43,41 +45,51 @@ function useEditor(
     }
   `)
 
+  watch(() => core.activeFilename, (val) => {
+    console.log('activeFile trigger', val)
+    shouldUpdateContent.trigger(null)
+  }, { immediate: true })
+
+  const actions = {
+    setActiveFile(name: string) {
+      core.activeFilename = name
+    },
+    removeFile(name: string) {
+      delete core.files[name]
+      setTimeout(() => actions.setActiveFile('App.vue'), 0)
+    },
+    addFileByName(filename: string) {
+      actions.addFile(new EditorFile(filename))
+    },
+    addFile(file: EditorFile) {
+      if (core.files[file.filename]) {
+        alert(`文件${file.filename}已存在`)
+        return
+      }
+      core.files = {
+        ...core.files,
+        [file.filename]: file,
+      }
+    },
+  }
+
   return {
     activeFile,
     core,
-    action: {
-      setActiveFile(name: string) {
-        core.activeFilename = name
-        // TODO
-      },
-      closeTab(name: string) {
-        // TODO
-      },
-    },
+    $actions: actions,
+    onShouldUpdateContent: shouldUpdateContent.on,
     importMap,
   }
 }
-
-const appTemplate = `<div>
-  {{helloWorld}}
-</div>
-`
-const appScript = `import {ref} from 'vue'
-
-const helloWorld = ref('helloWorld')
-`
 
 export const EEditorProvider = defineComponent({
   setup(_) {
     const slot = useSlots()
 
     const editor = useEditor({
-      files: {
-        'App.vue': new EditorFile('App.vue', appTemplate, appScript),
-      },
+      files: {},
       packages: [],
-      activeFilename: 'App.vue',
+      activeFilename: null,
     })
 
     provide('editor', editor)

@@ -9,8 +9,6 @@ declare global {
   const $shallowRef: typeof import('vue/macros')['$shallowRef']
   const $toRef: typeof import('vue/macros')['$toRef']
   const EffectScope: typeof import('vue')['EffectScope']
-  const OrchestratorFile: typeof import('./src/composables/orchestrator')['OrchestratorFile']
-  const addFile: typeof import('./src/composables/orchestrator')['addFile']
   const asyncComputed: typeof import('@vueuse/core')['asyncComputed']
   const autoResetRef: typeof import('@vueuse/core')['autoResetRef']
   const computed: typeof import('vue')['computed']
@@ -71,7 +69,6 @@ declare global {
   const onStartTyping: typeof import('@vueuse/core')['onStartTyping']
   const onUnmounted: typeof import('vue')['onUnmounted']
   const onUpdated: typeof import('vue')['onUpdated']
-  const orchestrator: typeof import('./src/composables/orchestrator')['orchestrator']
   const pausableWatch: typeof import('@vueuse/core')['pausableWatch']
   const provide: typeof import('vue')['provide']
   const proxyEl: typeof import('./src/composables/floating')['proxyEl']
@@ -89,8 +86,6 @@ declare global {
   const refThrottled: typeof import('@vueuse/core')['refThrottled']
   const refWithControl: typeof import('@vueuse/core')['refWithControl']
   const resolveComponent: typeof import('vue')['resolveComponent']
-  const setActiveFile: typeof import('./src/composables/orchestrator')['setActiveFile']
-  const sfcBuild: typeof import('./src/composables/sfc-build.js')['default']
   const shallowReactive: typeof import('vue')['shallowReactive']
   const shallowReadonly: typeof import('vue')['shallowReadonly']
   const shallowRef: typeof import('vue')['shallowRef']
@@ -270,8 +265,6 @@ declare module '@vue/runtime-core' {
     readonly $shallowRef: UnwrapRef<typeof import('vue/macros')['$shallowRef']>
     readonly $toRef: UnwrapRef<typeof import('vue/macros')['$toRef']>
     readonly EffectScope: UnwrapRef<typeof import('vue')['EffectScope']>
-    readonly OrchestratorFile: UnwrapRef<typeof import('./src/composables/orchestrator')['OrchestratorFile']>
-    readonly addFile: UnwrapRef<typeof import('./src/composables/orchestrator')['addFile']>
     readonly asyncComputed: UnwrapRef<typeof import('@vueuse/core')['asyncComputed']>
     readonly autoResetRef: UnwrapRef<typeof import('@vueuse/core')['autoResetRef']>
     readonly computed: UnwrapRef<typeof import('vue')['computed']>
@@ -332,7 +325,6 @@ declare module '@vue/runtime-core' {
     readonly onStartTyping: UnwrapRef<typeof import('@vueuse/core')['onStartTyping']>
     readonly onUnmounted: UnwrapRef<typeof import('vue')['onUnmounted']>
     readonly onUpdated: UnwrapRef<typeof import('vue')['onUpdated']>
-    readonly orchestrator: UnwrapRef<typeof import('./src/composables/orchestrator')['orchestrator']>
     readonly pausableWatch: UnwrapRef<typeof import('@vueuse/core')['pausableWatch']>
     readonly provide: UnwrapRef<typeof import('vue')['provide']>
     readonly proxyEl: UnwrapRef<typeof import('./src/composables/floating')['proxyEl']>
@@ -350,8 +342,6 @@ declare module '@vue/runtime-core' {
     readonly refThrottled: UnwrapRef<typeof import('@vueuse/core')['refThrottled']>
     readonly refWithControl: UnwrapRef<typeof import('@vueuse/core')['refWithControl']>
     readonly resolveComponent: UnwrapRef<typeof import('vue')['resolveComponent']>
-    readonly setActiveFile: UnwrapRef<typeof import('./src/composables/orchestrator')['setActiveFile']>
-    readonly sfcBuild: UnwrapRef<typeof import('./src/composables/sfc-build.js')['default']>
     readonly shallowReactive: UnwrapRef<typeof import('vue')['shallowReactive']>
     readonly shallowReadonly: UnwrapRef<typeof import('vue')['shallowReadonly']>
     readonly shallowRef: UnwrapRef<typeof import('vue')['shallowRef']>

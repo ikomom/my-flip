@@ -1,7 +1,23 @@
 <script lang="ts" setup>
 import { useEditorInject } from '~/composables/editor/EditorCore'
+import Tab from '~/pages/editor/Tab.vue'
 
-const { core } = useEditorInject()
+const { core, $actions: { setActiveFile, addFileByName, removeFile } } = useEditorInject()
+
+const onAddFile = () => {
+  const name = prompt('请输入文件名')
+  if (name) {
+    const filename = name.endsWith('.vue') ? name : `${name}.vue`
+    addFileByName(filename)
+    setActiveFile(filename)
+  }
+}
+
+const onClose = (filename: string) => {
+  const res = confirm('关闭文件, 无法恢复')
+  if (res)
+    removeFile(filename)
+}
 </script>
 
 <template>
@@ -12,22 +28,16 @@ const { core } = useEditorInject()
     b="x-1 t-1 #dde1e3"
     rounded-t-md
   >
-    <div
+    <Tab
       v-for="file in core.files"
       :key="file.filename"
-      text-xs
-      items-center
-      h="8"
-      p="t-1 x-2"
-      cursor-pointer
-      truncate
-      b="r-1 #dde1e3"
-      bg="hover:#dee2e6 dark:hover:#0000"
-      :class="{ 'text-green-500': core.activeFilename === file.filename }"
+      :active="core.activeFilename === file.filename"
+      @click="setActiveFile(file.filename)"
     >
-      <i w-4 h-4 relative top-1 inline-block i-vscode-icons-file-type-vue />
       {{ file.filename }}
-    </div>
+      <i v-if="file.closeable" w-4 h-4 relative top-1 inline-block icon-btn i-carbon-close @click.stop="onClose(file.filename)" />
+    </Tab>
+    <a icon-btn i-carbon-add w-5 h-5 top-1 relative @click="onAddFile" />
   </div>
 </template>
 
