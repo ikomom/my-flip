@@ -2,6 +2,7 @@
 import { Pane, Splitpanes } from 'splitpanes'
 import 'splitpanes/dist/splitpanes.css'
 import TabBar from './TabBar.vue'
+import { compilerVue } from '~/composables/editor/compiler/vueCompiler'
 import EditorFile from '~/composables/editor/EditorFile'
 import { useEditorInject } from '~/composables/editor/EditorCore'
 
@@ -34,10 +35,9 @@ onShouldUpdateContent(() => {
 })
 
 const onCompiler = async () => {
-  // const file = new EditorFile('App.vue', appTemplate, appScript)
-  // const code = await compilerVue(file)
-  //
-  // console.log('file.code', code)
+  const code = await compilerVue(activeFile.value)
+  activeFile.value.compiled.js = code
+  console.log('file.code', { code })
 }
 </script>
 
@@ -78,7 +78,7 @@ const onCompiler = async () => {
       <splitpanes horizontal :push-other-panes="false">
         <pane size="75">
           <e-container title="Output">
-            <e-preview />
+            <e-preview :code="activeFile ? activeFile.compiled.js : ''" />
           </e-container>
         </pane>
         <pane size="25">

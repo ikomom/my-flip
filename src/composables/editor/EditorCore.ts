@@ -62,10 +62,10 @@ function useEditor(
       actions.addFile(new EditorFile(filename))
     },
     addFile(file: EditorFile) {
-      if (core.files[file.filename]) {
-        alert(`文件${file.filename}已存在`)
-        return
-      }
+      // if (core.files[file.filename]) {
+      //   alert(`文件${file.filename}已存在`)
+      //   return
+      // }
       core.files = {
         ...core.files,
         [file.filename]: file,
