@@ -1,4 +1,4 @@
-import { compileScript, compileTemplate, parse, rewriteDefault } from 'vue/compiler-sfc'
+import { MagicString, babelParse, compileScript, compileTemplate, parse, rewriteDefault } from 'vue/compiler-sfc'
 
 import type EditorFile from '~/composables/editor/EditorFile'
 import { hashId } from '~/utils/utils'
@@ -17,11 +17,14 @@ export const COMP_IDENTIFIER = '__sfc__'
 /**
  * 编译vue代码
  *
- * @param code
- * @param filename
+ * @param file
  * @param opt
  */
-export const compilerVue = async ({ code, filename }: EditorFile, opt?: Partial<VueCompilerOptions>) => {
+export const compilerVue = async (file: EditorFile, opt?: Partial<VueCompilerOptions>) => {
+  const {
+    code,
+    filename,
+  } = file
   const codeResult = []
   const { ssr } = { ...defaultOption, ...opt }
   const id = await hashId(filename)
@@ -31,17 +34,17 @@ export const compilerVue = async ({ code, filename }: EditorFile, opt?: Partial<
   const { descriptor } = parse(code, {
     filename,
   })
-  console.log('1: descriptor', id, descriptor)
+  // console.log('1: descriptor', id, descriptor)
   // 编译<script></script>
   const compiledScript = compileScript(descriptor, {
     id,
     // inlineTemplate: true, // 内联template
     // templateOptions: { ssr, ssrCssVars: descriptor.cssVars },
   })
-  console.log('2: compiledScript', compiledScript)
+  // console.log('2: compiledScript', compiledScript)
   // export default 转为 const var =
   const rewriteCode = rewriteDefault(compiledScript.content, COMP_IDENTIFIER)
-  console.log('3: code', { content: compiledScript.content, rewriteCode })
+  // console.log('3: code', { content: compiledScript.content, rewriteCode })
 
   codeResult.push(rewriteCode)
   // 编译<template></template>
@@ -62,8 +65,40 @@ export const compilerVue = async ({ code, filename }: EditorFile, opt?: Partial<
   codeResult.push(
     `${COMP_IDENTIFIER}.${fnName} = ${fnName}`,
   )
-  console.log('4: compiledTemple', compiledTemple)
+  try { // TODO: 测试
+    await parseModule(file)
+  }
+  catch (e) {
+    console.error(e)
+  }
 
   return codeResult.join('\n')
 }
+// TODO: 测试 转换
+export async function parseModule({ code, filename }: EditorFile) {
+  const { descriptor } = parse(code, {
+    filename,
+    sourceMap: true,
+  })
 
+  const compiledScript = compileScript(descriptor, {
+    id: filename,
+    inlineTemplate: true, // 内联template
+    templateOptions: { ssr: false, ssrCssVars: descriptor.cssVars },
+  })
+  const rewriteCode = rewriteDefault(compiledScript.content, COMP_IDENTIFIER)
+  console.log('compiledScript', {
+    content: compiledScript.content,
+    rewriteCode,
+  })
+  const s = new MagicString(compiledScript.content)
+  const ast = babelParse(rewriteCode, {
+    sourceType: 'module',
+    sourceFilename: filename,
+  }).program.body
+
+  console.log('parseModule', {
+    s,
+    ast,
+  })
+}

@@ -18,11 +18,11 @@ const script = ref('')
 const template = ref('')
 
 onMounted(() => {
-  $actions.addFile(new EditorFile('App.vue', '<div>{{helloWorld}}</div>', `import {ref} from 'vue'
+  $actions.addFile(new EditorFile('App.vue', '<div>{{helloWorld}}</div>', `import { ref } from 'vue'
 const helloWorld = ref('helloWorld')
 `, '', false))
-  $actions.addFile(new EditorFile('App2.vue', '<div>2</div>', `import {ref} from 'vue'
-const helloWorld2 = ref('helloWorld')
+  $actions.addFile(new EditorFile('App2.vue', '<div>2</div>', `import { ref } from 'vue'
+const helloWorld = ref('helloWorld')
 `))
   $actions.setActiveFile('App.vue')
 })
@@ -38,7 +38,7 @@ onShouldUpdateContent(() => {
 const onCompiler = async () => {
   const code = await compilerVue(activeFile.value)
   activeFile.value.compiled.js = code
-  console.log('file.code', { code })
+  // console.log('file.code', { code })
 }
 </script>
 

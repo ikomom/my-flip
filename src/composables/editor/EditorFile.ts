@@ -27,7 +27,7 @@ class EditorFile {
 
   get code() {
     return `
-      <script setup lang="ts">
+      <script setup >
           ${this.script}
       </script>
       <template>
