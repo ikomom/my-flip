@@ -1,5 +1,5 @@
 import { MagicString, babelParse, compileScript, compileTemplate, parse, rewriteDefault } from 'vue/compiler-sfc'
-
+import { walk } from 'estree-walker'
 import type EditorFile from '~/composables/editor/EditorFile'
 import { hashId } from '~/utils/utils'
 
@@ -65,12 +65,6 @@ export const compilerVue = async (file: EditorFile, opt?: Partial<VueCompilerOpt
   codeResult.push(
     `${COMP_IDENTIFIER}.${fnName} = ${fnName}`,
   )
-  try { // TODO: 测试
-    await parseModule(file)
-  }
-  catch (e) {
-    console.error(e)
-  }
 
   return codeResult.join('\n')
 }
@@ -91,14 +85,34 @@ export async function parseModule({ code, filename }: EditorFile) {
     content: compiledScript.content,
     rewriteCode,
   })
-  const s = new MagicString(compiledScript.content)
+  const s = new MagicString(rewriteCode)
   const ast = babelParse(rewriteCode, {
     sourceType: 'module',
     sourceFilename: filename,
   }).program.body
 
+  // 1.
+
+  walk(ast, {
+    enter(node, parent, key, index) {
+      console.log('enter', { node, parent, key, index })
+      if (node.type === 'Import' && parent.type === 'CallExpression')
+        console.log('enter', { node, parent, key, index })
+    },
+    // leave(node, parent, key, index) {
+    //   console.log('leave', { node, parent, key, index })
+    // },
+  })
+
   console.log('parseModule', {
     s,
     ast,
   })
+}
+
+export const astTest = (file: EditorFile) => {
+  const s = new MagicString(file.code.trim())
+  // @ts-expect-error
+  window.s = s
+  console.log(s)
 }

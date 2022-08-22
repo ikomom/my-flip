@@ -2,7 +2,7 @@
 import { Pane, Splitpanes } from 'splitpanes'
 import 'splitpanes/dist/splitpanes.css'
 import TabBar from './TabBar.vue'
-import { compilerVue } from '~/composables/editor/compiler/vueCompiler'
+import { astTest, compilerVue, parseModule } from '~/composables/editor/compiler/vueCompiler'
 import EditorFile from '~/composables/editor/EditorFile'
 import { useEditorInject } from '~/composables/editor/EditorCore'
 
@@ -18,11 +18,13 @@ const script = ref('')
 const template = ref('')
 
 onMounted(() => {
-  $actions.addFile(new EditorFile('App.vue', '<div>{{helloWorld}}</div>', `import { ref } from 'vue'
+  $actions.addFile(new EditorFile('App.vue', '<div>{{helloWorld}} <Test/></div>', `import { ref } from 'vue';
+import Test from './Test.vue'
+
 const helloWorld = ref('helloWorld')
 `, '', false))
-  $actions.addFile(new EditorFile('App2.vue', '<div>2</div>', `import { ref } from 'vue'
-const helloWorld = ref('helloWorld')
+  $actions.addFile(new EditorFile('Test.vue', '<div>{{token}}</div>', `import { ref } from 'vue'
+const token = ref('Test')
 `))
   $actions.setActiveFile('App.vue')
 })
@@ -44,7 +46,13 @@ const onCompiler = async () => {
 
 <template>
   <div mb-2 text-end>
-    <button btn @click="onCompiler">
+    <button btn mx-2 @click="astTest(activeFile)">
+      run ast
+    </button>
+    <button btn mx-2 @click="parseModule(activeFile)">
+      run Parse
+    </button>
+    <button btn mx-2 @click="onCompiler">
       run     <i inline-block i-carbon-play-filled-alt w-4 h-4 top-1 relative />
     </button>
   </div>
