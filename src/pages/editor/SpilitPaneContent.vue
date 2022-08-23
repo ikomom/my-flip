@@ -20,6 +20,8 @@ const template = ref('')
 onMounted(() => {
   $actions.addFile(new EditorFile('App.vue', '<div>{{helloWorld}} <Test/></div>', `import { ref } from 'vue';
 import Test from './Test.vue'
+import {join, toJs} from './lo.js'
+import * as ok from './foo.js'
 
 const helloWorld = ref('helloWorld')
 `, '', false))
@@ -49,7 +51,7 @@ const onCompiler = async () => {
     <button btn mx-2 @click="astTest(activeFile)">
       run ast
     </button>
-    <button btn mx-2 @click="parseModule(activeFile)">
+    <button btn mx-2 @click="parseModule(activeFile, core)">
       run Parse
     </button>
     <button btn mx-2 @click="onCompiler">

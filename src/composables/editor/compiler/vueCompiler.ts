@@ -1,7 +1,9 @@
 import { MagicString, babelParse, compileScript, compileTemplate, parse, rewriteDefault } from 'vue/compiler-sfc'
 import { walk } from 'estree-walker'
+import type { ExportSpecifier, Identifier, ImportDeclaration, Node, ObjectProperty } from '@babel/types'
 import type EditorFile from '~/composables/editor/EditorFile'
 import { hashId } from '~/utils/utils'
+import type { EditorCore } from '~/composables/editor/EditorCore'
 
 interface VueCompilerOptions {
   ssr: boolean
@@ -68,8 +70,19 @@ export const compilerVue = async (file: EditorFile, opt?: Partial<VueCompilerOpt
 
   return codeResult.join('\n')
 }
-// TODO: 测试 转换
-export async function parseModule({ code, filename }: EditorFile) {
+
+const modulesKey = '__modules__'
+const moduleKey = '__module__'
+const exportKey = '__export__'
+const dynamicImportKey = '__dynamic_import__'
+
+/**
+ * 转换module
+ * @param code
+ * @param filename
+ * @param core
+ */
+export async function parseModule({ code, filename }: EditorFile, core: EditorCore) {
   const { descriptor } = parse(code, {
     filename,
     sourceMap: true,
@@ -81,21 +94,82 @@ export async function parseModule({ code, filename }: EditorFile) {
     templateOptions: { ssr: false, ssrCssVars: descriptor.cssVars },
   })
   const rewriteCode = rewriteDefault(compiledScript.content, COMP_IDENTIFIER)
-  console.log('compiledScript', {
-    content: compiledScript.content,
-    rewriteCode,
-  })
+  // console.log('compiledScript', {
+  //   content: compiledScript.content,
+  //   rewriteCode,
+  // })
   const s = new MagicString(rewriteCode)
   const ast = babelParse(rewriteCode, {
     sourceType: 'module',
     sourceFilename: filename,
   }).program.body
 
-  // 1.
+  // 已经导入的文件
+  const importedFiles = new Set<string>()
+  // 文件名与Id的映射
+  const importToIdMap = new Map<string, string>()
+  // 变量引入名与实际引入地址间的映射
+  const idToImportMap = new Map<string, string>()
+
+  /**
+   * 自定义import
+   * @param node
+   */
+  function defineImport(node: ImportDeclaration) {
+    const _filename = node.source.value.replace(/^\.\/+/, '')
+    // 检查文件是否存在
+    // if (!(_filename in core.files))
+    //   throw new Error(`File "${_filename}" does not exist.`)
+    // 只需要导入一次
+    if (importedFiles.has(_filename))
+      return importToIdMap.get(_filename)
+
+    importedFiles.add(_filename)
+    // 自增id
+    const id = `__import_${importedFiles.size}__`
+    importToIdMap.set(_filename, id)
+    // 头部添加引用
+    s.appendLeft(node.start, `const ${id} = ${modulesKey}[${JSON.stringify(_filename)}]`)
+
+    return id
+  }
+
+  // 0. 引入当前文件的module
+  s.prepend(`const ${moduleKey} = ${modulesKey}[${JSON.stringify(filename)}]`)
+
+  // 1. 检查所有导入并且记录id
+  for (const node of ast) {
+    if (node.type === 'ImportDeclaration') {
+      const source = node.source.value
+      // 只考虑本地模块处理，非本地模块使用import-maps导入
+      if (source.startsWith('./')) {
+        const importId = defineImport(node as ImportDeclaration)
+        console.log('node', { value: node.source.value, importId })
+        for (const spec of node.specifiers) {
+          console.log('spec', spec.type, spec.local.name)
+          // 根据不同导入做映射
+          switch (spec.type) {
+            //  import foo from 'foo'
+            case 'ImportDefaultSpecifier':
+              idToImportMap.set(spec.local.name, `${importId}.default`)
+              break
+            // import { baz } from 'foo'
+            case 'ImportSpecifier':
+              idToImportMap.set(spec.local.name, `${importId}.${(spec.imported as Identifier).name}`)
+              break
+            // import * as ok from 'foo'
+            case 'ImportNamespaceSpecifier':
+              idToImportMap.set(spec.local.name, `${importId}`)
+              break
+          }
+        }
+      }
+    }
+  }
 
   walk(ast, {
     enter(node, parent, key, index) {
-      console.log('enter', { node, parent, key, index })
+      // console.log('enter', { node, parent, key, index })
       if (node.type === 'Import' && parent.type === 'CallExpression')
         console.log('enter', { node, parent, key, index })
     },
@@ -106,7 +180,11 @@ export async function parseModule({ code, filename }: EditorFile) {
 
   console.log('parseModule', {
     s,
+    code: s.toString(),
     ast,
+    importedFiles,
+    importToIdMap,
+    idToImportMap,
   })
 }
 
