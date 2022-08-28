@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import PreviewPage from '../../pages/editor/Preview.html?raw'
+import PreviewPage from '~/composables/editor/template/Preview.html?raw'
 import { COMP_IDENTIFIER } from '~/composables/editor/compiler/vueCompiler'
 import { createBlobURL } from '~/utils/utils'
 

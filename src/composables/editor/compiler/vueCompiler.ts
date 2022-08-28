@@ -1,6 +1,7 @@
-import { MagicString, babelParse, compileScript, compileTemplate, parse, rewriteDefault } from 'vue/compiler-sfc'
+import { MagicString, babelParse, compileScript, compileTemplate, parse, rewriteDefault, walkIdentifiers } from 'vue/compiler-sfc'
 import { walk } from 'estree-walker'
 import type { ExportSpecifier, Identifier, ImportDeclaration, Node, ObjectProperty } from '@babel/types'
+import { cloneDeep } from 'lodash-es'
 import type EditorFile from '~/composables/editor/EditorFile'
 import { hashId } from '~/utils/utils'
 import type { EditorCore } from '~/composables/editor/EditorCore'
@@ -70,6 +71,14 @@ export const compilerVue = async (file: EditorFile, opt?: Partial<VueCompilerOpt
 
   return codeResult.join('\n')
 }
+/**
+ * 是否是静态属性
+ * 动态属性 a[b] 时 computed true
+ *
+ * @param node
+ */
+const isStaticProperty = (node: Node): node is ObjectProperty =>
+  node.type === 'ObjectProperty' && !node.computed
 
 const modulesKey = '__modules__'
 const moduleKey = '__module__'
@@ -135,10 +144,10 @@ export async function parseModule({ code, filename }: EditorFile, core: EditorCo
   }
 
   // 0. 引入当前文件的module
-  s.prepend(`const ${moduleKey} = ${modulesKey}[${JSON.stringify(filename)}]`)
+  s.prepend(`const ${moduleKey} = ${modulesKey}[${JSON.stringify(filename)}]\n`)
 
-  // 1. 检查所有导入并且记录id
   for (const node of ast) {
+    // 1. 检查所有导入并且记录id
     if (node.type === 'ImportDeclaration') {
       const source = node.source.value
       // 只考虑本地模块处理，非本地模块使用import-maps导入
@@ -162,21 +171,47 @@ export async function parseModule({ code, filename }: EditorFile, core: EditorCo
               idToImportMap.set(spec.local.name, `${importId}`)
               break
           }
+
+          s.remove(node.start, node.end)
         }
       }
     }
+
+    // 2. 检查所有导出
+    // 命名导出
+    if (node.type === 'ExportNamedDeclaration') {}
+    // 默认导出
+    if (node.type === 'ExportDefaultDeclaration') {}
+    // 导出全部 export * from './foo'
+    if (node.type === 'ExportAllDeclaration') {}
+  }
+  // 3. 对替换后的引用进行转换
+  for (const node of ast) {
+    if (node.type === 'ImportDeclaration')
+      continue
+    walkIdentifiers(node, (id, parent, parentStack) => {
+      const binding = idToImportMap.get(id.name)
+      if (!binding)
+        return
+      // shorthand: const a = {b} ; b 就是 shorthand es6新特性，简写
+      if (isStaticProperty(parent) && parent.shorthand) {
+
+      }
+
+      console.log('WalkIdentifiers', cloneDeep({ name: id.name, binding, id, parent, parentStack }))
+    })
   }
 
-  walk(ast, {
-    enter(node, parent, key, index) {
-      // console.log('enter', { node, parent, key, index })
-      if (node.type === 'Import' && parent.type === 'CallExpression')
-        console.log('enter', { node, parent, key, index })
-    },
-    // leave(node, parent, key, index) {
-    //   console.log('leave', { node, parent, key, index })
-    // },
-  })
+  // walk(ast, {
+  //   enter(node, parent, key, index) {
+  //     // console.log('enter', { node, parent, key, index })
+  //     if (node.type === 'Import' && parent.type === 'CallExpression')
+  //       console.log('enter', { node, parent, key, index })
+  //   },
+  //   // leave(node, parent, key, index) {
+  //   //   console.log('leave', { node, parent, key, index })
+  //   // },
+  // })
 
   console.log('parseModule', {
     s,
