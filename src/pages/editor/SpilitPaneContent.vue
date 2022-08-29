@@ -20,8 +20,6 @@ const template = ref('')
 onMounted(() => {
   $actions.addFile(new EditorFile('App.vue', '<div>{{helloWorld}} <Test/></div>', `import { ref } from 'vue';
 import Test from './Test.vue'
-import {join, toJs} from './lo.js'
-import * as ok from './foo.js'
 
 const helloWorld = ref('helloWorld')
 `, '', false))

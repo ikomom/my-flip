@@ -17,6 +17,8 @@ export interface EditorCore {
 
 }
 
+export const MAIN_FILE = 'App.vue'
+
 const defaultParams: EditorCore = {
   files: {},
   packages: [],
@@ -56,7 +58,7 @@ function useEditor(
     },
     removeFile(name: string) {
       delete core.files[name]
-      setTimeout(() => actions.setActiveFile('App.vue'), 0)
+      setTimeout(() => actions.setActiveFile(MAIN_FILE), 0)
     },
     addFileByName(filename: string) {
       actions.addFile(new EditorFile(filename))
