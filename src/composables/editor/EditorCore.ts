@@ -1,4 +1,5 @@
 import EditorFile from './EditorFile'
+import { parseModule } from '~/composables/editor/compiler/vueCompiler'
 
 export interface EditorPackage {
   name: string
@@ -47,9 +48,18 @@ function useEditor(
     }
   `)
 
+  watchEffect(() => {
+    if (activeFile.value) {
+      parseModule(activeFile.value).then(js => activeFile.value.compiled.js = js)
+      console.log('编译module')
+    }
+  })
+
   watch(() => core.activeFilename, (val) => {
-    console.log('activeFile trigger', val)
-    shouldUpdateContent.trigger(null)
+    nextTick(() => {
+      console.log('activeFile trigger', val)
+      shouldUpdateContent.trigger(null)
+    })
   }, { immediate: true })
 
   const actions = {
@@ -61,13 +71,14 @@ function useEditor(
       setTimeout(() => actions.setActiveFile(MAIN_FILE), 0)
     },
     addFileByName(filename: string) {
-      actions.addFile(new EditorFile(filename))
+      return actions.addFile(new EditorFile(filename))
     },
-    addFile(file: EditorFile) {
+    async addFile(file: EditorFile) {
       // if (core.files[file.filename]) {
       //   alert(`文件${file.filename}已存在`)
       //   return
       // }
+      file.compiled.js = await parseModule(file)
       core.files = {
         ...core.files,
         [file.filename]: file,

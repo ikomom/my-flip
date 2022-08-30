@@ -84,9 +84,9 @@ export const compilerVue = async (file: EditorFile, opt?: Partial<VueCompilerOpt
   return codeResult.join('\n')
 }
 
-const modulesKey = '__modules__'
+export const modulesKey = '__modules__'
 const moduleKey = '__module__'
-const exportKey = '__export__'
+export const exportKey = '__export__'
 const dynamicImportKey = '__dynamic_import__'
 
 /**
@@ -103,7 +103,7 @@ function extractNames(node: Node): string[] {
  * @param filename
  * @param core
  */
-export async function parseModule({ code, filename }: EditorFile, core: EditorCore) {
+export async function parseModule({ code, filename }: EditorFile) {
   const { descriptor } = parse(code, {
     filename,
     sourceMap: true,
@@ -119,6 +119,8 @@ export async function parseModule({ code, filename }: EditorFile, core: EditorCo
   //   content: compiledScript.content,
   //   rewriteCode,
   // })
+
+  return `${rewriteCode}\n${modulesKey}["${filename}"] = ${COMP_IDENTIFIER}`
 }
 
 /**
@@ -290,9 +292,9 @@ export const startProcessFile = (core: EditorCore) => {
   }
 
   if (core.files[MAIN_FILE])
-    processFile(core.files[MAIN_FILE])
+    return processFile(core.files[MAIN_FILE]).reverse()
   else
-    alert(`编译入口${MAIN_FILE}文件不存在`)
+    return []
 }
 
 export const astTest = (file: EditorFile) => {

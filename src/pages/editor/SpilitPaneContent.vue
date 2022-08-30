@@ -45,17 +45,17 @@ const onCompiler = async () => {
 </script>
 
 <template>
-  <div mb-2 text-end>
-    <button btn mx-2 @click="astTest(activeFile)">
-      run ast
-    </button>
-    <button btn mx-2 @click="parseModule(activeFile, core)">
-      run Parse
-    </button>
-    <button btn mx-2 @click="onCompiler">
-      run     <i inline-block i-carbon-play-filled-alt w-4 h-4 top-1 relative />
-    </button>
-  </div>
+  <!--  <div mb-2 text-end> -->
+  <!--    <button btn mx-2 @click="astTest(activeFile)"> -->
+  <!--      run ast -->
+  <!--    </button> -->
+  <!--    <button btn mx-2 @click="parseModule(activeFile)"> -->
+  <!--      run Parse -->
+  <!--    </button> -->
+  <!--    <button btn mx-2 @click="onCompiler"> -->
+  <!--      run     <i inline-block i-carbon-play-filled-alt w-4 h-4 top-1 relative /> -->
+  <!--    </button> -->
+  <!--  </div> -->
 
   <splitpanes
     class="default-theme ediotr-content"
