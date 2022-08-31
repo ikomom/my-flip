@@ -23,7 +23,7 @@ import Test from './Test.vue'
 
 const helloWorld = ref('helloWorld')
 `, '', false))
-  $actions.addFile(new EditorFile('Test.vue', '<div>{{token}}</div>', `import { ref } from 'vue'
+  $actions.addFile(new EditorFile('Test.vue', '<span style="color: red">{{token}}</span>', `import { ref } from 'vue'
 const token = ref('Test')
 `))
   $actions.setActiveFile('App.vue')
