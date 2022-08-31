@@ -66,7 +66,12 @@ const onCompiler = async () => {
       <splitpanes horizontal :push-other-panes="false">
         <pane>
           <tab-bar />
-          <e-container style="height: calc(100% - 34px)" rounded-b-md title="scirpt setup" no-rounding>
+          <e-container
+            title="scirpt setup"
+            style="height: calc(100% - 34px)"
+            rounded-b-md
+            no-rounding
+          >
             <e-editor
               :value="script" language="javascript"
               @change="content => activeFile && (activeFile.script = content)"
@@ -87,7 +92,7 @@ const onCompiler = async () => {
       <splitpanes horizontal :push-other-panes="false">
         <pane size="75">
           <e-container title="Output">
-            <e-preview :code="activeFile ? activeFile.compiled.js : ''" :import-map="importMap" />
+            <e-preview />
           </e-container>
         </pane>
         <pane size="25">

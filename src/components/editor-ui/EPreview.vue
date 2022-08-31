@@ -1,21 +1,56 @@
 <script setup lang="ts">
+import type { WatchStopHandle } from 'vue'
+import { PreviewProxy } from '~/composables/editor/PreviewProxy'
 import PreviewPage from '~/composables/editor/template/Preview.html?raw'
-import { COMP_IDENTIFIER, exportKey, modulesKey, startProcessFile } from '~/composables/editor/compiler/vueCompiler'
+import { exportKey, modulesKey, startProcessFile } from '~/composables/editor/compiler/vueCompiler'
 import { createBlobURL } from '~/utils/utils'
 import { MAIN_FILE, useEditorInject } from '~/composables/editor/EditorCore'
 
-const props = defineProps<{ code?: string; importMap?: string }>()
-const { core } = useEditorInject()
+const { core, importMap } = useEditorInject()
 
-const frame = ref()
+const previewContainer = ref<HTMLDivElement>()
 const iframeSrc = ref()
-
-watchEffect(() => {
+let sandbox: HTMLIFrameElement
+let proxy: PreviewProxy
+let stopUpdateWatcher: WatchStopHandle
+/**
+ * 更新脚本和视图
+ */
+const updateScripts = async () => {
   const codeArr = startProcessFile(core)
-  if (codeArr.length) {
-    const previewHtml = [
-      PreviewPage.replace('/<!--IMPORT_MAP-->/', props.importMap),
-      `<script >
+  console.log(`成功编译 ${codeArr.length} 模块.`, codeArr)
+
+  await proxy.eval([
+    ...codeArr,
+    `import { createApp } from 'vue'
+     
+     if (window.__app__) {
+        window.__app__.unmount()
+        document.getElementById('app').innerHTML = ''
+      }
+    
+     const app = window.__app__ = createApp(${modulesKey}["${MAIN_FILE}"])
+      app.config.errorHandler = e => console.error(e)
+      app.mount('#app')
+    `,
+  ])
+}
+/**
+ * 创建沙盒
+ */
+const createSandBox = () => {
+  if (sandbox) {
+    proxy.destroy()
+    if (stopUpdateWatcher)
+      stopUpdateWatcher()
+    previewContainer.value.removeChild(sandbox)
+  }
+  sandbox = document.createElement('iframe')
+  sandbox.width = '100%'
+  sandbox.height = '100%'
+  const previewHtml = PreviewPage
+    .replace('/<!--IMPORT_MAP-->/', importMap.value)
+    .replace('/<!--HEADER-SCRIPT-->/', `<script>
         window.${modulesKey} = {}
         window.${exportKey} = (mod, key, get) => {
           Object.defineProperty(mod, key, {
@@ -24,28 +59,28 @@ watchEffect(() => {
             get
           })
         }
-       <\/script>`,
-      ...codeArr.map(code => (
-        `<script type="module">
-        ${code}
-       <\/script>
-      `
-      )),
-      `<script type="module">
-          import { createApp } from 'vue'
-          createApp(${modulesKey}["${MAIN_FILE}"]).mount('#app')
-       <\/script>`,
-    ].join('\n')
+       <\/script>`)
+  // console.log('previewHtml', previewHtml)
+  sandbox.src = createBlobURL(previewHtml, 'text/html')
+  previewContainer.value.appendChild(sandbox)
 
-    //   srcDoc += `<script type="module">
-    //   <\/script>`
+  proxy = new PreviewProxy(sandbox)
+  sandbox.addEventListener('load', () => {
+    stopUpdateWatcher = watchEffect(updateScripts)
+  })
+}
 
-    iframeSrc.value = createBlobURL(previewHtml, 'text/html')
-    console.log('preview codeArr', { codeArr, previewHtml, iframeSrc })
-  }
+onMounted(createSandBox)
+watch(importMap, () => {
+  createSandBox()
+})
+
+onUnmounted(() => {
+  proxy.destroy()
+  stopUpdateWatcher && stopUpdateWatcher()
 })
 </script>
 
 <template>
-  <iframe ref="frame" :src="iframeSrc" width="100%" height="100%" />
+  <div ref="previewContainer" w-full h-full />
 </template>

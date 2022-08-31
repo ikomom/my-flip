@@ -186,14 +186,15 @@ export const startProcessFile = (core: EditorCore) => {
         // 只考虑本地模块处理，非本地模块使用import-maps导入
         if (source.startsWith('./')) {
           const importId = defineImport(node as ImportDeclaration)
-          console.log('node', { value: node.source.value, importId })
+          // console.log('node', { value: node.source.value, importId })
           for (const spec of node.specifiers) {
-            console.log('spec', spec.type, spec.local.name)
+            // console.log('spec', spec.type, spec.local.name)
             // 根据不同导入做映射
             switch (spec.type) {
               //  import foo from 'foo'
               case 'ImportDefaultSpecifier':
-                idToImportMap.set(spec.local.name, `${importId}.default`)
+                // TODO: 暂时去掉.default
+                idToImportMap.set(spec.local.name, `${importId}`)
                 break
               // import { baz } from 'foo'
               case 'ImportSpecifier':
@@ -258,7 +259,7 @@ export const startProcessFile = (core: EditorCore) => {
           s.overwrite(id.start, id.end, binding)
         }
 
-        console.log('WalkIdentifiers', cloneDeep({ name: id.name, binding, id, parent, parentStack }))
+        // console.log('WalkIdentifiers', cloneDeep({ name: id.name, binding, id, parent, parentStack }))
       })
     }
 
@@ -273,21 +274,23 @@ export const startProcessFile = (core: EditorCore) => {
     //   // },
     // })
 
+    s.prepend(`console.log("${filename} loaded", JSON.stringify(__modules__));\n`)
+
     const processed = [s.toString()]
     if (importedFiles.size) {
       for (const imported of importedFiles)
         processed.push(...processFile(core.files[imported]))
     }
-
-    console.log('parseModule', {
-      s,
-      code: s.toString(),
-      ast,
-      importedFiles,
-      importToIdMap,
-      idToImportMap,
-      processed,
-    })
+    //
+    // console.log('parseModule', {
+    //   s,
+    //   code: s.toString(),
+    //   ast,
+    //   importedFiles,
+    //   importToIdMap,
+    //   idToImportMap,
+    //   processed,
+    // })
     return processed
   }
 
