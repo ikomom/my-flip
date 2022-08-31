@@ -1,11 +1,16 @@
 <script lang="ts" setup>
-import { defineEmits } from 'vue'
-
 defineProps<{ active: boolean }>()
+const tab = ref()
+const width = ref()
+onMounted(() => {
+  width.value = getComputedStyle(tab.value).width
+  console.log(tab)
+})
 </script>
 
 <template>
   <div
+    ref="tab"
     text-xs
     items-center
     h="8"
@@ -13,6 +18,7 @@ defineProps<{ active: boolean }>()
     cursor-pointer
     truncate
     b="r-1 #dde1e3"
+    :style="{ width }"
     bg="hover:#dee2e6 dark:hover:#0000"
     :class="{ 'text-green-500': active }"
   >

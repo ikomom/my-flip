@@ -104,10 +104,13 @@ function extractNames(node: Node): string[] {
  * @param core
  */
 export async function parseModule({ code, filename }: EditorFile) {
-  const { descriptor } = parse(code, {
+  const { descriptor } = parse(code.trim(), {
     filename,
     sourceMap: true,
   })
+
+  if (!descriptor.scriptSetup)
+    return ''
 
   const compiledScript = compileScript(descriptor, {
     id: filename,

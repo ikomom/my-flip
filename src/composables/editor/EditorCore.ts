@@ -50,8 +50,11 @@ function useEditor(
 
   watchEffect(() => {
     if (activeFile.value) {
-      parseModule(activeFile.value).then(js => activeFile.value.compiled.js = js)
-      console.log('编译module')
+      parseModule(activeFile.value).then((js) => {
+        console.log('编译module', { js })
+        activeFile.value.compiled.js = js
+      },
+      )
     }
   })
 
