@@ -2,6 +2,7 @@
 import { Pane, Splitpanes } from 'splitpanes'
 import 'splitpanes/dist/splitpanes.css'
 import TabBar from './TabBar.vue'
+import EConsole from '~/components/editor-ui/EConsole.vue'
 import { astTest, compilerVue, parseModule } from '~/composables/editor/compiler/vueCompiler'
 import EditorFile from '~/composables/editor/EditorFile'
 import { useEditorInject } from '~/composables/editor/EditorCore'
@@ -97,7 +98,7 @@ const onCompiler = async () => {
         </pane>
         <pane size="25">
           <e-container title="Console">
-            templeta
+            <EConsole />
           </e-container>
         </pane>
       </splitpanes>

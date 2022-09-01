@@ -8,8 +8,10 @@ export {}
 declare module '@vue/runtime-core' {
   export interface GlobalComponents {
     Counter: typeof import('./src/components/Counter.vue')['default']
+    EConsole: typeof import('./src/components/editor-ui/EConsole.vue')['default']
     EContainer: typeof import('./src/components/editor-ui/EContainer.vue')['default']
     EEditor: typeof import('./src/components/editor-ui/EEditor.vue')['default']
+    EMessage: typeof import('./src/components/editor-ui/EMessage.vue')['default']
     EPreview: typeof import('./src/components/editor-ui/EPreview.vue')['default']
     Footer: typeof import('./src/components/Footer.vue')['default']
     RouterLink: typeof import('vue-router')['RouterLink']

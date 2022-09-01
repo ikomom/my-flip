@@ -9,7 +9,14 @@ import { MAIN_FILE, useEditorInject } from '~/composables/editor/EditorCore'
 const { core, importMap } = useEditorInject()
 
 const previewContainer = ref<HTMLDivElement>()
-const iframeSrc = ref()
+
+const runtimeError = ref()
+const runtimeWarning = ref()
+
+watch([runtimeError, runtimeWarning], () => {
+  core.runtimeErrors = [runtimeError.value, runtimeWarning.value].filter(x => x)
+})
+
 let sandbox: HTMLIFrameElement
 let proxy: PreviewProxy
 let stopUpdateWatcher: WatchStopHandle
@@ -17,23 +24,30 @@ let stopUpdateWatcher: WatchStopHandle
  * 更新脚本和视图
  */
 const updateScripts = async () => {
-  const codeArr = startProcessFile(core)
-  console.log(`成功编译 ${codeArr.length} 模块.`, codeArr)
+  runtimeError.value = null
+  runtimeWarning.value = null
+  try {
+    const codeArr = startProcessFile(core)
+    console.log(`成功编译 ${codeArr.length} 模块.`, codeArr)
 
-  await proxy.eval([
-    ...codeArr,
-    `import { createApp } from 'vue'
-     
-     if (window.__app__) {
-        window.__app__.unmount()
-        document.getElementById('app').innerHTML = ''
-      }
-    
-     const app = window.__app__ = createApp(${modulesKey}["${MAIN_FILE}"])
-      app.config.errorHandler = e => console.error(e)
-      app.mount('#app')
-    `,
-  ])
+    await proxy.eval([
+      ...codeArr,
+      `import { createApp } from 'vue'
+       
+       if (window.__app__) {
+          window.__app__.unmount()
+          document.getElementById('app').innerHTML = ''
+        }
+      
+       const app = window.__app__ = createApp(${modulesKey}["${MAIN_FILE}"])
+        app.config.errorHandler = e => console.error(e)
+        app.mount('#app')
+      `,
+    ])
+  }
+  catch (e: any) {
+    runtimeError.value = e.message
+  }
 }
 /**
  * 创建沙盒
@@ -64,7 +78,11 @@ const createSandBox = () => {
   sandbox.src = createBlobURL(previewHtml, 'text/html')
   previewContainer.value.appendChild(sandbox)
 
-  proxy = new PreviewProxy(sandbox)
+  proxy = new PreviewProxy(sandbox, {
+    onUnhandledRejection(event: any) {
+      console.log('unhandledrejection', event)
+    },
+  })
   sandbox.addEventListener('load', () => {
     stopUpdateWatcher = watchEffect(updateScripts)
   })

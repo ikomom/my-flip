@@ -6,62 +6,93 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Preview</title>
   <script async src="https://unpkg.com/es-module-shims@1.5.15/dist/es-module-shims.js"></script>
-  
+
   /<!--HEADER-SCRIPT-->/
-  
+
   <script>
     const scriptEls = []
 
     function clearScript() {
-      if (scriptEls.length)
+      if (scriptEls.length) {
         scriptEls.forEach(el => document.head.removeChild(el))
+      }
       scriptEls.length = 0
     }
 
     async function handle_message(ev) {
       console.log('handle_message', ev)
-      const { action, cmd_id } = ev.data
-      const send_message = payload => parent.postMessage({ ...payload }, ev.origin)
-      const send_reply = payload => send_message({ ...payload, cmd_id })
+      const {
+        action,
+        cmd_id
+      } = ev.data
+      const send_message = payload => parent.postMessage({...payload}, ev.origin)
+      const send_reply = payload => send_message({
+        ...payload,
+        cmd_id
+      })
 
-      const send_ok = () => send_reply({ action: 'cmd_ok' })
-      const send_error = (message, stack) => send_reply({ action: 'cmd_error', message, stack })
+      const send_ok = () => send_reply({action: 'cmd_ok'})
+      const send_error = (message, stack) => send_reply({
+        action: 'cmd_error',
+        message,
+        stack
+      })
 
       // 解析脚本
       if (action === 'eval') {
-        clearScript()
+        try {
+          clearScript()
 
-        let { script: scripts } = ev.data.args
+          let {script: scripts} = ev.data.args
 
-        if (typeof scripts === 'string')
-          scripts = [scripts]
+          if (typeof scripts === 'string') {
+            scripts = [scripts]
+          }
 
-        for (const script of scripts) {
-          const scriptEl = document.createElement('script')
-          scriptEl.setAttribute('type', 'module')
-          scriptEl.innerHTML = `${script}\n window.__next__()`
-          document.head.appendChild(scriptEl)
-          scriptEl.onerror = err => send_error(err.message, err.stack)
+          for (const script of scripts) {
+            const scriptEl = document.createElement('script')
+            scriptEl.setAttribute('type', 'module')
+            scriptEl.innerHTML = `${script}\n window.__next__()`
+            document.head.appendChild(scriptEl)
+            scriptEl.onerror = err => send_error(err.message, err.stack)
 
-          scriptEls.push(scriptEl)
-          // 加载完夫脚本运行下一个
-          await new Promise(resolve => window.__next__ = resolve)
+            scriptEls.push(scriptEl)
+            // 加载完夫脚本运行下一个
+            await new Promise(resolve => window.__next__ = resolve)
+          }
+          window.__next__ = undefined
+          send_ok()
+        } catch (e) {
+          send_error(e.message, e.stack)
         }
-        window.__next__ = undefined
-        send_ok()
       }
     }
 
     window.addEventListener('message', handle_message, false)
+
+    window.onerror = function (msg, url, lineNo, columnNo, error) {
+      console.log('onerror', {msg, url, lineNo, columnNo, error})
+      parent.postMessage({ action: 'error', value: error }, '*')
+    }
+
+      window.addEventListener('unhandledrejection', ev => {
+      parent.postMessage({
+        action: 'unhandledrejection',
+        value: ev.reason
+      }, '*')
+
+    })
   </script>
-  
+
   <script type="importmap">
  /<!--IMPORT_MAP-->/
+  
+  
   </script>
 </head>
 <body class="dark:text-light-300 text-dark-100">
-  <div id="app">
-  </div>
+<div id="app">
+</div>
 </body>
 
 
