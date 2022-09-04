@@ -1,5 +1,24 @@
 <script lang="ts" setup>
+import SMenu from './SMenu.vue'
 const route = useRoute()
+
+const menus = [
+  {
+    path: '/foo',
+  },
+  {
+    path: '/bar',
+  },
+  {
+    path: '/forbidden',
+  },
+  {
+    path: '/tableTest',
+  },
+  {
+    path: '/editor',
+  },
+]
 </script>
 
 <template>
@@ -11,18 +30,7 @@ const route = useRoute()
       <router-link btn to="/">
         /
       </router-link>
-      <router-link btn to="/foo">
-        /foo
-      </router-link>
-      <router-link btn to="/bar">
-        /bar
-      </router-link>
-      <router-link btn to="/tableTest">
-        /table
-      </router-link>
-      <router-link btn to="/editor">
-        /editor
-      </router-link>
+      <SMenu :menus="menus" />
     </div>
   </div>
 </template>

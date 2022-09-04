@@ -2,6 +2,7 @@ lockfileVersion: 5.4
 
 specifiers:
   '@antfu/eslint-config': ^0.25.2
+  '@headlessui/vue': ^1.6.7
   '@iconify-json/carbon': ^1.1.7
   '@iconify-json/vscode-icons': ^1.1.10
   '@types/lodash-es': ^4.17.6
@@ -34,10 +35,12 @@ specifiers:
   vscode-html-languageservice: ^5.0.1
   vue: ^3.2.37
   vue-router: ^4.0.16
+  vue-toastification: 2.0.0-rc.5
   vue-tsc: ^0.39.0
   windicss: ^3.0.12
 
 dependencies:
+  '@headlessui/vue': 1.6.7_vue@3.2.37
   '@vueuse/core': 8.7.5_vue@3.2.37
   lodash-es: 4.17.21
   monaco-editor: registry.npmmirror.com/monaco-editor/0.33.0
@@ -48,6 +51,7 @@ dependencies:
   vscode-html-languageservice: 5.0.1
   vue: 3.2.37
   vue-router: 4.0.16_vue@3.2.37
+  vue-toastification: 2.0.0-rc.5_vue@3.2.37
 
 devDependencies:
   '@antfu/eslint-config': 0.25.2_b5e7v2qnwxfo6hmiq56u52mz3e
@@ -232,6 +236,15 @@ packages:
     transitivePeerDependencies:
       - supports-color
     dev: true
+
+  /@headlessui/vue/1.6.7_vue@3.2.37:
+    resolution: {integrity: sha512-5sTCBpkUoFE7zhANn/6Z+pf3PUA7MD6BBaTsJcQybq9E4fnNiMM9agOJI9meXbtcawE6Dm8EeB5A8HAJEnZCbQ==}
+    engines: {node: '>=10'}
+    peerDependencies:
+      vue: ^3.2.0
+    dependencies:
+      vue: 3.2.37
+    dev: false
 
   /@humanwhocodes/config-array/0.9.2:
     resolution: {integrity: sha512-UXOuFCGcwciWckOpmfKDq/GyhlTf9pN/BzG//x8p8zTOFEcGuA68ANXheFS0AGvy3qgZqLBUkMs7hqzqCKOVwA==}
@@ -2768,6 +2781,14 @@ packages:
       vue: ^3.2.0
     dependencies:
       '@vue/devtools-api': 6.0.13
+      vue: 3.2.37
+    dev: false
+
+  /vue-toastification/2.0.0-rc.5_vue@3.2.37:
+    resolution: {integrity: sha512-q73e5jy6gucEO/U+P48hqX+/qyXDozAGmaGgLFm5tXX4wJBcVsnGp4e/iJqlm9xzHETYOilUuwOUje2Qg1JdwA==}
+    peerDependencies:
+      vue: ^3.0.2
+    dependencies:
       vue: 3.2.37
     dev: false
 

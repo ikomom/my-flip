@@ -69,8 +69,8 @@
 
 <style scoped lang="scss">
 .t-container {
-  width: 200px;
-  height: 100px;
+  width: 400px;
+  height: 200px;
 
   position: relative;
   overflow: auto;
