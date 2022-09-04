@@ -10,6 +10,9 @@ const menus = [
     path: '/bar',
   },
   {
+    path: '/layout',
+  },
+  {
     path: '/forbidden',
   },
   {

@@ -1,6 +1,6 @@
 <script lang="ts" setup>
 import { useEditorInject } from '~/composables/editor/EditorCore'
-import Tab from '~/pages/editor/Tab.vue'
+import Tab from '~/pages/editor/modules/Tab.vue'
 
 const { core, $actions: { setActiveFile, addFileByName, removeFile } } = useEditorInject()
 

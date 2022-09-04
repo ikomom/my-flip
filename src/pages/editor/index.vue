@@ -1,11 +1,11 @@
 <script setup lang="ts">
-import SpilitPaneContent from './SpilitPaneContent.vue'
+import SplitPaneContent from './modules/SplitPaneContent.vue'
 import { EEditorProvider } from '~/composables/editor/EditorCore'
 </script>
 
 <template>
   <e-editor-provider>
-    <spilit-pane-content />
+    <split-pane-content />
   </e-editor-provider>
 </template>
 

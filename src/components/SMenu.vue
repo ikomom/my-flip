@@ -6,6 +6,11 @@ defineProps<{ menus: { path: string }[] }>()
 const router = useRouter()
 
 const [open, toggleOpen] = useToggle(false)
+
+const setOpen = () => {
+  if (!open.value)
+    toggleOpen(true)
+}
 </script>
 
 <template>
@@ -13,7 +18,7 @@ const [open, toggleOpen] = useToggle(false)
     <div>
       <MenuButton
         class="btn"
-        @mouseenter="toggleOpen(true)"
+        @mouseenter="setOpen"
         @click="toggleOpen()"
       >
         more <i i-carbon-chevron-down icon w-4 h-4 />
@@ -33,16 +38,13 @@ const [open, toggleOpen] = useToggle(false)
         z="9999"
         static
         class="absolute right-0 mt-2 w-56 origin-top-right divide-y divide-gray-100 rounded-md bg-white shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none"
-        @mouseenter="toggleOpen(true)"
+        @mouseenter="setOpen"
         @mouseleave="toggleOpen(false)"
       >
         <div class="px-1 py-1">
-          <MenuItem v-for="menu in menus" :key="menu.path" v-slot="{ active }">
+          <MenuItem v-for="menu in menus" :key="menu.path">
             <router-link
-              class="group flex w-full items-center rounded-md px-2 py-2 text-sm"
-              :class="[
-                active ? 'bg-teal-600 text-white' : 'text-gray-900',
-              ]"
+              s-link
               :to="menu.path"
               @click="toggleOpen(false)"
             >
