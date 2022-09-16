@@ -21,6 +21,9 @@ const menus = [
   {
     path: '/editor',
   },
+  {
+    path: '/vr',
+  },
 ]
 </script>
 

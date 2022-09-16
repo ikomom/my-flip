@@ -4,7 +4,7 @@ import { installNotification } from '~/composables/notification'
 import { router } from '~/router'
 
 import '@unocss/reset/tailwind.css'
-import './styles/main.css'
+import './assets/styles/main.css'
 import 'uno.css'
 //
 // if (process.env.NODE_ENV === 'development') {
