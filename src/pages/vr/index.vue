@@ -89,7 +89,7 @@ onMounted(() => {
 </script>
 
 <template>
-  <div ref="container" dark:b="1 #fff" />
+  <div ref="container" b="1" dark:b="1 #fff" inline-block p-2 />
 </template>
 
 <style scoped>
