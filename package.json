@@ -13,6 +13,7 @@
   "dependencies": {
     "@headlessui/vue": "^1.6.7",
     "@vueuse/core": "^8.7.5",
+    "graphql": "^16.6.0",
     "lodash-es": "^4.17.21",
     "monaco-editor": "^0.33.0",
     "monaco-editor-core": "^0.33.0",

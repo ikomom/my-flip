@@ -15,6 +15,7 @@ specifiers:
   '@vue/test-utils': ^2.0.2
   '@vueuse/core': ^8.7.5
   eslint: ^8.18.0
+  graphql: ^16.6.0
   jsdom: ^20.0.0
   lodash-es: ^4.17.21
   monaco-editor: ^0.33.0
@@ -42,6 +43,7 @@ specifiers:
 dependencies:
   '@headlessui/vue': 1.6.7_vue@3.2.37
   '@vueuse/core': 8.7.5_vue@3.2.37
+  graphql: 16.6.0
   lodash-es: 4.17.21
   monaco-editor: registry.npmmirror.com/monaco-editor/0.33.0
   monaco-editor-core: registry.npmmirror.com/monaco-editor-core/0.33.0
@@ -1698,6 +1700,10 @@ packages:
       merge2: registry.npmmirror.com/merge2/1.4.1
       slash: 3.0.0
     dev: true
+
+  /graphql/16.6.0:
+    resolution: {integrity: sha512-KPIBPDlW7NxrbT/eh4qPXz5FiFdL5UbaA0XUNz2Rp3Z3hqBSkbj0GVjwFDztsWVauZUWsbKHgMg++sk8UX0bkw==}
+    engines: {node: ^12.22.0 || ^14.16.0 || ^16.0.0 || >=17.0.0}
 
   /has-symbols/1.0.3:
     resolution: {integrity: sha512-l3LCuF6MgDNwTDKkdYGEihYjt5pRPbEg46rtlmnSPlUbgmB8LOIrKJbYYFBSbnPaJexMKtiPO8hmeRjRz2Td+A==}
@@ -4266,13 +4272,6 @@ packages:
       is-glob: registry.npmmirror.com/is-glob/4.0.3
     dev: true
 
-  registry.npmmirror.com/graphql/16.5.0:
-    resolution: {integrity: sha512-qbHgh8Ix+j/qY+a/ZcJnFQ+j8ezakqPiHwPiZhV/3PgGlgf96QMBB5/f2rkiC9sgLoy/xvT6TSiaf2nTHJh5iA==, registry: https://registry.npm.taobao.org/, tarball: https://registry.npmmirror.com/graphql/-/graphql-16.5.0.tgz}
-    name: graphql
-    version: 16.5.0
-    engines: {node: ^12.22.0 || ^14.16.0 || ^16.0.0 || >=17.0.0}
-    dev: true
-
   registry.npmmirror.com/gzip-size/6.0.0:
     resolution: {integrity: sha512-ax7ZYomf6jqPTQ4+XCpUGyXKHk5WweS+e05MBO4/y3WJ5RkmPXNKvX+bx1behVILVwr6JSQvZAku021CHPXG3Q==, registry: https://registry.npm.taobao.org/, tarball: https://registry.npmmirror.com/gzip-size/-/gzip-size-6.0.0.tgz}
     name: gzip-size
@@ -4845,7 +4844,7 @@ packages:
       chalk: registry.npmmirror.com/chalk/4.1.1
       chokidar: registry.npmmirror.com/chokidar/3.5.3
       cookie: registry.npmmirror.com/cookie/0.4.2
-      graphql: registry.npmmirror.com/graphql/16.5.0
+      graphql: 16.6.0
       headers-polyfill: registry.npmmirror.com/headers-polyfill/3.0.10
       inquirer: registry.npmmirror.com/inquirer/8.2.4
       is-node-process: registry.npmmirror.com/is-node-process/1.0.1
