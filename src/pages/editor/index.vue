@@ -4,9 +4,9 @@ import { EEditorProvider } from '~/composables/editor/EditorCore'
 </script>
 
 <template>
-  <e-editor-provider>
-    <split-pane-content />
-  </e-editor-provider>
+  <EEditorProvider>
+    <SplitPaneContent />
+  </EEditorProvider>
 </template>
 
 <style>

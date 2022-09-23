@@ -58,15 +58,15 @@ const onCompiler = async () => {
   <!--    </button> -->
   <!--  </div> -->
 
-  <splitpanes
+  <Splitpanes
     class="default-theme ediotr-content"
     :push-other-panes="false"
     style="height: 500px"
   >
-    <pane>
-      <splitpanes horizontal :push-other-panes="false">
-        <pane>
-          <tab-bar />
+    <Pane>
+      <Splitpanes horizontal :push-other-panes="false">
+        <Pane>
+          <TabBar />
           <e-container
             title="scirpt setup"
             style="height: calc(100% - 34px)"
@@ -78,32 +78,32 @@ const onCompiler = async () => {
               @change="content => activeFile && (activeFile.script = content)"
             />
           </e-container>
-        </pane>
-        <pane>
+        </Pane>
+        <Pane>
           <e-container title="templeta">
             <e-editor
               :value="template" language="html"
               @change="content => activeFile && (activeFile.template = content)"
             />
           </e-container>
-        </pane>
-      </splitpanes>
-    </pane>
-    <pane>
-      <splitpanes horizontal :push-other-panes="false">
-        <pane size="75">
+        </Pane>
+      </Splitpanes>
+    </Pane>
+    <Pane>
+      <Splitpanes horizontal :push-other-panes="false">
+        <Pane size="75">
           <e-container title="Output">
             <e-preview />
           </e-container>
-        </pane>
-        <pane size="25">
+        </Pane>
+        <Pane size="25">
           <e-container title="Console">
             <EConsole />
           </e-container>
-        </pane>
-      </splitpanes>
-    </pane>
-  </splitpanes>
+        </Pane>
+      </Splitpanes>
+    </Pane>
+  </Splitpanes>
 </template>
 
 <style>
