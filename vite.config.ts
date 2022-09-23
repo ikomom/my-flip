@@ -1,6 +1,7 @@
 /// <reference types="vitest" />
 
 import path from 'path'
+import { NaiveUiResolver } from 'unplugin-vue-components/resolvers'
 import { defineConfig } from 'vite'
 import Vue from '@vitejs/plugin-vue'
 import Pages from 'vite-plugin-pages'
@@ -42,6 +43,7 @@ export default defineConfig({
     // https://github.com/antfu/vite-plugin-components
     Components({
       dts: true,
+      resolvers: [NaiveUiResolver()],
     }),
 
     // https://github.com/antfu/unocss

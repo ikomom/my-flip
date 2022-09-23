@@ -15,6 +15,7 @@ export default defineConfig({
     ['icon', 'relative w-2 h-2 top-1 inline-block !outline-none'],
     ['s-link', 'group flex w-full items-center rounded-md px-2 py-2 text-sm text-gray-900 hover:bg-teal-600 hover:text-white'],
     ['s-link-active', 'group flex w-full items-center rounded-md px-2 py-2 text-sm bg-teal-600 text-white'],
+    ['s-tag', 'mx-2 text-white px-2 py-1 inline-block bg-yellow'],
   ],
   presets: [
     presetUno(),

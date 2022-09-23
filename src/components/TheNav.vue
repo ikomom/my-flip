@@ -13,6 +13,9 @@ const menus = [
     path: '/layout',
   },
   {
+    path: '/algorithms',
+  },
+  {
     path: '/forbidden',
   },
   {
