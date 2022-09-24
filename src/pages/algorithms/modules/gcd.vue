@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import Two from 'two.js'
+import { useTwoJs } from '~/composables'
 import { getGcd, getLcm } from '~/utils/algorithms'
 
 const container = ref()
@@ -22,33 +23,39 @@ const drawRect = async () => {
   for (let i = 0; i < drawing.width / len; i++) {
     for (let j = 0; j < drawing.height / len; j++) {
       await new Promise<void>((resolve) => {
-        requestAnimationFrame(() => {
-          const num = setTimeout(() => {
-            console.log('console.log', [i * len + len / 2, j * len + len / 2], drawTimeout)
-            clearTimeout(num)
-            drawTimeout.delete(num)
+        const num = setTimeout(() => {
+          console.log('drawRect', [i * len + len / 2, j * len + len / 2], drawTimeout)
+          drawTimeout.delete(num)
 
-            const rect = two.makeRectangle(i * len + len / 2, j * len + len / 2, len, len)
-            rect.fill = `rgb(${Math.random() * 300}, ${Math.random() * 300},  ${Math.random() * 300})`
-            rect.noStroke()
-            two.update()
-            resolve()
-          }, drawTime.value)
-          drawTimeout.add(num)
-        })
+          const rect = two.makeRectangle(i * len + len / 2, j * len + len / 2, len, len)
+          rect.fill = `rgb(${Math.random() * 300}, ${Math.random() * 300},  ${Math.random() * 300})`
+          rect.noStroke()
+          two.update()
+          resolve()
+        }, drawTime.value)
+        drawTimeout.add(num)
       })
     }
   }
 }
 
-const render = async () => {
-  two.clear()
-  two.height = drawing.height
-  two.width = drawing.width
+const clearDrawTimeArr = () => {
+  console.log('clearDrawTimeArr', [...drawTimeout])
   drawTimeout.forEach(time => clearTimeout(time))
   drawTimeout.clear()
+}
+
+const render = async () => {
+  two.clear()
+  clearDrawTimeArr()
+  two.height = drawing.height
+  two.width = drawing.width
   await drawRect()
 }
+
+onUnmounted(() => {
+  clearDrawTimeArr()
+})
 
 onMounted(() => {
   two.appendTo(container.value)
