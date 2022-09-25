@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { isEqual } from 'lodash-es'
 import Gcd from '~/pages/algorithms/modules/gcd.vue'
-import UnionFind from '~/pages/algorithms/modules/unionFind.vue'
+import UnionFind from '~/pages/algorithms/modules/union-find/unionFind.vue'
 
 const checkedKey = shallowRef(UnionFind)
 const Options = [

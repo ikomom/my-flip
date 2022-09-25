@@ -24,4 +24,3 @@ export function getLcm(p: number, q: number) {
   return p * q / getGcd(p, q)
 }
 
-export function useUnionFind() {}
