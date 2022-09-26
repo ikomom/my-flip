@@ -133,6 +133,7 @@ export const useUnionFindV2 = (initRow: number) => {
         toast.warning(`${[n1, n2]}未连接`)
       }
     },
+    // TODO
     union(n1: number, n2: number) {
       const connected = command.findConnect(n1, n2)
       if (connected) {
@@ -186,7 +187,8 @@ export function useUnionFindV3(initRow: number) {
     deep: true,
     immediate: true,
   })
-
+  // @ts-expect-error
+  window.command = command
   return {
     command,
     unionSet: command.roots,

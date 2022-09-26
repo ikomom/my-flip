@@ -29,7 +29,7 @@ export class UnionFind {
     return n
   }
 
-  private find(num: number) {
+  find(num: number) {
     let n1 = num
     const roots = this.roots
     while (roots[num] !== num)
