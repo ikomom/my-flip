@@ -51,6 +51,19 @@ export class HTMLWorker {
     return Promise.resolve(hover!)
   }
 
+  async format(
+    uri: string,
+    range: htmlService.Range,
+    options: htmlService.FormattingOptions,
+  ): Promise<htmlService.TextEdit[]> {
+    const document = this._getTextDocument(uri)
+    const formattingOptions = { ...this._languageSettings.format, ...options }
+    const textEdits = this._languageService.format(document, range, formattingOptions)
+    console.log('format', { document, formattingOptions, textEdits })
+
+    return Promise.resolve(textEdits)
+  }
+
   findDocumentLinks() {
 
   }

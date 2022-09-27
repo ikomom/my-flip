@@ -3,6 +3,7 @@ import type { editor } from 'monaco-editor'
 import darkTheme from 'theme-vitesse/themes/vitesse-dark.json'
 import lightTheme from 'theme-vitesse/themes/vitesse-light.json'
 import { watch } from 'vue'
+
 import { editorPlugins } from '~/monaco/plugins/editor'
 import setupMonaco from '~/monaco'
 
@@ -33,6 +34,11 @@ const useMonaco = (target: Ref, options: Options) => {
   const isSetup = ref(false)
 
   let editor: editor.IStandaloneCodeEditor
+
+  const resize = (dimension?: editor.IDimension) => {
+    console.log('resize', dimension)
+    editor.layout(dimension)
+  }
 
   const setContent = async (content: string) => {
     await until(isSetup).toBeTruthy()
@@ -99,6 +105,7 @@ const useMonaco = (target: Ref, options: Options) => {
   return {
     onChange: changeEventHook.on,
     setContent,
+    resize,
   }
 }
 

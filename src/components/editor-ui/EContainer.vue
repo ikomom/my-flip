@@ -1,7 +1,7 @@
 <script setup lang="ts">
 defineProps<{
   title: string
-  //   noOverflow?: boolean
+  noOverflow?: boolean
   noRounding?: boolean
 }>()
 </script>
@@ -30,7 +30,11 @@ defineProps<{
         <slot name="controls" />
       </div>
     </div>
-    <div bg="dark:dark-800 light-300" overflow="hidden" relative rounded-b-md>
+    <div
+      bg="dark:dark-800 light-300"
+      :class="noOverflow ? 'overflow-unset' : 'overflow-hidden'"
+      relative rounded-b-md
+    >
       <slot />
     </div>
   </div>

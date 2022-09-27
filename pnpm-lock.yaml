@@ -10,6 +10,7 @@ specifiers:
   '@types/lodash-es': ^4.17.6
   '@types/node': ^18.0.0
   '@types/nprogress': ^0.2.0
+  '@types/prettier': ^2.7.1
   '@types/splitpanes': ^2.2.1
   '@types/three': ^0.144.0
   '@unocss/reset': ^0.44.7
@@ -29,6 +30,7 @@ specifiers:
   nprogress: ^0.2.0
   photo-sphere-viewer: ^4.7.2
   pnpm: ^7.4.0
+  prettier: ^2.7.1
   sass: ^1.53.0
   splitpanes: ^3.1.1
   theme-vitesse: ^0.5.0
@@ -60,6 +62,7 @@ dependencies:
   naive-ui: 2.33.3_vue@3.2.39
   nprogress: 0.2.0
   photo-sphere-viewer: 4.7.2
+  prettier: 2.7.1
   splitpanes: 3.1.1
   theme-vitesse: 0.5.2
   three: 0.144.0
@@ -77,6 +80,7 @@ devDependencies:
   '@types/lodash-es': 4.17.6
   '@types/node': 18.7.18
   '@types/nprogress': 0.2.0
+  '@types/prettier': 2.7.1
   '@types/splitpanes': 2.2.1
   '@types/three': 0.144.0
   '@unocss/reset': 0.44.7
@@ -811,6 +815,10 @@ packages:
 
   /@types/nprogress/0.2.0:
     resolution: {integrity: sha512-1cYJrqq9GezNFPsWTZpFut/d4CjpZqA0vhqDUPFWYKF1oIyBz5qnoYMzR+0C/T96t3ebLAC1SSnwrVOm5/j74A==}
+    dev: true
+
+  /@types/prettier/2.7.1:
+    resolution: {integrity: sha512-ri0UmynRRvZiiUJdiz38MmIblKK+oH30MztdBVR95dv/Ubw6neWSb8u1XpRb72L4qsZOhz+L+z9JD40SJmfWow==}
     dev: true
 
   /@types/set-cookie-parser/2.4.2:
@@ -4204,6 +4212,12 @@ packages:
     resolution: {integrity: sha512-vkcDPrRZo1QZLbn5RLGPpg/WmIQ65qoWWhcGKf/b5eplkkarX0m9z8ppCat4mlOqUsWpyNuYgO3VRyrYHSzX5g==}
     engines: {node: '>= 0.8.0'}
     dev: true
+
+  /prettier/2.7.1:
+    resolution: {integrity: sha512-ujppO+MkdPqoVINuDFDRLClm7D78qbDt0/NR+wp5FqEZOoTNAjPHWj17QRhu7geIHJfcNhRk1XVQmF8Bp3ye+g==}
+    engines: {node: '>=10.13.0'}
+    hasBin: true
+    dev: false
 
   /probe.gl/3.5.2:
     resolution: {integrity: sha512-8lFQVmi7pMQZkqfj8+VjX4GU9HTkyxgRm5/h/xxA/4/IvZPv3qtP996L+awPwZsrPRKEw99t12SvqEHqSls/sA==}

@@ -1,9 +1,10 @@
 <script setup lang="ts">
 import { Pane, Splitpanes } from 'splitpanes'
 import 'splitpanes/dist/splitpanes.css'
+import { throttle } from 'lodash-es'
 import TabBar from './TabBar.vue'
 import EConsole from '~/components/editor-ui/EConsole.vue'
-import { astTest, compilerVue, parseModule } from '~/composables/editor/compiler/vueCompiler'
+// import { astTest, compilerVue, parseModule } from '~/composables/editor/compiler/vueCompiler'
 import EditorFile from '~/composables/editor/EditorFile'
 import { useEditorInject } from '~/composables/editor/EditorCore'
 
@@ -17,6 +18,9 @@ const {
 
 const script = ref('')
 const template = ref('')
+
+const scriptRef = ref()
+const templateRef = ref()
 
 onMounted(() => {
   $actions.addFile(new EditorFile('App.vue', '<div>{{helloWorld}} <Test/></div>', `import { ref } from 'vue';
@@ -38,50 +42,40 @@ onShouldUpdateContent(() => {
   }
 })
 
-const onCompiler = async () => {
-  const code = await compilerVue(activeFile.value)
-  activeFile.value.compiled.js = code
-  // console.log('file.code', { code })
-}
+const onResize = throttle((e: any) => {
+  scriptRef.value.resize()
+  templateRef.value.resize()
+}, 300)
 </script>
 
 <template>
-  <!--  <div mb-2 text-end> -->
-  <!--    <button btn mx-2 @click="astTest(activeFile)"> -->
-  <!--      run ast -->
-  <!--    </button> -->
-  <!--    <button btn mx-2 @click="parseModule(activeFile)"> -->
-  <!--      run Parse -->
-  <!--    </button> -->
-  <!--    <button btn mx-2 @click="onCompiler"> -->
-  <!--      run     <i inline-block i-carbon-play-filled-alt w-4 h-4 top-1 relative /> -->
-  <!--    </button> -->
-  <!--  </div> -->
-
   <Splitpanes
     class="default-theme ediotr-content"
     :push-other-panes="false"
     style="height: 500px"
+    @resize="onResize"
   >
     <Pane>
-      <Splitpanes horizontal :push-other-panes="false">
+      <Splitpanes horizontal :push-other-panes="false" @resize="onResize">
         <Pane>
           <TabBar />
           <e-container
             title="scirpt setup"
             style="height: calc(100% - 34px)"
-            rounded-b-md
-            no-rounding
+            class="rounded-b-md no-rounding"
+            no-overflow
           >
             <e-editor
+              ref="scriptRef"
               :value="script" language="javascript"
               @change="content => activeFile && (activeFile.script = content)"
             />
           </e-container>
         </Pane>
         <Pane>
-          <e-container title="templeta">
+          <e-container title="template" no-overflow>
             <e-editor
+              ref="templateRef"
               :value="template" language="html"
               @change="content => activeFile && (activeFile.template = content)"
             />
@@ -113,7 +107,7 @@ const onCompiler = async () => {
 <style scoped lang="scss">
 .ediotr-content {
   :deep(.splitpanes__pane) {
-    @apply bg-transparent;
+    @apply bg-transparent overflow-unset;
   }
 
   :deep(.splitpanes__splitter::after),
