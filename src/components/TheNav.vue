@@ -27,6 +27,9 @@ const menus = [
   {
     path: '/vr',
   },
+  {
+    path: '/carousal',
+  },
 ]
 </script>
 
