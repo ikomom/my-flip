@@ -30,6 +30,9 @@ const menus = [
   {
     path: '/carousal',
   },
+  {
+    path: '/css',
+  },
 ]
 </script>
 
