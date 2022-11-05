@@ -16,6 +16,7 @@ declare module '@vue/runtime-core' {
     Footer: typeof import('./src/components/Footer.vue')['default']
     NCarousel: typeof import('naive-ui')['NCarousel']
     NCarouselItem: typeof import('naive-ui')['NCarouselItem']
+    NSpace: typeof import('naive-ui')['NSpace']
     RouterLink: typeof import('vue-router')['RouterLink']
     RouterView: typeof import('vue-router')['RouterView']
     SMenu: typeof import('./src/components/SMenu.vue')['default']
