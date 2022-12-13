@@ -68,6 +68,9 @@ const useMonaco = (target: Ref, options: Options) => {
         detectIndentation: false,
         folding: true,
         automaticLayout: true,
+        hover: {
+          above: false,
+        },
         theme: EDITOR_THEME.LIGHT,
         minimap: {
           enabled: false,
