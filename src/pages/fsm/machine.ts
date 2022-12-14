@@ -1,11 +1,16 @@
-import { walk } from 'estree-walker'
-import { createMachine } from 'xstate'
+import { actions, createMachine } from 'xstate'
+
+console.log('#cancel', actions.cancel('ddd'))
 
 export const promiseMachine
-/** @xstate-layout N4IgpgJg5mDOIC5SG0Ew604DoDuBDAlgF1wDsoBiAGzGwDcwAJAewFswBtABgF1FQAHB2AVwMiPEAA9EARgCcU9AA4A7AFZ2AZiXqp6gEz6ZKgDQgAntPUA2dCtkylUrQsv2ALCoC+Hk2ix5CJKQATmAAjgCucPgAYgwMEBzcSCD8goQiYpIISkoK6OyWuq5SxXKurg4m5ggK8rYyDSqW6sW5rpZePhgiAOrY5ADWpAwDiWKpQhnJWTLsSugymu5Sau1KVYhKrnnsuuy7qjkH6p0gvr39A+jYAMaE1LhwfoPEZLC8YJAAqrxjyRPpUTTRC6WzoPb7OYyYq6QoqBQbbLsFToI67bblBQVE7eM7dIh9QbXO64B5PHAvQKwfAMX5ccYCSZA0BZUHyCH7JTQqSw0EIsyIFSafIQywFBQKcVKU7nAmXYn3R6wdBBcJEIivUjvT4QAAiDEwRD+fEZgMyILBHKhMLh-OqlhUKNhDS2Dm2KwUMvxhKut0VT1V6s1sHCEAgYCIAGUaXSkia0sJmRJBUVUTy1JoFEVdJUBUi8jn9pYpAoVEoxepPLjZT6FaSlehYBqAGZaj7fWMMhNTFmCyU2HmuGSWHIqVzqdSIrPWFQQoezGTOXQyL3oC5Ev31p5N3CtkNhiOR9sQH7GlKmxPmhCz1xp0EaXLZ3P2suopT7UuqdTsLFVrpruUiXwPByGVIgGHwPooCgTUcGg15o2wIJ8DPAFL2BBBYXUBY1A-H8uVcH9ESkB8RXYEtXGXLR3xXatvXlYDcFAvx4MCOCYJIaNaVQi8e2TTDLGsIoGkXWcJ0lSc80XGc9h0YoRwnRYvFxcDw3gZI0C7JkrwAWhzREdJRRdIRM0zXFXHAhBILSzQw18J1UKRHGElR7HYVxiOFciXUcdRnDcP88QAn0bPQ3tMKkRErF0MjdhLSxlF0ZRApreVNzJdT420jCXERcoZBsCFHQaYstAdVd119EkMueAZXlCvisic9Y83fbDKP2WQFG0LFKIqwCqv9ZVAw1az-l4pMskI9gBxcrEnMsdpjFa-Z0AShT7wSjN+trdKGx3ZsGsmzYktRJZS3I8toUk6pana992GhR6eWaFL6KAkDMvPbtjoQXK8wUBoyJI-Z1EXaFzLo4KGM+9BwMg7BWKgI6r2axEGhiisKnhR0R09KHKvQRjmPY+rxp+q9KJRbHdisFwSkMZbqkadASMrWFZG-WFIf-CkBgAYWYXhKHwMAUYwho8kWLZHU0GRl2cRFXXBB61DHHlJVorwgA */
+/** @xstate-layout N4IgpgJg5mDOIC5SG0Ew604DoDuBDAlgF1wDsoBiAGzGwDcwAJAewFswBtABgF1FQAHB2AVwMiPEAA9EARgCcU9AA4A7AFZ2UgGxKZ7JUoBM+gCwAaEAE9EKgMwb0SozJlb9KlUf0aZAX29m0WHiEJKQATmAAjgCucPgAYgwMEBzcSCD8goQiYpIIUvrW6OzWDjL6SlIqMipSFWaWCEYK8qXV2goy1prW1r7+GCIA6tjkANakDKMpYhlC2Wm5UlIKdgquy1WV7jIK9Va29o7OBm4eXn0gAUMjo+jYAMaE1LhwgWPEZLC8YJAAqrzTNKzLKiBZWIzsIrKRxKDTqWyVPYIKoyexqdjqHTWdjGIwXK5EYZjO6PXDPV44d4hWD4BgArgzARzUGgXLuSHsaEyWHwjSIiyIIxdIoYjHLDQrGpSfEDQk3ElPF6wdChKJEIgfUhfH4QAAiDEwREBfCZIJy4I5XJ5UgRKiR23Qrgx+mKGg0jgUChl6GuxIeiteqvVmtgUQgEDARAAyrT6akTZlhCyJIhmoU4RiFNZXNYFOwhUi4fpHej9M5s3DOt7fbd-WSlehYBqAGZa75-OOMxPzVmprzoCHqNzVIxVPlIgyQo5OTwVfTKFTVuV+0nk5VN3Ct0PhyNR9sQf7G9KmpPmhBp9AZznZmx5gsC5E1Q5OMoaWxyaw+PyXWVE274PByGVIgGHwYYoCgTUcAgj4Y2wUJ8CPYFTzBZEPEUEp2XUE58iRTpIRfZQOnzawVE9Jc-3QADcCAwIYJCaDIJIGM6SQk8exTNCVHQG1VDOMo9BUfQkU9KcXyEtYlGdRdvwJSjCBYAAVUJsCIbsiHQZtcFCGlSHwTAGDY9SzyEy1SmtW0kXKAiXx2FZSOMXpZN-eUFLAZTVPUxswHuEQIAmIg2AZIF2OTNkXShcy4RtPk7QfQxIXRbCKycFZfG-ECI3gNI0C7ZkzxkJEAFojHkWzyvK70cCEEg8rNVCVCUdAelUHFdBUCVqntEpHSOT8hLIjxpWcn1l1GOqUN7BAy1RT0HAURw+WcNYkVHdAkrFIwlBvGwKPlOs1wmjjcmsLbFGhBbnFkCVhIfU7Cg2lENDInYnP6UbKIOhtKVGD4jrCxB+vO+bFuulaHyMNb81SoSSj0Rw3p-D79tXBsgw1WqQuM1DOoHUVZCGnp+QaNwmqzHo1A0QwyLfPaVwDdcW3+s8pAxJqqZqbbyli577TcHj8YUUzKhtOn-0A7KE3y1DTrJi7QeW26Gm0YtbIcF0lDTfQxaoiX0BAsDsHoqBmZl6pgaaBWbpElZ1qzAoJS0JYOp16jaMYv6selqapKMZqObvapcTihpPVRa8HZWCpKg0V3cCUlS1O949sam2WLcupbrYfG1ClFTMFs56pY5GmsqPj9zE68rSdPwU20-NubLauxWrM8O2ek-dg1B0WnS7G8uE885lvN8ogIHrzi+XkTkHAqIUjDdDw2-D8mu579g+-en6AGFmF4Sh8DASe2SUJF8iEgcX0qHQMXcdLvCAA */
 = createMachine({
   id: '遛狗',
   initial: 'waiting',
+  context: {
+    master: 'ikonon',
+    dog: 'miao',
+  },
   states: {
     waiting: {
       on: {
@@ -30,6 +35,15 @@ export const promiseMachine
                   target: 'snif',
                 },
               },
+              after: [
+                {
+                  delay: (context, event) => {
+                    console.log('#delay', { context, event })
+                    return 2000
+                  },
+                  target: 'running',
+                },
+              ],
             },
 
             running: {
@@ -67,11 +81,34 @@ export const promiseMachine
             },
           },
         },
+        timeTransition: {
+          initial: 'first',
+          states: {
+            first: {
+              on: {
+                two: { target: 'second' },
+              },
+            },
+            second: {
+              on: {
+                one: {
+                  target: 'first',
+                },
+              },
+            },
+          },
+        },
       },
     },
     walkComplete: {
       type: 'final',
       entry: ['closeDoor', 'haveDinner'],
+    },
+  },
+}, {
+  actions: {
+    closeDoor: (context, event) => {
+      alert('closeDoor!')
     },
   },
 })
