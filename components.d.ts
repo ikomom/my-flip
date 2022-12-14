@@ -14,6 +14,8 @@ declare module '@vue/runtime-core' {
     EMessage: typeof import('./src/components/editor-ui/EMessage.vue')['default']
     EPreview: typeof import('./src/components/editor-ui/EPreview.vue')['default']
     Footer: typeof import('./src/components/Footer.vue')['default']
+    NDivider: typeof import('naive-ui')['NDivider']
+    NSpace: typeof import('naive-ui')['NSpace']
     RouterLink: typeof import('vue-router')['RouterLink']
     RouterView: typeof import('vue-router')['RouterView']
     SMenu: typeof import('./src/components/SMenu.vue')['default']
