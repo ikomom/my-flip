@@ -33,6 +33,9 @@ const menus = [
   {
     path: '/css',
   },
+  {
+    path: '/fsm',
+  },
 ]
 </script>
 
