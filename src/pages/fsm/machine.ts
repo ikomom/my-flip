@@ -1,4 +1,4 @@
-import { actions, createMachine } from 'xstate'
+import { actions, assign, createMachine } from 'xstate'
 
 console.log('#cancel', actions.cancel('ddd'))
 
@@ -13,9 +13,11 @@ export const promiseMachine
   },
   states: {
     waiting: {
+      tags: ['home', 'idle'],
       on: {
         leaveHome: { target: 'onWalk' },
         requestFood: {
+          target: 'waiting',
         },
       },
     },
@@ -23,6 +25,9 @@ export const promiseMachine
       type: 'parallel',
       on: {
         ok: { target: 'walkComplete' },
+      },
+      meta: {
+        msg: '我和皮特走路',
       },
       states: {
         activies: {
@@ -52,6 +57,9 @@ export const promiseMachine
                 suddenStop: {
                   target: 'snif',
                 },
+              },
+              meta: {
+                msg: '跑步啊啊啊',
               },
             },
 
@@ -150,6 +158,51 @@ const fileMachine
         },
         success: {},
       },
+    },
+  },
+})
+
+interface RedditMachineContext {
+  subreddit: null | string
+}
+
+const selectEvent = {
+  type: 'SELECT', // event type
+  name: 'reactjs', // subreddit name
+}
+function invokeFetchSubreddit(context: RedditMachineContext) {
+  const { subreddit } = context
+
+  return fetch(`https://www.reddit.com/r/${subreddit}.json`)
+    .then(response => response.json())
+    .then(json => json.data.children.map((child: { data: any }) => child.data))
+}
+
+export const redditMachine
+/** @xstate-layout N4IgpgJg5mDOIC5QCdIQJYBcDEBlAogDL4DCAKgNoAMAuoqAA4D2sW6TAdvSAB6IAcAOgCco0QDZxVcfwDsAJmEBGeQBoQAT0RKArMMFSqVJeKUBmfsIAsk2QF8H6jkwhxuqCBkzdmrTOy4kXkQAWjN9I0izcLMVWSphdS0EEJ0RMWE9Cx1FcWEzRxAPL0F0CAAbMB8WNk5uPgQrNU0BJUEdSKoraSUreIK7dWKsQVgwSoBjTEhqvwD67UlBeUje2XWdfnl+fiTtbvbO-ioVpSV+HXsHOyA */
+= createMachine({
+  id: 'reddit',
+  initial: 'idle',
+  context: {
+    subreddit: null,
+  } as RedditMachineContext,
+  states: {
+    idle: {
+      tags: 'go',
+    },
+    selected: {
+      invoke: {
+        id: 'fetch-subreddit',
+        src: invokeFetchSubreddit,
+      },
+    },
+  },
+  on: {
+    SELECT: {
+      target: 'selected',
+      actions: assign<RedditMachineContext>({
+        subreddit: (ctx, evt) => evt.type,
+      }),
     },
   },
 })
