@@ -36,6 +36,9 @@ const menus = [
   {
     path: '/fsm',
   },
+  {
+    path: '/tensorflow',
+  },
 ]
 </script>
 
@@ -52,4 +55,3 @@ const menus = [
     </div>
   </div>
 </template>
-
