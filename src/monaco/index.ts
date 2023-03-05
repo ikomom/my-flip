@@ -35,7 +35,6 @@ const setupMonaco = createSingletonPromise(async () => {
         import('monaco-editor/esm/vs/language/typescript/ts.worker?worker'),
       ])
       console.log('worker', { EditorWorker, HtmlWorker, TsWorker })
-      // @ts-expect-error
       window.MonacoEnvironment = {
         getWorker(_: any, label: string) {
           // console.log('MonacoEnvironment getWorker', { _, label })

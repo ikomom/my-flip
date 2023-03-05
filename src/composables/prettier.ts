@@ -15,4 +15,3 @@ export const formatVue = (source: string) => {
     , prettier, p)
   return p
 }
-

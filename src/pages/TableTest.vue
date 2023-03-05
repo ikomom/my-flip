@@ -74,7 +74,7 @@
 
   position: relative;
   overflow: auto;
-  border: 1px solid #000;
+  border: 1px solid;
 
   .t-main {
     position: absolute;
@@ -103,7 +103,6 @@
   @mixin sticky {
     position: sticky;
     z-index: 1;
-    background: #ffffff;
   }
 
   .sticky-left {

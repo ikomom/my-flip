@@ -10,7 +10,7 @@ const originSet = range(0, 10)
 const container = ref()
 const radius = 20
 
-const { command, unionLineSet, unionSet } = useUnionFind('V3', 9)
+const { command, unionLineSet, unionSet } = useUnionFind('V3', 9) as any
 
 const { run } = useTwoJs(container, {
   render(two) {
@@ -33,7 +33,7 @@ const { run } = useTwoJs(container, {
     }
     for (let i = 0; i < unionLineSet.length; i++) {
       const item = unionLineSet[i]
-      two.makePath(item.map((num) => {
+      two.makePath(item.map((num: any) => {
         const { x, y } = numPos[num]
         return new Anchor(x, y)
       })).noFill()

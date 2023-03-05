@@ -7,11 +7,7 @@ const { core } = useEditorInject()
 
 <template>
   <div overflow-auto>
-    <EMessage v-for="err in core.errors" :key="err" type="error">
-      {{ err.toString() }}
-    </EMessage>
-    <EMessage v-for="err in core.runtimeErrors" :key="err" type="error">
-      {{ err.toString() }}
-    </EMessage>
+    <EMessage v-for="(err, idx) in core.errors" :key="idx" type="error" :message=" err.toString()" />
+    <EMessage v-for="(err, idx) in core.runtimeErrors" :key="idx" type="error" :message="err.toString()" />
   </div>
 </template>

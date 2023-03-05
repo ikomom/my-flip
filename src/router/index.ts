@@ -2,7 +2,6 @@ import nProgress from 'nprogress'
 import 'nprogress/nprogress.css' // progress bar style
 import routes from 'virtual:generated-pages'
 import { createRouter, createWebHistory } from 'vue-router'
-import { POSITION } from 'vue-toastification'
 import { toast } from '~/composables/notification'
 import { layoutRoute } from '~/router/route'
 

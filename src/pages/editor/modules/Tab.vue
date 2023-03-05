@@ -26,4 +26,3 @@ onMounted(() => {
     <slot />
   </div>
 </template>
-

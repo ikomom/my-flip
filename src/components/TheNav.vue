@@ -25,6 +25,9 @@ const menus = [
     path: '/editor',
   },
   {
+    path: '/line-editor',
+  },
+  {
     path: '/vr',
   },
   {

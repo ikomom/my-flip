@@ -1,5 +1,6 @@
 import { createApp } from 'vue'
 import App from './App.vue'
+import { installPinia } from '~/composables/pinia'
 import { installNotification } from '~/composables/notification'
 import { router } from '~/router'
 
@@ -15,6 +16,7 @@ import 'uno.css'
 // }
 
 const app = createApp(App)
+installPinia(app)
 installNotification(app)
 app.use(router)
 app.mount('#app')

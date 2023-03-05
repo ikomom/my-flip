@@ -19,8 +19,8 @@ const Options = [
 <template>
   <n-space>
     <n-tag
-      v-for="opt in Options"
-      :key="opt.value" :checked="isEqual(checkedKey, opt.value)" checkable
+      v-for="(opt) in Options"
+      :key="opt.title" :checked="isEqual(checkedKey, opt.value)" checkable
       @click="checkedKey = opt.value"
     >
       {{ opt.title }}
