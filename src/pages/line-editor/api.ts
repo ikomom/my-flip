@@ -1,6 +1,6 @@
 import axios from 'axios'
-export const apiMockUrl = 'http://eyzy4.mocklab.io/json/1'
-export const apiMockUrl2 = 'http://eyzy4.mocklab.io/thing/8'
+export const apiMockUrl = 'https://eyzy4.mocklab.io/json/1'
+export const apiMockUrl2 = 'https://eyzy4.mocklab.io/thing/8'
 
 export const apiMockJson = () => {
   return axios.get(apiMockUrl).then((res) => {
