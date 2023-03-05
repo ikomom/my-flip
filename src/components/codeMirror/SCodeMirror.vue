@@ -25,23 +25,23 @@ const handleReady: InstanceType<typeof Codemirror>['onReady'] = (payload) => {
   view.value = payload.view
 }
 
-const getCodemirrorStates = () => {
-  const state = view.value.state
-  const ranges = state.selection.ranges
-  const selected = ranges.reduce((r, range) => r + range.to - range.from, 0)
-  const cursor = ranges[0].anchor
-  const length = state.doc.length
-  const lines = state.doc.lines
-
-  console.log({ selected, ranges, cursor, length, lines })
-}
+// const getCodemirrorStates = () => {
+//   const state = view.value.state
+//   const ranges = state.selection.ranges
+//   const selected = ranges.reduce((r, range) => r + range.to - range.from, 0)
+//   const cursor = ranges[0].anchor
+//   const length = state.doc.length
+//   const lines = state.doc.lines
+//
+//   console.log({ selected, ranges, cursor, length, lines })
+// }
 </script>
 
 <template>
   <div>
-    <button btn @click="getCodemirrorStates()">
-      getCodemirrorStates
-    </button>
+    <!--    <button btn @click="getCodemirrorStates()"> -->
+    <!--      getCodemirrorStates -->
+    <!--    </button> -->
     <Codemirror
       v-model="code"
       placeholder="Code goes here..."

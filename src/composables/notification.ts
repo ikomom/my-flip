@@ -8,6 +8,7 @@ export const installNotification = (app: App<Element>) => {
     pauseOnHover: false,
     position: POSITION.TOP_CENTER,
     showCloseButtonOnHover: true,
+    timeout: 1200,
   } as PluginOptions)
 }
 

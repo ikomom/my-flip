@@ -10,6 +10,36 @@ const store = useDataSourceStore()
 let mdl = $ref<Omit<DataSourceItem, 'key'>>()
 
 const formRef = ref<FormInst | null>(null)
+const rules = {
+  type: {
+    required: true,
+    message: '必填',
+    trigger: 'change',
+  },
+  title: {
+    required: true,
+    message: '必填',
+    trigger: 'blur',
+  },
+  stateKey: {
+    required: true,
+    message: '必填',
+    trigger: 'blur',
+  },
+  fetchParams: {
+    age: {
+      required: true,
+      message: '必填',
+      trigger: 'blur',
+    },
+    method: {
+      required: true,
+      message: '必填',
+      trigger: 'blur',
+    },
+  },
+}
+
 const show = () => {
   toggleVisible(true)
   mdl = {
@@ -41,9 +71,13 @@ const onCancel = () => {
 }
 const onOk = () => {
   formRef.value?.validate((errors) => {
+    console.log('validate', errors)
     if (!errors) {
       store.addData(mdl)
       onCancel()
+    }
+    else {
+      toast.error('need compelet basic info')
     }
   })
 }
@@ -51,22 +85,29 @@ const onOk = () => {
 
 <template>
   <n-modal v-model:show="visible" title="edit or add" preset="dialog" style="width: 1000px">
-    <n-form v-if="mdl" ref="formRef">
-      <n-form-item label="type" required>
-        <n-select v-model:value="mdl.type" :options="typeOptions" />
-      </n-form-item>
-      <n-form-item label="title" required>
-        <n-input v-model:value="mdl.title" />
-      </n-form-item>
-      <n-form-item label="stateKey" required>
-        <n-input v-model:value="mdl.stateKey" />
-      </n-form-item>
-      <n-form-item label="url" required>
-        <n-input v-model:value="mdl.fetchParams.url" />
-      </n-form-item>
-      <n-form-item label="method" required>
-        <n-select v-model:value="mdl.fetchParams.method" :options="options" />
-      </n-form-item>
+    <n-form v-if="mdl" ref="formRef" :model="mdl" :rules="rules">
+      <n-tabs>
+        <n-tab-pane name="basic" tab="basic" display-directive="show">
+          <n-form-item label="type" path="type" required>
+            <n-select v-model:value="mdl.type" :options="typeOptions" />
+          </n-form-item>
+          <n-form-item label="title" path="title" required>
+            <n-input v-model:value="mdl.title" />
+          </n-form-item>
+          <n-form-item label="stateKey" path="stateKey" required>
+            <n-input v-model:value="mdl.stateKey" />
+          </n-form-item>
+          <n-form-item label="url" path="fetchParams.url" required>
+            <n-input v-model:value="mdl.fetchParams.url" />
+          </n-form-item>
+          <n-form-item label="method" path="fetchParams.method" required>
+            <n-select v-model:value="mdl.fetchParams.method" :options="options" />
+          </n-form-item>
+        </n-tab-pane>
+        <n-tab-pane name="advance" label="advance" display-directive="show">
+          <SCodeMirror v-model="mdl.transformRes" />
+        </n-tab-pane>
+      </n-tabs>
       <n-form-item>
         <n-space class="justify-end! w-full">
           <n-button @click="onCancel">
