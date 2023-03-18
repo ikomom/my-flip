@@ -29,7 +29,3 @@ const Options = [
   <n-divider style="margin-top: 10px;margin-bottom: 10px" />
   <component :is="checkedKey" />
 </template>
-
-<style scoped>
-
-</style>

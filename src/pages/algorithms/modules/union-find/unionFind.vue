@@ -83,7 +83,3 @@ watch(unionLineSet, () => {
     </n-col>
   </n-row>
 </template>
-
-<style scoped>
-
-</style>

@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import EditorPane from './EditorPane.vue'
 import LineEditorList from '~/pages/line-editor/components/LineEditorList.vue'
 import { useDataSourceStore, useEditorState } from '~/pages/line-editor/data'
 import EditState from '~/pages/line-editor/modules/editor/EditState.vue'
@@ -15,21 +16,25 @@ const onReset = () => {
 </script>
 
 <template>
-  <header>
-    <button btn @click="onReset()">
-      reset
-    </button>
-  </header>
-  <main>
-    <LineEditorList :data-source="editor.state" @edit="editState.show($event.item)">
-      <template #default="{ item }">
-        {{ item }}
-      </template>
-    </LineEditorList>
-  </main>
-  <EditState ref="editState" />
+  editor 模拟组件预览和编辑
+  <div flex>
+    <div flex-1>
+      <header>
+        <button btn @click="onReset()">
+          reset
+        </button>
+      </header>
+      <main>
+        <LineEditorList :data-source="editor.state" @edit="editState.show($event.item)">
+          <template #default="{ item }">
+            {{ item }}
+          </template>
+        </LineEditorList>
+      </main>
+      <EditState ref="editState" />
+    </div>
+    <div flex-1>
+      <EditorPane />
+    </div>
+  </div>
 </template>
-
-<style scoped>
-
-</style>

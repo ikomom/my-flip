@@ -56,7 +56,3 @@ const setOpen = () => {
     </transition>
   </Menu>
 </template>
-
-<style scoped>
-
-</style>

@@ -25,7 +25,3 @@ const onOk = () => {
     </template>
   </n-popconfirm>
 </template>
-
-<style scoped>
-
-</style>

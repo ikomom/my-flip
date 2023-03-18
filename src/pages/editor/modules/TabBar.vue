@@ -40,7 +40,3 @@ const onClose = (filename: string) => {
     <a icon-btn i-carbon-add w-5 h-5 top-1 relative @click="onAddFile" />
   </div>
 </template>
-
-<style scoped>
-
-</style>

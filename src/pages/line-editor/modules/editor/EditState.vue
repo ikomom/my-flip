@@ -61,7 +61,3 @@ const onRun = async () => {
     </LineEditorList>
   </n-modal>
 </template>
-
-<style scoped>
-
-</style>

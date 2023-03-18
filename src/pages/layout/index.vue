@@ -34,7 +34,3 @@ const route = useRoute()
     </div>
   </div>
 </template>
-
-<style scoped>
-
-</style>

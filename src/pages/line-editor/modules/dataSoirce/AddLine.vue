@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import { omit } from 'lodash'
 import type { FormInst } from 'naive-ui'
 import { apiMockUrl } from '~/pages/line-editor/api'
 import { defaultTransform, useDataSourceStore } from '~/pages/line-editor/data'
@@ -7,7 +8,11 @@ import type { DataSourceItem } from '~/pages/line-editor/data/types'
 const [visible, toggleVisible] = useToggle()
 const store = useDataSourceStore()
 
-let mdl = $ref<Omit<DataSourceItem, 'key'>>()
+type mdlType = Omit<DataSourceItem, 'key'> | null
+
+let mdl = $ref<mdlType>()
+let type = $ref<'edit' | 'add'>('add')
+let key: string | null
 
 const formRef = ref<FormInst | null>(null)
 const rules = {
@@ -40,8 +45,9 @@ const rules = {
   },
 }
 
-const show = () => {
+const add = () => {
   toggleVisible(true)
+  type = 'add'
   mdl = {
     title: undefined,
     type: 'fetch',
@@ -53,6 +59,14 @@ const show = () => {
     transformRes: defaultTransform,
   }
 }
+
+const edit = (data: DataSourceItem) => {
+  toggleVisible(true)
+  type = 'edit'
+  key = data.key
+  mdl = { ...omit(data, 'key') }
+}
+
 const options = [
   { label: 'GET', value: 'GET' },
   { label: 'POST', value: 'POST' },
@@ -64,16 +78,21 @@ const typeOptions = [
   { label: 'fetch', value: 'fetch' },
 ]
 
-defineExpose({ show })
+defineExpose({ add, edit })
 
 const onCancel = () => {
   toggleVisible(false)
+  mdl = null
 }
 const onOk = () => {
   formRef.value?.validate((errors) => {
     console.log('validate', errors)
     if (!errors) {
-      store.addData(mdl)
+      if (type === 'add')
+        store.addData(mdl)
+      else
+        store.editData(key, mdl)
+
       onCancel()
     }
     else {
@@ -121,7 +140,3 @@ const onOk = () => {
     </n-form>
   </n-modal>
 </template>
-
-<style scoped>
-
-</style>

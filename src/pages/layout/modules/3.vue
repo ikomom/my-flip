@@ -7,7 +7,3 @@ defineProps<{ id: string }>()
     red: {{ id }}
   </div>
 </template>
-
-<style scoped>
-
-</style>

@@ -35,6 +35,7 @@ export const useDataSourceStore = defineStore('dataSource', () => {
   const addData = (item: Omit<DataSourceItem, 'key'>) => {
     dataSource.value.push({ ...getDefaultDataSource(item.stateKey), ...item })
   }
+
   const deleteData = (item: DataSourceItem) => {
     dataSource.value = dataSource.value.filter(i => i !== item)
     console.log('dataSource', dataSource)
@@ -47,12 +48,17 @@ export const useDataSourceStore = defineStore('dataSource', () => {
 
     throw new Error('not found data')
   }
+  const editData = (key: string, item: Omit<DataSourceItem, 'key'>) => {
+    const to = findData(key)
+    Object.assign(to, item)
+  }
 
   return {
     dataSource,
     addData,
     deleteData,
     findData,
+    editData,
   }
 })
 
@@ -60,6 +66,14 @@ export const useEditorState = defineStore('editorState', () => {
   const state = ref<EditorState[]>([
     {
       name: 'text',
+      props: {
+        visible: true,
+        run: false,
+      },
+      traits: [],
+    },
+    {
+      name: 'img',
       props: {
         visible: true,
         run: false,

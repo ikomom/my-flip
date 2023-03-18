@@ -91,7 +91,3 @@ onMounted(() => {
 <template>
   <div ref="container" b="1" dark:b="1 #fff" inline-block p-2 />
 </template>
-
-<style scoped>
-
-</style>
