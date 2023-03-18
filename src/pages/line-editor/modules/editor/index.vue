@@ -33,7 +33,7 @@ const onReset = () => {
       </main>
       <EditState ref="editState" />
     </div>
-    <div flex-1>
+    <div flex-1 b="1">
       <EditorPane />
     </div>
   </div>
