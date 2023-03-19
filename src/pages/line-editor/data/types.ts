@@ -23,6 +23,7 @@ export interface EditorTrait {
 }
 
 export interface EditorState {
+  key: string
   name: string
   props: Record<string, unknown>
   traits: EditorTrait[]

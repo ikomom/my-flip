@@ -65,6 +65,7 @@ export const useDataSourceStore = defineStore('dataSource', () => {
 export const useEditorState = defineStore('editorState', () => {
   const state = ref<EditorState[]>([
     {
+      key: 'obqc2j1m',
       name: 'text',
       props: {
         visible: true,
@@ -73,6 +74,7 @@ export const useEditorState = defineStore('editorState', () => {
       traits: [],
     },
     {
+      key: 'cfwz8i9a',
       name: 'img',
       props: {
         visible: true,
