@@ -1,5 +1,3 @@
-import { resolve } from 'dns'
-
 let uid = 1
 
 export class PreviewProxy {
