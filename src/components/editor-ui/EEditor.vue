@@ -1,5 +1,4 @@
 <script setup lang="ts">
-import { pick } from 'lodash-es'
 import type { languageType } from '~/composables/use-monaco'
 import useMonaco from '~/composables/use-monaco'
 

@@ -1,5 +1,3 @@
-import type { AxiosResponse } from 'axios'
-
 export interface DataSourceFetchItem {
   type: 'fetch'
   fetchParams: {
@@ -10,15 +8,29 @@ export interface DataSourceFetchItem {
   }
 }
 
+export interface DataSourceVariableItem {
+  type: 'variable'
+}
+
 export type DataSourceItem = {
   key: string
   title: string
   stateKey: string
   transformRes: string
-} & DataSourceFetchItem
+} & (DataSourceFetchItem | DataSourceVariableItem)
+
+const D: DataSourceItem = {
+  key: '',
+  stateKey: '',
+  transformRes: '',
+  title: '',
+  type: 'variable',
+}
+D
 
 export interface EditorTrait {
   mapSourceKey: string
+  mapSourceTitle: string
   key: string
 }
 

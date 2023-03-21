@@ -19,7 +19,7 @@ const mockReq = () => {
   })
 }
 
-let myWorker = $ref<any>()
+let myWorker = $ref<Worker>()
 const testSimpleWorker = () => {
   if (myWorker)
     myWorker.terminate()
@@ -33,7 +33,7 @@ const postMsgWorker = () => {
   myWorker.postMessage('哈哈哈哈')
 }
 
-let myShareWorker = $ref<any>()
+let myShareWorker = $ref<SharedWorker>()
 const testShareWorker = () => {
   if (myShareWorker) {
     console.log('已经开启')

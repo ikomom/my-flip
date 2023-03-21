@@ -71,6 +71,7 @@ export const UseDraggableWithBounding = defineComponent<UseDraggableOptionsPorps
     const target = ref()
     const boundElement = toRef(props, 'boundElement')
     const handle = computed(() => props.handle ?? target.value)
+    const isHover = useElementHover(target)
     const storageValue = props.storageKey && useStorage(
       props.storageKey,
       resolveUnref(props.initialValue) || { x: 0, y: 0 },
@@ -88,13 +89,16 @@ export const UseDraggableWithBounding = defineComponent<UseDraggableOptionsPorps
       storageValue.value.y = position.y
     }
 
-    const data = reactive(useDraggableWithBounding(target, {
-      ...props,
-      boundElement,
-      handle,
-      initialValue,
-      onEnd,
-    }))
+    const data = reactive({
+      ...useDraggableWithBounding(target, {
+        ...props,
+        boundElement,
+        handle,
+        initialValue,
+        onEnd,
+      }),
+      isHover,
+    })
 
     return () => {
       if (slots.default)

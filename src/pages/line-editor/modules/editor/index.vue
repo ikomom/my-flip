@@ -2,16 +2,18 @@
 import EditorPane from './EditorPane.vue'
 import LineEditorList from '~/pages/line-editor/components/LineEditorList.vue'
 import { useDataSourceStore, useEditorState } from '~/pages/line-editor/data'
-import EditState from '~/pages/line-editor/modules/editor/EditState.vue'
+import EditTraitModal from '~/pages/line-editor/modules/editor/EditTraitModal.vue'
 
 const store = useDataSourceStore()
 const editor = useEditorState()
-const editState = ref()
+const editTraitModal = ref<InstanceType<typeof EditTraitModal>>()
 
 const onReset = () => {
   const s = confirm('reset all')
-  if (s)
+  if (s) {
     store.$reset()
+    editor.$reset()
+  }
 }
 </script>
 
@@ -25,15 +27,29 @@ const onReset = () => {
         </button>
       </header>
       <main>
-        <LineEditorList :data-source="editor.state" @edit="editState.show($event.item)">
+        <LineEditorList :data-source="editor.state" @edit="editTraitModal.show($event.item)">
           <template #default="{ item }">
-            {{ item }}
+            <b>name: {{ item.name }}</b>
+            <div flex>
+              <div flex-1>
+                <div>props</div>
+                <pre v-html="JSON.stringify(item.props, null, 2)" />
+              </div>
+              <div flex-1>
+                <div>traits</div>
+                <LineEditorList :data-source="item.traits">
+                  <template #default="{ item: trait }">
+                    {{ trait.mapSourceKey }} {{ trait.mapSourceTitle }}
+                  </template>
+                </LineEditorList>
+              </div>
+            </div>
           </template>
         </LineEditorList>
       </main>
-      <EditState ref="editState" />
+      <EditTraitModal ref="editTraitModal" />
     </div>
-    <div flex-1 b="1">
+    <div flex-1 b="1 gray-400/30">
       <EditorPane />
     </div>
   </div>

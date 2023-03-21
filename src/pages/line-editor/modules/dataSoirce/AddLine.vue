@@ -1,18 +1,15 @@
 <script setup lang="ts">
-import { omit } from 'lodash'
 import type { FormInst } from 'naive-ui'
-import { apiMockUrl } from '~/pages/line-editor/api'
+import { omit } from 'lodash-es'
 import { defaultTransform, useDataSourceStore } from '~/pages/line-editor/data'
 import type { DataSourceItem } from '~/pages/line-editor/data/types'
+import { apiMockUrl } from '~/pages/line-editor/api'
 
 const [visible, toggleVisible] = useToggle()
 const store = useDataSourceStore()
 
-type mdlType = Omit<DataSourceItem, 'key'> | null
-
-let mdl = $ref<mdlType>()
+let mdl = $ref<DataSourceItem | null>()
 let type = $ref<'edit' | 'add'>('add')
-let key: string | null
 
 const formRef = ref<FormInst | null>(null)
 const rules = {
@@ -49,6 +46,7 @@ const add = () => {
   toggleVisible(true)
   type = 'add'
   mdl = {
+    key: shortId(),
     title: undefined,
     type: 'fetch',
     fetchParams: {
@@ -63,8 +61,7 @@ const add = () => {
 const edit = (data: DataSourceItem) => {
   toggleVisible(true)
   type = 'edit'
-  key = data.key
-  mdl = { ...omit(data, 'key') }
+  mdl = { ...data }
 }
 
 const options = [
@@ -76,6 +73,7 @@ const options = [
 
 const typeOptions = [
   { label: 'fetch', value: 'fetch' },
+  { label: 'variable', value: 'variable' },
 ]
 
 defineExpose({ add, edit })
@@ -88,11 +86,11 @@ const onOk = () => {
   formRef.value?.validate((errors) => {
     console.log('validate', errors)
     if (!errors) {
-      if (type === 'add')
-        store.addData(mdl)
-      else
-        store.editData(key, mdl)
-
+      if (type === 'add') {
+        const _mdl = mdl.type === 'variable' ? omit(mdl, 'fetchParams') : mdl
+        store.addData({ ..._mdl })
+      }
+      else { store.editData(mdl.key, mdl) }
       onCancel()
     }
     else {
@@ -116,14 +114,17 @@ const onOk = () => {
           <n-form-item label="stateKey" path="stateKey" required>
             <n-input v-model:value="mdl.stateKey" />
           </n-form-item>
-          <n-form-item label="url" path="fetchParams.url" required>
-            <n-input v-model:value="mdl.fetchParams.url" />
-          </n-form-item>
-          <n-form-item label="method" path="fetchParams.method" required>
-            <n-select v-model:value="mdl.fetchParams.method" :options="options" />
-          </n-form-item>
+          <template v-if="mdl.type === 'fetch'">
+            <n-form-item label="url" path="fetchParams.url" required>
+              <n-input v-model:value="mdl.fetchParams.url" />
+            </n-form-item>
+            <n-form-item label="method" path="fetchParams.method" required>
+              <n-select v-model:value="mdl.fetchParams.method" :options="options" />
+            </n-form-item>
+          </template>
+          <template v-if="mdl.type === 'variable'" />
         </n-tab-pane>
-        <n-tab-pane name="advance" label="advance" display-directive="show">
+        <n-tab-pane name="advance" tab="advance" display-directive="show">
           <SCodeMirror v-model="mdl.transformRes" />
         </n-tab-pane>
       </n-tabs>

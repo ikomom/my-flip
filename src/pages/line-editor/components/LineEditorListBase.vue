@@ -6,10 +6,13 @@ const emit = defineEmits(['edit', 'delete'])
 <template>
   <div
     v-for="(item, index) in dataSource" :key="index"
-    px-3 py-1 hover:bg-gray-50 dark:hover:bg-dark-50
+    py-1 hover:bg-gray-50 dark:hover:bg-dark-50
   >
     <div s-layout-between select="none">
-      <span op50>[{{ index + 1 }}]</span>
+      <div>
+        <span op50 mr-2>[{{ index + 1 }}]</span>
+        <span v-if="item.key" op50>[{{ item.key }}]</span>
+      </div>
       <span>
         <i
           v-if="props.onEdit"
@@ -28,4 +31,5 @@ const emit = defineEmits(['edit', 'delete'])
       {{ item }}
     </div>
   </div>
+  <n-empty v-if="!dataSource.length" :show-icon="false" />
 </template>

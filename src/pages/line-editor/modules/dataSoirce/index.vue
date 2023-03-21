@@ -3,7 +3,7 @@ import LineEditorList from '~/pages/line-editor/components/LineEditorList.vue'
 import { useDataSourceStore } from '~/pages/line-editor/data'
 import AddLine from '~/pages/line-editor/modules/dataSoirce/AddLine.vue'
 
-const addLine = ref()
+const addLine = ref<InstanceType<typeof AddLine>>()
 const store = useDataSourceStore()
 </script>
 
@@ -23,9 +23,11 @@ const store = useDataSourceStore()
       <template #default="{ item }">
         <section flex>
           <div flex-1>
-            <p>[{{ item.key }}] {{ item.type }}: {{ item.title }}</p>
+            <p> {{ item.type }}: {{ item.title }}</p>
             <p>mapKey: {{ item.stateKey }}</p>
-            <p>fetchParams: {{ item.fetchParams }}</p>
+            <p v-if="item.fetchParams">
+              fetchParams: {{ item.fetchParams }}
+            </p>
           </div>
           <pre flex-1 v-text="item.transformRes.trim()" />
         </section>

@@ -1,39 +1,48 @@
 import { defineStore } from 'pinia'
 import type { DataSourceItem, EditorState } from './types'
-import { apiMockJson, apiMockUrl, apiMockUrl2 } from '~/pages/line-editor/api'
 import { shortId } from '~/composables/common'
+import { apiMockUrl } from '~/pages/line-editor/api'
 
 export const defaultTransform = `function(data) {
   return data
 }`
-
-export const getDefaultDataSource = (
-  stateKey: string,
-  title = 'apiMockReq',
-  fetchParams = {
-    url: apiMockUrl,
-    method: 'GET',
-  } as DataSourceItem['fetchParams'],
-): DataSourceItem => ({
-  title: `${title}:${stateKey}`,
-  type: 'fetch',
-  fetchParams,
-  stateKey,
-  transformRes: defaultTransform,
-  key: shortId(),
-})
+const defaultDataSource: DataSourceItem[] = [
+  {
+    title: '请求接口1',
+    type: 'fetch',
+    stateKey: 'fetchStateKey1',
+    transformRes: defaultTransform,
+    fetchParams: {
+      url: apiMockUrl,
+      method: 'GET',
+    },
+    key: shortId(),
+  },
+  {
+    title: '请求接口2',
+    type: 'fetch',
+    stateKey: 'fetchStateKey2',
+    transformRes: defaultTransform,
+    key: shortId(),
+    fetchParams: {
+      url: apiMockUrl,
+      method: 'GET',
+    },
+  },
+  {
+    title: '状态1',
+    type: 'variable',
+    stateKey: 'state1',
+    transformRes: defaultTransform,
+    key: shortId(),
+  },
+]
 
 export const useDataSourceStore = defineStore('dataSource', () => {
-  const dataSource = ref<DataSourceItem[]>([
-    getDefaultDataSource('testState1'),
-    getDefaultDataSource('testState2', '嘎嘎嘎', {
-      url: apiMockUrl2,
-      method: 'GET',
-    })],
-  )
+  const dataSource = ref<DataSourceItem[]>([...defaultDataSource])
 
-  const addData = (item: Omit<DataSourceItem, 'key'>) => {
-    dataSource.value.push({ ...getDefaultDataSource(item.stateKey), ...item })
+  const addData = (item: DataSourceItem) => {
+    dataSource.value.push({ ...item })
   }
 
   const deleteData = (item: DataSourceItem) => {
@@ -48,7 +57,7 @@ export const useDataSourceStore = defineStore('dataSource', () => {
 
     throw new Error('not found data')
   }
-  const editData = (key: string, item: Omit<DataSourceItem, 'key'>) => {
+  const editData = (key: string, item: DataSourceItem) => {
     const to = findData(key)
     Object.assign(to, item)
   }
@@ -91,10 +100,11 @@ export const useEditorState = defineStore('editorState', () => {
     throw new Error('not found name')
   }
 
-  const addTrait = (name: string, mapSourceKey: string) => {
+  const addTrait = (name: string, mapSourceKey: string, mapSourceTitle = mapSourceKey) => {
     const to = findState(name)
     to.traits.push({
       mapSourceKey,
+      mapSourceTitle,
       key: shortId(),
     })
   }

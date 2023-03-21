@@ -10,7 +10,7 @@ let mdl = $ref<EditorState>()
 const store = useDataSourceStore()
 const state = useEditorState()
 
-const show = (data: any) => {
+const show = (data: EditorState) => {
   toggleVisible(true)
   console.log('show', toRaw(data))
   mdl = toRaw(data)
@@ -45,7 +45,7 @@ const onRun = async () => {
 <template>
   <n-modal v-model:show="visible" :title="mdl?.name" preset="dialog" style="width: 1000px">
     <n-space>
-      <n-popselect :options="options" @update-value=" state.addTrait(mdl?.name, $event)">
+      <n-popselect :options="options" @update-value="(v, o) => state.addTrait(mdl?.name, v, o.label)">
         <button btn>
           add
         </button>
