@@ -19,15 +19,6 @@ export type DataSourceItem = {
   transformRes: string
 } & (DataSourceFetchItem | DataSourceVariableItem)
 
-const D: DataSourceItem = {
-  key: '',
-  stateKey: '',
-  transformRes: '',
-  title: '',
-  type: 'variable',
-}
-D
-
 export interface EditorTrait {
   mapSourceKey: string
   mapSourceTitle: string

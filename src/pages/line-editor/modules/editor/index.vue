@@ -9,7 +9,7 @@ const editor = useEditorState()
 const editTraitModal = ref<InstanceType<typeof EditTraitModal>>()
 
 const onReset = () => {
-  const s = confirm('reset all')
+  const s = confirm('reset all?')
   if (s) {
     store.$reset()
     editor.$reset()
