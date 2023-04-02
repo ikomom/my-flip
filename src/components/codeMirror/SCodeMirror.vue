@@ -1,7 +1,7 @@
 <script lang="ts" setup>
 import type { Extension } from '@codemirror/state'
 import type { EditorView } from 'codemirror'
-import { ref, shallowRef } from 'vue'
+import { shallowRef } from 'vue'
 import { Codemirror } from 'vue-codemirror'
 import { javascript } from '@codemirror/lang-javascript'
 import { oneDark } from '@codemirror/theme-one-dark'

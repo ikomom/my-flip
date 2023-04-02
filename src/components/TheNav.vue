@@ -42,6 +42,9 @@ const menus = [
   {
     path: '/tensorflow',
   },
+  {
+    path: '/games',
+  },
 ]
 </script>
 
