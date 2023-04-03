@@ -34,22 +34,43 @@ const matrix = computed(() => {
   return defaultMartix
 })
 
+const checkBound = (rule: (cord: number[]) => boolean) => {
+  for (const cord of activeGeometry.value) {
+    if (rule(cord))
+      return false
+  }
+
+  return true
+}
+
 onKeyStroke(['a'], () => {
+  if (!checkBound(cord => cord[1] - 2 < 0))
+    return
+
   for (const cord of activeGeometry.value)
     cord[1] -= 1
 })
 
 onKeyStroke(['d'], () => {
+  if (!checkBound(cord => cord[1] + 1 > rows))
+    return
+
   for (const cord of activeGeometry.value)
     cord[1] += 1
 })
 
 onKeyStroke(['w'], () => {
+  if (!checkBound(cord => cord[0] - 2 < 0))
+    return
+
   for (const cord of activeGeometry.value)
     cord[0] -= 1
 })
 
 onKeyStroke(['s'], () => {
+  if (!checkBound(cord => cord[0] + 1 > cols))
+    return
+
   for (const cord of activeGeometry.value)
     cord[0] += 1
 })
