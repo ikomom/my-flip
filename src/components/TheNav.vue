@@ -1,5 +1,6 @@
 <script lang="ts" setup>
 import SMenu from './SMenu.vue'
+
 const route = useRoute()
 
 const menus = [

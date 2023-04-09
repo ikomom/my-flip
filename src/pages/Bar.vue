@@ -4,14 +4,14 @@ import { invoke } from '@vueuse/core'
 import SimpleWorker from '~/composables/simpleWorker/index.ts?worker'
 import SimpleShareWorker from '~/composables/simpleWorker/ShareWorkerTest.ts?sharedworker'
 
-const onTransitionEnd = (...args: any[]) => {
+function onTransitionEnd(...args: any[]) {
   console.log('Bar: onTransitionEnd', args)
 }
-const onTransitionStart = (...args: any[]) => {
+function onTransitionStart(...args: any[]) {
   console.log('Bar: onTransitionStart', args)
 }
 
-const mockReq = () => {
+function mockReq() {
   fetch('/login', {
     method: 'post',
   }).then(() => {
@@ -20,7 +20,7 @@ const mockReq = () => {
 }
 
 let myWorker = $ref<Worker>()
-const testSimpleWorker = () => {
+function testSimpleWorker() {
   if (myWorker)
     myWorker.terminate()
 
@@ -29,12 +29,12 @@ const testSimpleWorker = () => {
     console.log('Message received from worker', e)
   }
 }
-const postMsgWorker = () => {
+function postMsgWorker() {
   myWorker.postMessage('哈哈哈哈')
 }
 
 let myShareWorker = $ref<SharedWorker>()
-const testShareWorker = () => {
+function testShareWorker() {
   if (myShareWorker) {
     console.log('已经开启')
     return
@@ -49,7 +49,7 @@ const testShareWorker = () => {
 
   console.log('myShareWorker start', myShareWorker)
 }
-const postMsgShareWorker = () => {
+function postMsgShareWorker() {
   myShareWorker.port.postMessage({
     type: 'notifyTab',
     payload: {
@@ -58,7 +58,7 @@ const postMsgShareWorker = () => {
   })
 }
 
-const shareWorkerClose = () => {
+function shareWorkerClose() {
   if (myShareWorker) {
     myShareWorker.port.postMessage({
       type: 'CLOSE',
@@ -76,7 +76,7 @@ onBeforeUnmount(() => {
 })
 
 // vue-use 测试
-const f = async () => {
+async function f() {
   let res: Response
   res = await fetch('/login', {
     method: 'post',
@@ -88,7 +88,7 @@ const f = async () => {
 }
 const fPromise = createSingletonPromise(f)
 // 创建单例的promise, 之后调用直接返回结果, 不会重新运行逻辑
-const testCreateSingletonPromise = async () => {
+async function testCreateSingletonPromise() {
   console.log('createSingletonPromise', await fPromise())
   console.log('createSingletonPromise', await fPromise())
   console.log('createSingletonPromise', await fPromise())

@@ -10,7 +10,7 @@ let mdl = $ref<EditorState>()
 const store = useDataSourceStore()
 const state = useEditorState()
 
-const show = (data: EditorState) => {
+function show(data: EditorState) {
   toggleVisible(true)
   console.log('show', toRaw(data))
   mdl = toRaw(data)
@@ -21,7 +21,7 @@ const options = computed(() => {
   return store.dataSource.map(item => ({ label: item.title, value: item.key }))
 })
 const [runLoading, setRunLoading] = useToggle()
-const onRun = async () => {
+async function onRun() {
   setRunLoading(true)
   for (const trait of mdl.traits) {
     try {
@@ -40,12 +40,16 @@ const onRun = async () => {
   }
   setRunLoading(false)
 }
+
+function onAdd(v: string, option: any) {
+  state.addTrait(mdl?.name, v, option.label)
+}
 </script>
 
 <template>
   <n-modal v-model:show="visible" :title="mdl?.name" preset="dialog" style="width: 1000px">
     <n-space>
-      <n-popselect :options="options" @update-value="(v, o) => state.addTrait(mdl?.name, v, o.label)">
+      <n-popselect :options="options" @update-value="onAdd">
         <button btn>
           add
         </button>

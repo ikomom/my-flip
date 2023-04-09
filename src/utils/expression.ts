@@ -71,7 +71,7 @@ export function build(tokens: string[]): ExpChunk[] {
 
 // copy and modify from
 // https://stackoverflow.com/questions/68161410/javascript-parse-multiple-brackets-recursively-from-a-string
-export const parseExpression = (rawExp: string): ExpChunk[] => {
+export function parseExpression(rawExp: string): ExpChunk[] {
   const exp = rawExp.trim()
   const tokens = lexer(exp)
   const result = build(tokens)

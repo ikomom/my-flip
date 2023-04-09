@@ -34,7 +34,7 @@ const matrix = computed(() => {
   return defaultMartix
 })
 
-const checkBound = (rule: (cord: number[]) => boolean) => {
+function checkBound(rule: (cord: number[]) => boolean) {
   for (const cord of activeGeometry.value) {
     if (rule(cord))
       return false
@@ -77,7 +77,7 @@ onKeyStroke(['s'], () => {
 
 console.log({ matrix })
 
-const onAdd = () => {
+function onAdd() {
   geometries.value.push({
     type: activeKey.value,
     data: cloneDeep(activeGeometry.value),

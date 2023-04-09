@@ -42,7 +42,7 @@ const rules = {
   },
 }
 
-const add = () => {
+function add() {
   toggleVisible(true)
   type = 'add'
   mdl = {
@@ -58,7 +58,7 @@ const add = () => {
   }
 }
 
-const edit = (data: DataSourceItem) => {
+function edit(data: DataSourceItem) {
   toggleVisible(true)
   type = 'edit'
   mdl = { ...data }
@@ -78,11 +78,11 @@ const typeOptions = [
 
 defineExpose({ add, edit })
 
-const onCancel = () => {
+function onCancel() {
   toggleVisible(false)
   mdl = null
 }
-const onOk = () => {
+function onOk() {
   formRef.value?.validate((errors) => {
     console.log('validate', errors)
     if (!errors) {

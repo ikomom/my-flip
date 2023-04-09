@@ -15,7 +15,9 @@ watch(() => props.value, () => setContent(props.value))
 onChange(content => emit('change', content))
 emit('change', props.value)
 
-const getSize = (num: number, min: number) => num - min > 0 ? num - min : min
+function getSize(num: number, min: number) {
+  return num - min > 0 ? num - min : min
+}
 
 defineExpose({
   resize: () => {

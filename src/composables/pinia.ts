@@ -11,7 +11,7 @@ const resetPlugin: PiniaPlugin = ({ store }) => {
   }
 }
 
-export const installPinia = (app: App<Element>) => {
+export function installPinia(app: App<Element>) {
   const pinia = createPinia()
   pinia.use(resetPlugin)
   app.use(pinia)

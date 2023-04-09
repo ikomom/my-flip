@@ -23,7 +23,7 @@ let stopUpdateWatcher: WatchStopHandle
 /**
  * 更新脚本和视图
  */
-const updateScripts = async () => {
+async function updateScripts() {
   runtimeError.value = null
   runtimeWarning.value = null
   try {
@@ -52,7 +52,7 @@ const updateScripts = async () => {
 /**
  * 创建沙盒
  */
-const createSandBox = () => {
+function createSandBox() {
   if (sandbox) {
     proxy.destroy()
     if (stopUpdateWatcher)

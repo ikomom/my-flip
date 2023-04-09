@@ -3,11 +3,9 @@ import { Menu, MenuButton, MenuItem, MenuItems } from '@headlessui/vue'
 
 defineProps<{ menus: { path: string }[] }>()
 
-const router = useRouter()
-
 const [open, toggleOpen] = useToggle(false)
 
-const setOpen = () => {
+function setOpen() {
   if (!open.value)
     toggleOpen(true)
 }

@@ -3,7 +3,7 @@ import type { PluginOptions } from 'vue-toastification'
 import Toast, { POSITION, useToast } from 'vue-toastification'
 import 'vue-toastification/dist/index.css'
 
-export const installNotification = (app: App<Element>) => {
+export function installNotification(app: App<Element>) {
   app.use(Toast, {
     pauseOnHover: false,
     position: POSITION.TOP_CENTER,

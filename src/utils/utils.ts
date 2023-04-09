@@ -57,7 +57,7 @@ export function renderTemplate(
 export function getFormTemplate(str: string, reg = BRACKETS_RXP.dbLarge) {
   const found = []
   let curMatch
-  // eslint-disable-next-line no-cond-assign
+
   while ((curMatch = reg.exec(str)))
     found.push(curMatch[1])
 

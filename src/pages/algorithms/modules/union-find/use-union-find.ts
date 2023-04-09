@@ -5,7 +5,7 @@ import { UnionFind } from '~/pages/algorithms/modules/union-find/union-find-npm'
  * 自我实现版本
  * 二维数组存储联通分类
  */
-export const useUnionFindV1 = () => {
+export function useUnionFindV1() {
   const unionSet: number[][] = reactive([]) // 联通分量
   const unionLineSet: number[][] = reactive([]) // 原始的对象集合, 用于画线
 
@@ -101,7 +101,7 @@ export const useUnionFindV1 = () => {
  * 算法第四版实现
  * 一维数组下标存储联通分量
  */
-export const useUnionFindV2 = (initRow: number) => {
+export function useUnionFindV2(initRow: number) {
   const unionSet: number[] = reactive(new Array(initRow).fill(0)) // 联通分量
   const unionLineSet: number[][] = reactive([]) // 原始的对象集合, 用于画线
   let index = 1
@@ -202,6 +202,6 @@ export const UnionFindVersion = {
   V3: useUnionFindV3,
 }
 
-export const useUnionFind = (version: keyof typeof UnionFindVersion, initRow?: number) => {
+export function useUnionFind(version: keyof typeof UnionFindVersion, initRow?: number) {
   return UnionFindVersion[version](initRow)
 }

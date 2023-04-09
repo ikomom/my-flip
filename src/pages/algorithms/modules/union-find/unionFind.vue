@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { cloneDeep, isEqual, random, range } from 'lodash-es'
+import { range } from 'lodash-es'
 import { Anchor } from 'two.js/src/anchor'
 import { chroma, useTwoJs } from '~/composables'
 import PopNumConfirm from '~/pages/algorithms/components/PopNumConfirm.vue'

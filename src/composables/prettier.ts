@@ -6,7 +6,7 @@ import parserHtml from 'prettier/esm/parser-html.mjs'
 // @ts-expect-error
 import parserTs from 'prettier/esm/parser-typescript.mjs'
 
-export const formatVue = (source: string) => {
+export function formatVue(source: string) {
   const p = prettier.format(source, {
     parser: 'vue',
     plugins: [parserJson, parserHtml, parserTs],

@@ -124,7 +124,7 @@ export const EEditorProvider = defineComponent({
   },
 })
 
-export const useEditorInject = () => {
+export function useEditorInject() {
   const editor = inject('editor')
   // console.log('editor', editor)
   return editor as ReturnType<typeof useEditor>

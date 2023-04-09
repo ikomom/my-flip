@@ -6,8 +6,9 @@ import type { Node, ObjectProperty } from '@babel/types'
  *
  * @param node
  */
-export const isStaticProperty = (node: Node): node is ObjectProperty =>
-  node.type === 'ObjectProperty' && !node.computed
+export function isStaticProperty(node: Node): node is ObjectProperty {
+  return node.type === 'ObjectProperty' && !node.computed
+}
 
 /**
  * 是否在结构赋值中
@@ -15,7 +16,7 @@ export const isStaticProperty = (node: Node): node is ObjectProperty =>
  * @param parent
  * @param parentStack
  */
-export const isInDestructureAssignment = (parent: Node, parentStack: Node[]): boolean => {
+export function isInDestructureAssignment(parent: Node, parentStack: Node[]): boolean {
   if (parent && ['ObjectProperty', 'ArrayPattern', 'ObjectPattern'].includes(parent.type)) {
     let i = parentStack.length
     while (i--) {

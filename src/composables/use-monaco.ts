@@ -29,7 +29,7 @@ interface Options {
  * @param target
  * @param options
  */
-const useMonaco = (target: Ref, options: Options) => {
+function useMonaco(target: Ref, options: Options) {
   const changeEventHook = createEventHook<string>()
   const isSetup = ref(false)
 

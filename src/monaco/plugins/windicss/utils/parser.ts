@@ -13,7 +13,7 @@ export class HTMLParser {
       return
     const regex = /\/\*[\s\S]*?\*\/|\/\*[\s\S]*$|([^\\:]|^)\/\/.*|<!--[\s\S]*?-->$/igm
     let match
-    // eslint-disable-next-line no-cond-assign
+
     while ((match = regex.exec(this.html as string))) {
       if (match)
         this.html = (this.html as string).slice(0, match.index) + ' '.repeat(regex.lastIndex - match.index) + this.html.slice(regex.lastIndex)
@@ -26,7 +26,7 @@ export class HTMLParser {
     const output: Attr[] = []
     const regex = /\S+\s*=\s*"[^"]+"|\S+\s*=\s*'[^']+'|\S+\s*=\s*[^>\s]+/igm
     let match
-    // eslint-disable-next-line no-cond-assign
+
     while ((match = regex.exec(this.html as string))) {
       if (match) {
         const raw = match[0]
@@ -90,7 +90,7 @@ export class HTMLParser {
     const output: ClassName[] = []
     const regex = /(?<=@apply\s+)[^;]+(?=\s+!important)|(?<=@apply\s+)[^;]+(?=;)/igm
     let match: any
-    // eslint-disable-next-line no-cond-assign
+
     while ((match = regex.exec(this.html as string))) {
       if (match) {
         output.push({

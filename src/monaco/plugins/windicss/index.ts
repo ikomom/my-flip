@@ -26,7 +26,7 @@ function attrKey(label: string, kind: CompletionItemKind, order: number): Comple
  * @param position
  * @returns
  */
-const resolveVariants = (document: TextDocument, position: Position) => {
+function resolveVariants(document: TextDocument, position: Position) {
   const text = document.getText({
     start: { line: 0, character: 0 },
     end: position,
@@ -78,7 +78,7 @@ const resolveVariants = (document: TextDocument, position: Position) => {
  * @param position
  * @returns
  */
-const resolveAttrKeys = (document: TextDocument, position: Position) => {
+function resolveAttrKeys(document: TextDocument, position: Position) {
   const text = document.getText({
     start: { line: 0, character: 0 },
     end: position,
@@ -104,7 +104,7 @@ const resolveAttrKeys = (document: TextDocument, position: Position) => {
  * @param position
  * @returns
  */
-const resolveAttrValues = (document: TextDocument, position: Position) => {
+function resolveAttrValues(document: TextDocument, position: Position) {
   const text = document.getText({
     start: { line: 0, character: 0 },
     end: position,

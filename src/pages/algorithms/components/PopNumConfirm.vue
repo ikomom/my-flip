@@ -2,7 +2,7 @@
 const emits = defineEmits<(e: 'ok', data: Record<string, number>) => void>()
 
 const data = reactive({ n1: 0, n2: 1 })
-const onOk = () => {
+function onOk() {
   if (data.n2 !== data.n1)
     emits('ok', { ...data })
   else

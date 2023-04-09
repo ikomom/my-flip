@@ -10,9 +10,7 @@ import {
   rewriteDefault,
   walkIdentifiers,
 } from 'vue/compiler-sfc'
-import { walk } from 'estree-walker'
-import type { ExportSpecifier, Identifier, ImportDeclaration, Node, ObjectProperty } from '@babel/types'
-import { cloneDeep } from 'lodash-es'
+import type { Identifier, ImportDeclaration, Node } from '@babel/types'
 import type EditorFile from '~/composables/editor/EditorFile'
 import { hashId } from '~/utils/utils'
 import type { EditorCore } from '~/composables/editor/EditorCore'
@@ -35,13 +33,13 @@ export const COMP_IDENTIFIER = '__sfc__'
  * @param file
  * @param opt
  */
-export const compilerVue = async (file: EditorFile, opt?: Partial<VueCompilerOptions>) => {
+export async function compilerVue(file: EditorFile, opt?: Partial<VueCompilerOptions>) {
   const {
     code,
     filename,
   } = file
   const codeResult = []
-  const { ssr } = { ...defaultOption, ...opt }
+  // const { ssr } = { ...defaultOption, ...opt }
   const id = await hashId(filename)
   // ssr ? 'ssrRender' :
   const fnName = 'render'
@@ -130,7 +128,7 @@ export async function parseModule({ code, filename }: EditorFile) {
  * 连接多文件代码, 编译css
  * @param core
  */
-export const startProcessFile = (core: EditorCore) => {
+export function startProcessFile(core: EditorCore) {
   const processFile = (file: EditorFile) => {
     const { filename, compiled } = file
     const s = new MagicString(compiled.js)
@@ -303,7 +301,7 @@ export const startProcessFile = (core: EditorCore) => {
     return []
 }
 
-export const astTest = (file: EditorFile) => {
+export function astTest(file: EditorFile) {
   const s = new MagicString(file.code.trim())
   // @ts-expect-error
   window.s = s

@@ -21,7 +21,7 @@ const useTwoJsOptionsDefault: UseTwoJsOptions = {
  * @param parent
  * @param options
  */
-export const useTwoJs = (parent: MaybeRef<any>, options: Partial<UseTwoJsOptions> = {}) => {
+export function useTwoJs(parent: MaybeRef<any>, options: Partial<UseTwoJsOptions> = {}) {
   const opt = { ...useTwoJsOptionsDefault, ...options }
 
   const two = new Two()

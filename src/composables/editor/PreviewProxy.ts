@@ -25,7 +25,7 @@ export class PreviewProxy {
   handle_repl_message(event: any) {
     if (event.source !== this.iframe.contentWindow)
       return
-    const { action, args } = event.data
+    const { action } = event.data
     switch (action) {
       case 'cmd_error':
       case 'cmd_ok':

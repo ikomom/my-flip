@@ -2,7 +2,7 @@
 import Ajv from 'ajv'
 import { BRACKETS_RXP } from '~/utils/utils'
 
-const validateFunc = () => {
+function validateFunc() {
   const ajv = new Ajv() // options can be passed, e.g. {allErrors: true}
 
   const schema = {
@@ -35,7 +35,7 @@ const source = reactive({
 
 const when = ref('{{a + b}}')
 
-const whenFunc = async (rule: string) => {
+async function whenFunc(rule: string) {
   // return sandbox.evaluate(rule, { ...source })
   return rule.replace(BRACKETS_RXP.dbLarge, (match, key) => {
     console.log({ match, key })
@@ -43,7 +43,7 @@ const whenFunc = async (rule: string) => {
   })
 }
 
-const run = async () => {
+async function run() {
   try {
     // "use strict";
     const res = new Function('source', `with(source){return ${await whenFunc(when.value)}}`)(toRaw(source))

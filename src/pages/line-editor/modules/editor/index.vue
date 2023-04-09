@@ -8,7 +8,7 @@ const store = useDataSourceStore()
 const editor = useEditorState()
 const editTraitModal = ref<InstanceType<typeof EditTraitModal>>()
 
-const onReset = () => {
+function onReset() {
   const s = confirm('reset all?')
   if (s) {
     store.$reset()

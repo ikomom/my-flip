@@ -4,7 +4,7 @@ import Tab from '~/pages/editor/modules/Tab.vue'
 
 const { core, $actions: { setActiveFile, addFileByName, removeFile } } = useEditorInject()
 
-const onAddFile = () => {
+function onAddFile() {
   const name = prompt('请输入文件名')
   if (name) {
     const filename = name.endsWith('.vue') ? name : `${name}.vue`
@@ -13,7 +13,7 @@ const onAddFile = () => {
   }
 }
 
-const onClose = (filename: string) => {
+function onClose(filename: string) {
   const res = confirm('关闭文件, 无法恢复')
   if (res)
     removeFile(filename)

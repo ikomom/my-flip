@@ -1,6 +1,5 @@
 <script setup lang="ts">
 import Two from 'two.js'
-import { useTwoJs } from '~/composables'
 import { getGcd, getLcm } from '~/utils/algorithms'
 
 const container = ref()
@@ -18,7 +17,7 @@ const two = new Two({
   ...drawing,
 })
 
-const drawRect = async () => {
+async function drawRect() {
   const len = gcdValue.value
   for (let i = 0; i < drawing.width / len; i++) {
     for (let j = 0; j < drawing.height / len; j++) {
@@ -39,13 +38,13 @@ const drawRect = async () => {
   }
 }
 
-const clearDrawTimeArr = () => {
+function clearDrawTimeArr() {
   console.log('clearDrawTimeArr', [...drawTimeout])
   drawTimeout.forEach(time => clearTimeout(time))
   drawTimeout.clear()
 }
 
-const render = async () => {
+async function render() {
   two.clear()
   clearDrawTimeArr()
   two.height = drawing.height
