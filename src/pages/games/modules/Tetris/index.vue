@@ -22,16 +22,16 @@ watch(activeKey, (val) => {
 })
 
 const matrix = computed(() => {
-  const defaultMartix = createMatrix(rows, cols)
+  const defaultMatrix = createMatrix(rows, cols)
 
   for (const cord of activeGeometry.value)
-    defaultMartix[cord[0] - 1][cord[1] - 1] = 1
+    defaultMatrix[cord[0] - 1][cord[1] - 1] = 1
 
   for (const geometry of geometries.value) {
     for (const cord of geometry.data)
-      defaultMartix[cord[0] - 1][cord[1] - 1] = 1
+      defaultMatrix[cord[0] - 1][cord[1] - 1] = 1
   }
-  return defaultMartix
+  return defaultMatrix
 })
 
 function checkBound(rule: (cord: number[]) => boolean) {
@@ -89,7 +89,7 @@ function onAdd() {
   <button btn @click="onAdd">
     add
   </button>
-  <div w="200px" m-auto b="1" relative text-center>
+  <div w="200px" b="1" relative text-center>
     <n-radio-group v-model:value="activeKey" name="radiogroup">
       <n-space>
         <n-radio
