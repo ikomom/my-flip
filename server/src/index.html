@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Index</title>
+  <script src="https://how2j.cn/study/jquery.min.js"></script>
+</head>
+<body>
+socket
+<!--<iframe src="https://www.baidu.com"></iframe>-->
+<button id="connect">connect</button>
+<button id="close">close</button>
+<div id="status">status: </div><br/>
+<div id="message"></div>
+<script>
+  function createWs() {
+    var ws = new WebSocket('ws://localhost:9888');
+    ws.onopen = function () {
+      console.log('ws onopen');
+      $("#status").append('open')
+      ws.send('from client: hello');
+    };
+    ws.onmessage = function (e) {
+      $("#message").append(e.data)
+      console.log('from server: ' + e.data);
+    };
+    return ws
+  }
+
+  window.onload = function () {
+    let ws
+    $("#connect").on("click", () => {
+      if (ws) {
+        closeWs()
+      }
+      ws = createWs()
+    })
+    function closeWs() {
+      if (ws) {
+        ws.close()
+        ws = null
+      }
+    }
+    $("#close").on("click", closeWs)
+ }
+</script>
+
+</body>
+</html>
