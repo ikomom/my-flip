@@ -2,7 +2,8 @@
   "name": "server",
   "version": "1.0.0",
   "scripts": {
-    "dev": "nodemon src/main.js"
+    "dev": "nodemon src/main.js",
+    "testNet": "nodemon src/testNet.js"
   },
   "dependencies": {
     "ws": "^8.13.0",

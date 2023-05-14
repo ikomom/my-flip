@@ -33,5 +33,8 @@ app.get('/', (req, res) => {
   console.log('get', req.url)
   res.sendFile(path.resolve(__dirname, './index.html'))
 })
+app.get('/WwLogin.js', (req, res) => {
+  res.sendFile(path.resolve(__dirname, './WwLogin.js'))
+})
 
-app.listen(3001)
+app.listen(3000)

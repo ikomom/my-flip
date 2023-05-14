@@ -94,7 +94,8 @@
       "no-new-func": "off"
     },
     "ignorePatterns": [
-      "*.html"
+      "*.html",
+      "*.js"
     ]
   },
   "msw": {

@@ -4,13 +4,16 @@
   <meta charset="UTF-8">
   <title>Index</title>
   <script src="https://how2j.cn/study/jquery.min.js"></script>
+  <script src="WwLogin.js"></script>
 </head>
 <body>
+<div id="wxLogin"></div>
 socket
 <!--<iframe src="https://www.baidu.com"></iframe>-->
 <button id="connect">connect</button>
 <button id="close">close</button>
-<div id="status">status: </div><br/>
+<div id="status">status:</div>
+<br/>
 <div id="message"></div>
 <script>
   function createWs() {
@@ -27,7 +30,7 @@ socket
     return ws
   }
 
-  window.onload = function () {
+  function WsInit() {
     let ws
     $("#connect").on("click", () => {
       if (ws) {
@@ -35,14 +38,34 @@ socket
       }
       ws = createWs()
     })
+
     function closeWs() {
       if (ws) {
         ws.close()
         ws = null
       }
     }
+
     $("#close").on("click", closeWs)
- }
+  }
+  const localUrl = window.location.protocol + '//' + window.location.host
+
+  function WxInit() {
+   const item =  new WwLogin({
+      id:'wxLogin',
+      appid: 'ww858498383909ca27',
+      agentid: '1000011',
+      redirect_uri: `http://oss.ptu.edu.cn/api/auth/wecom/callback?host=b3NzLnB0dS5lZHUuY24=`,
+      state: '12',
+      lang: 'zh'
+    })
+    console.log('WxInit', item)
+  }
+
+  window.onload = function () {
+    WsInit()
+    // WxInit()
+  }
 </script>
 
 </body>
