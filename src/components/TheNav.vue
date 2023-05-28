@@ -46,6 +46,9 @@ const menus = [
   {
     path: '/games',
   },
+  {
+    path: '/js',
+  },
 ]
 </script>
 
