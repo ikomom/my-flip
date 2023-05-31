@@ -32,21 +32,21 @@ export default class Uploader {
   // 是否文件切片
   enableSlice: boolean
   // 自定义进度处理函数
-  customProgressHandler: ProgressHandler = null
+  private customProgressHandler: ProgressHandler = null
   // 自定义请求结束处理函数
-  customCompleteHandler: HandlerType = null
+  private customCompleteHandler: HandlerType = null
   // 自定义错误请求
-  customErrorHandler: HandlerErrorType = null
+  private customErrorHandler: HandlerErrorType = null
   // 文件大小
-  length = 0
+  private length = 0
   // 切片请求, 用于断点传续
-  requestList: any[] = []
+  private requestList: any[] = []
   // 切片详情
-  chunkList: chunkListType = []
+  private chunkList: chunkListType = []
   // 上传耗时
-  uploadTime: number | null = null
+  private uploadTime: number | null = null
   // 计算Hash耗时
-  calHashTime: number | null = null
+  private calHashTime: number | null = null
 
   constructor(url: string, options?: Partial<typeof defaultUploader>) {
     this.uploaderUrl = url
