@@ -32,7 +32,7 @@ export function createFloating<T extends Component>(component: T, options?: floa
       const cleanRouterGuard = router.beforeEach(async () => {
         isFly.value = true
         await nextTick()
-        console.log('起飞')
+        // console.log('起飞')
       })
 
       onBeforeUnmount(() => {

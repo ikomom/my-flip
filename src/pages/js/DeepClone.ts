@@ -71,6 +71,7 @@ function cloneFunction(func: Function) {
   const paramReg = /(?<=\().+(?=\)\s+{)/
   const funcString = func.toString()
   if (func.prototype) {
+    // 没有复制原型
     console.log('普通函数')
     const param = paramReg.exec(funcString)
     const body = bodyReg.exec(funcString)

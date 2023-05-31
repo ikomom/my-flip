@@ -36,7 +36,7 @@ export const router = createRouter({
  * 权限控制
  */
 router.beforeResolve(async (to, from) => {
-  console.log('beforeResolve', to)
+  // console.log('beforeResolve', to)
   if (to.meta.forbidden) {
     const timeout = 1000
     toast.error('禁止访问', { timeout })
@@ -50,11 +50,11 @@ router.beforeResolve(async (to, from) => {
 })
 
 router.beforeEach(() => {
-  console.log('beforeEach')
+  // console.log('beforeEach')
   nProgress.start()
 })
 
 router.afterEach((to, from, failure) => {
-  console.log('afterEach', { to, from, failure })
+  // console.log('afterEach', { to, from, failure })
   nProgress.done()
 })

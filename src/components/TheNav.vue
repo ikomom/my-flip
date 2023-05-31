@@ -49,6 +49,9 @@ const menus = [
   {
     path: '/js',
   },
+  {
+    path: '/comp',
+  },
 ]
 </script>
 
