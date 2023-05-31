@@ -15,27 +15,37 @@ function getTest2() {
   })
 }
 
-const fileRef = ref()
+const formRef = ref<HTMLFormElement>()
+const fileRef = ref<HTMLInputElement>()
 const singleFileUploader = new Uploader(UPLOAD_SINGLE_FILE_API, { showProgress: true })
 
 function uploadSingleFile() {
   fileRef.value.click()
 }
 
+const loading = ref(false)
 function onFileChange(e: Event) {
+  if (loading.value)
+    return
   const target = (e.target as HTMLInputElement)
   const originFile = target.files[0]
 
-  console.log('onFileChange', target.files[0])
-  singleFileUploader
-    .upload(originFile)
-    .onProgress((e) => {
-      console.log('upload', e)
-    }).onComplete((e) => {
-      console.log('onComplete', e)
-    }).onError((e) => {
-      console.log('onError', e)
-    })
+  console.log('onFileChange', target.files)
+  if (originFile) {
+    loading.value = true
+    formRef.value.reset()
+    singleFileUploader
+      .upload(originFile)
+      .onProgress((e) => {
+        console.log('upload', e)
+      }).onComplete((e) => {
+        console.log('onComplete', e)
+        loading.value = false
+      }).onError((e) => {
+        console.log('onError', e)
+        loading.value = false
+      })
+  }
 }
 </script>
 
@@ -47,10 +57,12 @@ function onFileChange(e: Event) {
     <button btn @click="getTest2">
       getTest
     </button>
-    <button btn @click="uploadSingleFile">
+    <n-button :loading="loading" @click="uploadSingleFile">
       upload File
-    </button>
-    <input v-show="false" ref="fileRef" type="file" @change="onFileChange">
+    </n-button>
+    <form v-show="false" ref="formRef">
+      <input ref="fileRef" type="file" multiple @change="onFileChange">
+    </form>
   </n-space>
 </template>
 

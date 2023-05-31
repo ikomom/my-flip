@@ -25,8 +25,11 @@ const defaultUploader = {
 }
 
 export default class Uploader {
+  // 上传地址
   uploaderUrl: string
+  // 显示进度条
   showProgress: boolean
+  // 是否文件切片
   enableSlice: boolean
   // 自定义进度处理函数
   customProgressHandler: ProgressHandler = null
@@ -46,11 +49,8 @@ export default class Uploader {
   calHashTime: number | null = null
 
   constructor(url: string, options?: Partial<typeof defaultUploader>) {
-    // 上传地址
     this.uploaderUrl = url
-    // 显示进度条
     this.showProgress = options?.showProgress || false
-    // 文件切片
     this.enableSlice = options?.enableSlice || false
   }
 
