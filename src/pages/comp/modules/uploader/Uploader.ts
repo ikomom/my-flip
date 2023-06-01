@@ -1,6 +1,9 @@
-import { ajax4Upload } from '~/pages/comp/modules/uploader/Request'
+import { VERIFY_FILE_API } from '~/pages/comp/modules/uploader/constant'
+import { ajax, ajax4Upload } from '~/pages/comp/modules/uploader/Request'
+import type { FileChunk } from '~/utils/fileUtils'
+import { calculateFileHash, createFileChunk } from '~/utils/fileUtils'
 
-type chunkListType = any[]
+type chunkListType = FileChunk[]
 
 interface ProgressHandlerParams {
   percentage: number
@@ -126,14 +129,39 @@ export default class Uploader {
     })
   }
 
+  verifyHash(fileSize: number, contentHash: string) {
+    const formData = new FormData()
+    formData.append('fileSize', `${fileSize}`)
+    formData.append('contentHash', contentHash)
+
+    return ajax({
+      method: 'POST',
+      url: VERIFY_FILE_API,
+      data: formData,
+    })
+  }
+
+  private uploadSliceFile = (file: File) => {
+    const chunkList = createFileChunk(file)
+    console.log(chunkList)
+    this.chunkList = chunkList
+    calculateFileHash(chunkList)
+      .then((res) => {
+        this.calHashTime = res.time
+        console.log('calculateFileHash', res)
+        this.verifyHash(this.length, res.hash).then((res) => {
+          console.log('verifyHash', res)
+        })
+      })
+  }
+
   public upload = (file: File) => {
     this.length = file.size
-    if (this.enableSlice) {
-
-    }
-    else {
+    if (this.enableSlice)
+      this.uploadSliceFile(file)
+    else
       this.uploadFile(file)
-    }
+
     return this
   }
 }

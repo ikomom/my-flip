@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { TEST_UPLOADER, UPLOAD_SINGLE_FILE_API } from '~/pages/comp/modules/uploader/constant'
+import { TEST_UPLOADER, UPLOAD_CHUNK_FILE_API, UPLOAD_SINGLE_FILE_API } from '~/pages/comp/modules/uploader/constant'
 import { ajax } from '~/pages/comp/modules/uploader/Request'
 import Uploader from '~/pages/comp/modules/uploader/Uploader'
 
@@ -14,38 +14,64 @@ function getTest2() {
     url: '/images/vr/img.png',
   })
 }
-
+type ModeType = 'SINGLE' | 'SLICE'
+const mode = ref<ModeType>('SINGLE')
 const formRef = ref<HTMLFormElement>()
 const fileRef = ref<HTMLInputElement>()
 const singleFileUploader = new Uploader(UPLOAD_SINGLE_FILE_API, { showProgress: true })
+const sliceFileUploader = new Uploader(UPLOAD_CHUNK_FILE_API, { showProgress: true, enableSlice: true })
 
-function uploadSingleFile() {
+function onUploadClick(modeType: ModeType) {
+  mode.value = modeType
   fileRef.value.click()
 }
 
-const loading = ref(false)
 function onFileChange(e: Event) {
-  if (loading.value)
-    return
   const target = (e.target as HTMLInputElement)
   const originFile = target.files[0]
 
-  console.log('onFileChange', target.files)
+  console.log('onFileChange', originFile)
   if (originFile) {
-    loading.value = true
     formRef.value.reset()
-    singleFileUploader
-      .upload(originFile)
-      .onProgress((e) => {
-        console.log('upload', e)
-      }).onComplete((e) => {
-        console.log('onComplete', e)
-        loading.value = false
-      }).onError((e) => {
-        console.log('onError', e)
-        loading.value = false
-      })
+    switch (mode.value) {
+      case 'SINGLE':
+        uploadSingleFile(originFile)
+        break
+      case 'SLICE':
+        uploadSliceFile(originFile)
+        break
+    }
   }
+}
+
+const loading = ref(false)
+function uploadSingleFile(file: File) {
+  loading.value = true
+  return singleFileUploader
+    .upload(file)
+    .onProgress((e) => {
+      console.log('upload', e)
+    }).onComplete((e) => {
+      console.log('onComplete', e)
+      loading.value = false
+    }).onError((e) => {
+      console.log('onError', e)
+      loading.value = false
+    })
+}
+const sliceLoading = ref(false)
+function uploadSliceFile(file: File) {
+  return sliceFileUploader
+    .upload(file)
+    .onProgress((e) => {
+      console.log('upload', e)
+    }).onComplete((e) => {
+      console.log('onComplete', e)
+      sliceLoading.value = false
+    }).onError((e) => {
+      console.log('onError', e)
+      sliceLoading.value = false
+    })
 }
 </script>
 
@@ -57,8 +83,11 @@ function onFileChange(e: Event) {
     <button btn @click="getTest2">
       getTest
     </button>
-    <n-button :loading="loading" @click="uploadSingleFile">
+    <n-button :loading="loading" @click="onUploadClick('SINGLE')">
       upload File
+    </n-button>
+    <n-button :loading="sliceLoading" @click="onUploadClick('SLICE')">
+      upload slice File
     </n-button>
     <form v-show="false" ref="formRef">
       <input ref="fileRef" type="file" multiple @change="onFileChange">

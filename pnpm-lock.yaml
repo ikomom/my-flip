@@ -14,6 +14,7 @@ specifiers:
   '@types/node': ^18.15.11
   '@types/nprogress': ^0.2.0
   '@types/prettier': ^2.7.2
+  '@types/spark-md5': ^3.0.2
   '@types/splitpanes': ^2.2.1
   '@types/three': ^0.150.1
   '@unocss/reset': ^0.50.8
@@ -46,6 +47,7 @@ specifiers:
   prettier: ^2.8.7
   sandbox-webworker: ^1.0.4
   sass: ^1.61.0
+  spark-md5: ^3.0.2
   splitpanes: ^3.1.5
   taze: ^0.9.1
   theme-vitesse: ^0.6.4
@@ -93,6 +95,7 @@ dependencies:
   pinia: 2.0.34_hmuptsblhheur2tugfgucj7gc4
   prettier: 2.8.7
   sandbox-webworker: 1.0.4
+  spark-md5: 3.0.2
   splitpanes: 3.1.5
   theme-vitesse: 0.6.4
   three: 0.151.3
@@ -113,6 +116,7 @@ devDependencies:
   '@types/node': 18.15.11
   '@types/nprogress': 0.2.0
   '@types/prettier': 2.7.2
+  '@types/spark-md5': 3.0.2
   '@types/splitpanes': 2.2.1
   '@types/three': 0.150.1
   '@unocss/reset': 0.50.8
@@ -1604,6 +1608,10 @@ packages:
     resolution: {integrity: sha512-fBZgytwhYAUkj/jC/FAV4RQ5EerRup1YQsXQCh8rZfiHkc4UahC192oH0smGwsXol3cL3A5oETuAHeQHmhXM4w==}
     dependencies:
       '@types/node': 18.15.11
+    dev: true
+
+  /@types/spark-md5/3.0.2:
+    resolution: {integrity: sha512-82E/lVRaqelV9qmRzzJ1PKTpyrpnT7mwdneKNJB9hUtypZDMggloDfFUCIqRRx3lYRxteCwXSq9c+W71Vf0QnQ==}
     dev: true
 
   /@types/splitpanes/2.2.1:
@@ -6600,6 +6608,10 @@ packages:
   /sourcemap-codec/1.4.8:
     resolution: {integrity: sha512-9NykojV5Uih4lgo5So5dtw+f0JgJX30KCNI8gwhz2J9A15wD0Ml6tjHKwf6fTSa6fAdVBdZeNOs9eJ71qCk8vA==}
     deprecated: Please use @jridgewell/sourcemap-codec instead
+
+  /spark-md5/3.0.2:
+    resolution: {integrity: sha512-wcFzz9cDfbuqe0FZzfi2or1sgyIrsDwmPwfZC4hiNidPdPINjeUwNfv5kldczoEAcjl9Y1L3SM7Uz2PUEQzxQw==}
+    dev: false
 
   /spdx-correct/3.1.1:
     resolution: {integrity: sha512-cOYcUWwhCuHCXi49RhFRCyJEK3iPj1Ziz9DpViV3tbZOwXD49QzIN3MpOLJNxh2qwq2lJJZaKMVw9qNi4jTC0w==}

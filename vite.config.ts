@@ -56,7 +56,18 @@ export default defineConfig({
     // see unocss.config.ts for config
     Unocss(),
   ],
-
+  build: {
+    rollupOptions: {
+      external: ['prettier'],
+      output: {
+        manualChunks: {
+          // 分离为一个单独的 chunk
+          'monaco-editor': ['monaco-editor'],
+          'vue-use': ['@vueuse/core', '@vueuse/components'],
+        },
+      },
+    },
+  },
   // https://github.com/vitest-dev/vitest
   test: {
     environment: 'jsdom',
