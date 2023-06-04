@@ -81,7 +81,7 @@ function uploadSliceFile(file: File) {
       getTest
     </button>
     <button btn @click="getTest2">
-      getTest
+      get image
     </button>
     <n-button :loading="loading" @click="onUploadClick('SINGLE')">
       upload File

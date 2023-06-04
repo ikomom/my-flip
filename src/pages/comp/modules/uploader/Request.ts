@@ -65,8 +65,8 @@ export function ajax4Upload(
   })
 }
 
-export function ajax({ method = 'GET', url, data, headers = {} }: AjaxOptions<any>) {
-  return new Promise((resolve, reject) => {
+export function ajax<T = any>({ method = 'GET', url, data, headers = {} }: AjaxOptions<any>) {
+  return new Promise<T>((resolve, reject) => {
     const xhr = new XMLHttpRequest()
     xhr.responseType = 'json'
 

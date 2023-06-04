@@ -27,6 +27,17 @@ const defaultUploader = {
   enableSlice: false,
 }
 
+function markAsSuccess(fileChunk: FileChunk) {
+  fileChunk.status = 'SUCCESS'
+  const chunkSize = fileChunk.chunk.size
+
+  fileChunk.progress = {
+    percentage: 100,
+    loaded: chunkSize,
+    total: chunkSize,
+  }
+}
+
 export default class Uploader {
   // 上传地址
   uploaderUrl: string
@@ -134,25 +145,46 @@ export default class Uploader {
     formData.append('fileSize', `${fileSize}`)
     formData.append('contentHash', contentHash)
 
-    return ajax({
+    return ajax<{ uploaded: boolean;uploadedChunkList: FileChunk[] }>({
       method: 'POST',
       url: VERIFY_FILE_API,
       data: formData,
     })
   }
 
-  private uploadSliceFile = (file: File) => {
+  private uploadSliceFile = async (file: File) => {
     const chunkList = createFileChunk(file)
     console.log(chunkList)
     this.chunkList = chunkList
-    calculateFileHash(chunkList)
-      .then((res) => {
-        this.calHashTime = res.time
-        console.log('calculateFileHash', res)
-        this.verifyHash(this.length, res.hash).then((res) => {
-          console.log('verifyHash', res)
+    const res = await calculateFileHash(chunkList)
+    this.calHashTime = res.time
+    console.log('calculateFileHash', res)
+    const verifiedRes = await this.verifyHash(this.length, res.hash)
+    if (verifiedRes.uploaded) {
+      // 秒传
+    }
+    else {
+      // 标记已经上传完的
+      this.chunkList.forEach((chunk) => {
+        chunk.fileHash = res.hash
+        verifiedRes.uploadedChunkList.forEach((uploadedChunk) => {
+          if (uploadedChunk.chunkName === chunk.chunkName)
+            markAsSuccess(chunk)
         })
       })
+      // 上传切片
+      this.uploadChunks(chunkList)
+    }
+  }
+
+  private uploadChunks = (chunkList: FileChunk[]) => {
+    const startTime = new Date().getTime()
+    const requestList = chunkList.filter(chunk => chunk.status === 'ERROR' || chunk.status === 'READY')
+    // const arr = requestList.map((item) => {
+    //   return ajax4Upload({
+    //     onUploadProgress: e => this.onUploadProgressHandler(item, e),
+    //   })
+    // })
   }
 
   public upload = (file: File) => {

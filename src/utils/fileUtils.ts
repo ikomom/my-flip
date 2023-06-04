@@ -4,7 +4,7 @@ const BLOCK_SIZE = 10 * 1024 * 1024 // 10M
 type ChunkStatus = 'READY' | 'UPLOADING' | 'SUCCESS' | 'ERROR'
 
 export class FileChunk {
-  progress = { loaded: 0 }
+  progress = { loaded: 0, percentage: 0, total: 0 }
   readonly fileName: string
   chunkName = ''
   // 切片 Hash 值
@@ -14,6 +14,7 @@ export class FileChunk {
   // 文件切片数
   chunkNum = 0
   // 文件状态 'READY', 'UPLOADING', 'SUCCESS', 'ERROR'
+
   status: ChunkStatus = 'READY'
   readonly start: number
   readonly end: number
