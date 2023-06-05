@@ -1,10 +1,16 @@
-const path = require('node:path')
-const app = require('express')()
+
+function TestIndex() {
+  const path = require('node:path')
+  const app = require('express')()
 // require('node:http').Server(app)
-const favicon = require('serve-favicon')
+  const favicon = require('serve-favicon')
 
-app.use(favicon(path.join(__dirname, './favicon.ico')))
-app.get('/', (req, res) => {
-})
+  app.use(favicon(path.join(__dirname, './favicon.ico')))
+  app.get('/', (req, res) => {
+  })
 
-app.listen(3000)
+  app.listen(3000)
+
+}
+
+require('./upload/index')

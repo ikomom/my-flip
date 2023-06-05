@@ -127,10 +127,10 @@ export default class Uploader {
       method: 'POST',
       url: this.uploaderUrl,
       data: formData,
-      onUploadProgress: e => this.onUploadProgressHandler(file, e),
+      // onUploadProgress: e => this.onUploadProgressHandler(file, e),
     }).then(() => {
       const endTime = new Date().getTime()
-      this.uploadTime = parseInt(String((endTime - startTime) / 10)) / 100
+      this.uploadTime = Number.parseInt(String((endTime - startTime) / 10)) / 100
       if (this.customCompleteHandler) {
         this.customCompleteHandler({
           uploadTime: this.uploadTime,

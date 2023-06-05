@@ -12,6 +12,15 @@ import VueMacros from 'unplugin-vue-macros/vite'
 import vueJsx from '@vitejs/plugin-vue-jsx'
 
 export default defineConfig({
+  server: {
+    proxy: {
+      '/api': {
+        target: 'http://localhost:3000',
+        changeOrigin: true,
+        rewrite: (path: string) => path.replace(/^\/api/, ''),
+      },
+    },
+  },
   resolve: {
     alias: {
       '~/': `${path.resolve(__dirname, 'src')}/`,

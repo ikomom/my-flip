@@ -8,12 +8,19 @@ function onCopy() {
 </script>
 
 <template>
-  <n-space mb-2>
-    <button btn @click="onCopy">
-      copy
-    </button>
-    <Pool />
-  </n-space>
-
-  <Uploader />
+  <n-tabs>
+    <n-tab-pane name="1" tab="pool uploader">
+      <Pool />
+    </n-tab-pane>
+    <n-tab-pane name="2" tab="old uploader">
+      <Uploader />
+    </n-tab-pane>
+    <n-tab-pane name="3" tab="copy Test">
+      <n-space mb-2>
+        <button btn @click="onCopy">
+          copy
+        </button>
+      </n-space>
+    </n-tab-pane>
+  </n-tabs>
 </template>
