@@ -27,8 +27,6 @@ jobs:
 
       - name: Set node version to ${{ matrix.node_version }}
         uses: actions/setup-node@v3
-        env:
-          NODE_OPTIONS: "--max_old_space_size=4096"
         with:
           node-version: ${{ matrix.node_version }}
           cache: pnpm
@@ -37,6 +35,8 @@ jobs:
         run: pnpm i
 
       - name: Build
+        env:
+          NODE_OPTIONS: "--max_old_space_size=4096"
         run: pnpm run build
 
       - name: typecheck
