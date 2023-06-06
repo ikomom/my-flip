@@ -17,5 +17,5 @@ export function uploadFiles(files: HTMLInputElement['files']) {
     onUploadProgress(ev) {
       console.log('ev', ev)
     },
-  })
+  }).then(res => res.data)
 }

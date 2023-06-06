@@ -26,9 +26,10 @@ function run() {
   // pool.start()
 }
 
+const { isLoading, execute, state } = useAsyncState(uploadFiles, {}, { immediate: false })
 function onFiles(files: HTMLInputElement['files']) {
   console.log('onFiles', files)
-  uploadFiles(files)
+  execute(0, files)
 }
 function onCancel() {
   console.log('oncancel')
@@ -36,9 +37,10 @@ function onCancel() {
 </script>
 
 <template>
-  <button btn mb-2 @click="run()">
+  <n-button mb-2 :loading="isLoading" @click="run()">
     上传
-  </button>
+  </n-button>
+  {{ state }}
   <ProgressForm ref="formRef" @cancel="onCancel" @files="onFiles" />
   <div flex="~ wrap" gap="3" w-120>
     <ProgressItem
