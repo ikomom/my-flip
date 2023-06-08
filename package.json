@@ -28,6 +28,7 @@
     "codemirror": "^6.0.1",
     "graphql": "^16.6.0",
     "lodash-es": "^4.17.21",
+    "magic-bytes.js": "^1.0.14",
     "monaco-editor": "^0.38.0",
     "monaco-editor-core": "^0.38.0",
     "naive-ui": "^2.34.4",

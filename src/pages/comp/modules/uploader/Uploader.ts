@@ -1,7 +1,7 @@
 import { VERIFY_FILE_API } from '~/pages/comp/modules/uploader/constant'
 import { ajax, ajax4Upload } from '~/pages/comp/modules/uploader/Request'
-import type { FileChunk } from '~/utils/fileUtils'
-import { calculateFileHash, createFileChunk } from '~/utils/fileUtils'
+import type { FileChunk } from '~/pages/comp/modules/uploader/fileUtils'
+import { calculateFileHash, createFileChunk } from '~/pages/comp/modules/uploader/fileUtils'
 
 type chunkListType = FileChunk[]
 

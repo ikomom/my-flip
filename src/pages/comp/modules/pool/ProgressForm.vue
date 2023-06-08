@@ -1,4 +1,5 @@
 <script setup lang="ts">
+defineProps<{ multiple?: boolean }>()
 const emits = defineEmits(['files', 'cancel'])
 
 const defaultShow = ref(false)
@@ -46,6 +47,6 @@ defineExpose({
 
 <template>
   <form v-show="defaultShow" ref="formRef">
-    <input ref="fileRef" type="file" multiple @change="onFileChange">
+    <input ref="fileRef" type="file" :multiple="multiple" @change="onFileChange">
   </form>
 </template>

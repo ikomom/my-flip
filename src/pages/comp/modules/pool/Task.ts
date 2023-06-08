@@ -1,5 +1,5 @@
 // export type Task<Res> = () => Promise<Res>
-import type { TaskStatus } from '~/pages/comp/modules/pool/constanst'
+import type { TaskStatus } from '~/pages/comp/modules/pool/utils'
 
 export class Task {
   status: TaskStatus = 'IDLE'

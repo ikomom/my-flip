@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import type { TaskStatus } from '~/pages/comp/modules/pool/constanst'
+import type { TaskStatus } from '~/pages/comp/modules/pool/utils'
 import type { Task } from '~/pages/comp/modules/pool/Task'
 import { getRandom } from '~/utils/utils'
 

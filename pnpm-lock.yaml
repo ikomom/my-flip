@@ -53,6 +53,9 @@ dependencies:
   lodash-es:
     specifier: ^4.17.21
     version: 4.17.21
+  magic-bytes.js:
+    specifier: ^1.0.14
+    version: 1.0.14
   monaco-editor:
     specifier: ^0.38.0
     version: 0.38.0
@@ -5509,6 +5512,10 @@ packages:
     resolution: {integrity: sha512-ERJq3FOzJTxBbFjZ7iDs+NiK4VI9Wz+RdrrAB8dio1oV+YvdPzUEE4QNiT2VD51DkIbCYRUUzCRkssXCHqSnKQ==}
     engines: {node: 14 || >=16.14}
     dev: true
+
+  /magic-bytes.js@1.0.14:
+    resolution: {integrity: sha512-Xz644ideT892A7l9JtYLlVp3KjQc8gHJP9rN6H2Mq8OOld6BMU7xiS9rFGYAXeY7Z/yHOYtFSLyFzL8/NaodPw==}
+    dev: false
 
   /magic-string-ast@0.1.2:
     resolution: {integrity: sha512-P53AZrzq7hclCU6HWj88xNZHmP15DKjMmK/vBytO1qnpYP3ul4IEZlyCE0aU3JRnmgWmZPmoTKj4Bls7v0pMyA==}
