@@ -98,6 +98,9 @@ dependencies:
   three:
     specifier: ^0.153.0
     version: 0.153.0
+  ts-md5:
+    specifier: ^1.3.1
+    version: 1.3.1
   two.js:
     specifier: ^0.8.10
     version: 0.8.10
@@ -113,6 +116,9 @@ dependencies:
   vue-router:
     specifier: ^4.2.2
     version: 4.2.2(vue@3.3.4)
+  vue-simple-uploader:
+    specifier: ^1.0.1
+    version: 1.0.1(vue@3.3.4)
   vue-toastification:
     specifier: 2.0.0-rc.5
     version: 2.0.0-rc.5(vue@3.3.4)
@@ -6878,6 +6884,10 @@ packages:
       is-arrayish: 0.3.2
     dev: false
 
+  /simple-uploader.js@0.6.0:
+    resolution: {integrity: sha512-EXN+o+LD6PVnfzTq/usP8k8yYrI6wKrAx8e+fPcPLVzzttonkyn1KT+Ycx5JnPBSnp6lpiVhNG4JhDJucdPnhA==}
+    dev: false
+
   /sirv@2.0.2:
     resolution: {integrity: sha512-4Qog6aE29nIjAOKe/wowFTxOdmbEZKb+3tsLljaBRzJwtqto0BChD2zzH0LhgCSXiI+V7X+Y45v14wBZQ1TK3w==}
     engines: {node: '>= 10'}
@@ -7331,6 +7341,11 @@ packages:
 
   /treemate@0.3.11:
     resolution: {integrity: sha512-M8RGFoKtZ8dF+iwJfAJTOH/SM4KluKOKRJpjCMhI8bG3qB74zrFoArKZ62ll0Fr3mqkMJiQOmWYkdYgDeITYQg==}
+    dev: false
+
+  /ts-md5@1.3.1:
+    resolution: {integrity: sha512-DiwiXfwvcTeZ5wCE0z+2A9EseZsztaiZtGrtSaY5JOD7ekPnR/GoIVD5gXZAlK9Na9Kvpo9Waz5rW64WKAWApg==}
+    engines: {node: '>=12'}
     dev: false
 
   /tsconfig-paths@3.14.1:
@@ -7975,6 +7990,16 @@ packages:
       vue: ^3.2.0
     dependencies:
       '@vue/devtools-api': 6.5.0
+      vue: 3.3.4
+    dev: false
+
+  /vue-simple-uploader@1.0.1(vue@3.3.4):
+    resolution: {integrity: sha512-upkQeG1eRYO2b5mTdPP1nXohEDk38p9AvR7ao9b8oyIcChUlhnOxS/fs0SDnbkhv2lCYrqx2AGkqoqSKZtgp6g==}
+    engines: {node: '>= 4.0.0', npm: '>= 3.0.0'}
+    peerDependencies:
+      vue: '>=3.1'
+    dependencies:
+      simple-uploader.js: 0.6.0
       vue: 3.3.4
     dev: false
 

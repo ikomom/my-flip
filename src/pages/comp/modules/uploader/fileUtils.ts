@@ -1,4 +1,4 @@
-import HashWorker from '../../../../utils/hash.worker.ts?worker'
+import HashWorker from './hash.worker.ts?worker'
 
 const BLOCK_SIZE = 10 * 1024 * 1024 // 10M
 type ChunkStatus = 'READY' | 'UPLOADING' | 'SUCCESS' | 'ERROR'

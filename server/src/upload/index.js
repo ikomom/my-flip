@@ -4,11 +4,11 @@ const path = require("path");
 const UPLOAD_DIR = path.resolve(__dirname, ".", "temp");
 const app = require('express')()
 
-app.post('/upload', (req, res) => {
+const commonFormParse = (req, res) => {
   const multipart = new multiparty.Form();
   multipart.parse(req, async (err, fields, files) => {
     if (err) return
-    for (let file of files.files) {
+    for (let file of files.file) {
       let dest =`${UPLOAD_DIR}/${file.originalFilename}`
       if (await fse.exists(dest)) {
         const p = path.parse(file.originalFilename)
@@ -25,6 +25,14 @@ app.post('/upload', (req, res) => {
 
     res.json({ success: true })
   })
+}
+
+app.post('/upload', (req, res) => {
+  commonFormParse(req, res)
+})
+
+app.post('/simple-upload', (req, res) => {
+  commonFormParse(req, res)
 })
 
 app.listen(3000, () => console.log("listening port 3000"))

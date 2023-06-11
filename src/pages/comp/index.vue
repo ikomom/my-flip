@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import Uploader from './modules/uploader/index.vue'
 import Pool from './modules/pool/index.vue'
+import SimpleUploader from './modules/simpleUploader/index.vue'
 
 function onCopy() {
   navigator.clipboard.writeText('xxx xxxxxxxxxxxx')
@@ -21,6 +22,9 @@ function onCopy() {
           copy
         </button>
       </n-space>
+    </n-tab-pane>
+    <n-tab-pane name="4" tab="simple-uploader">
+      <SimpleUploader />
     </n-tab-pane>
   </n-tabs>
 </template>
