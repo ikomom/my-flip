@@ -5,6 +5,7 @@ import { Md5 } from 'ts-md5/src/md5'
 /**
  * spark太慢了
  * @param chunkList
+ * @param calculateChunkHash
  */
 function hashBySpark(chunkList: any[], calculateChunkHash = false) {
   return new Promise((resolve, reject) => {

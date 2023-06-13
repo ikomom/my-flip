@@ -4,6 +4,9 @@ interface WorkRequest {
   reject: (...d: any) => void
 }
 
+/**
+ * TODO: 参考pool
+ */
 export class WorkerManage {
   private _queue: WorkRequest[] = []
   constructor() {

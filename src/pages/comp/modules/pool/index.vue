@@ -8,6 +8,7 @@ import ProgressForm from '~/pages/comp/modules/pool/ProgressForm.vue'
 import ProgressItem from '~/pages/comp/modules/pool/ProgressItem.vue'
 import { uploadFiles } from '~/pages/comp/modules/pool/Request'
 import { TaskPool } from '~/pages/comp/modules/pool/Task'
+import { runTest, runWorkerPool } from '~/pages/comp/modules/pool/upload/parallel/test'
 import { UploadFile } from '~/pages/comp/modules/pool/upload/UploadFile'
 import { MB_BIT, sliceRange } from '~/pages/comp/modules/pool/utils'
 
@@ -107,7 +108,13 @@ function onCancel() {
       <n-input-number v-model:value="formState.chunkSize" />
     </n-form-item>
   </n-form>
-  <n-button mb-2 :loading="isLoading" @click="run()">
+  <n-button m-2 @click="runTest()">
+    运行测试
+  </n-button>
+  <n-button m-2 @click="runWorkerPool()">
+    运行workerPool
+  </n-button>
+  <n-button m-2 :loading="isLoading" @click="run()">
     上传
   </n-button>
   <span p-2 text-white bg-blue>

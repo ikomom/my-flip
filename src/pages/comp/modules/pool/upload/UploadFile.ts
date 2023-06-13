@@ -7,7 +7,10 @@ export interface UploadFileOptions {
   chunkSize: number // M
 }
 
-function calculateChunkList(chunkList: UploadFileChunk[], calculateChunkHash: boolean) {
+function calculateChunkList(
+  chunkList: UploadFileChunk[],
+  calculateChunkHash: boolean,
+) {
   const fileMD5Worker = new FileMD5Worker()
   return new Promise<any>((resolve, reject) => {
     const start = new Date().getTime()
@@ -29,7 +32,6 @@ export class UploadFile {
   loaded: number
   chunks: UploadFileChunk[]
   options: Partial<UploadFileOptions>
-  private _hashReady = false
 
   constructor(public file: File, options?: Partial<UploadFileOptions>) {
     this.loaded = 0
@@ -48,30 +50,28 @@ export class UploadFile {
   }
 
   /**
-   * TODO: Queue
+   * TODO: 添加线程池管理代码
    */
-  getHash() {
-    if (this._hashReady) {
-      this._hashReady = false
-      const start = new Date().getTime()
-      return Promise.all([
-        calculateChunkList(this.chunks, false),
-        calculateChunkList(this.chunks, true),
-      ])
-        .then(([allHashObj, chunkHashObj]) => {
-          const end = new Date().getTime()
+  getHash(autoSetChunk = true) {
+    const start = new Date().getTime()
+    return Promise.all([
+      calculateChunkList(this.chunks, false),
+      calculateChunkList(this.chunks, true),
+    ])
+      .then(([allHashObj, chunkHashObj]) => {
+        const end = new Date().getTime()
+        if (autoSetChunk) {
           this.chunks.forEach((chunk, index) => {
             chunk.fileHash = allHashObj.hash
             chunk.chunkHash = chunkHashObj.chunkHash?.[index]
           })
-          return {
-            chunks: this.chunks,
-            time: end - start,
-          }
-        }).finally(() => {
-          this._hashReady = true
-        })
-    }
+        }
+        return {
+          allHashObj,
+          chunkHashObj,
+          time: end - start,
+        }
+      })
   }
 
   getTypeInfo() {
