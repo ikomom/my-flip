@@ -122,6 +122,9 @@ dependencies:
   vue-toastification:
     specifier: 2.0.0-rc.5
     version: 2.0.0-rc.5(vue@3.3.4)
+  workerpool:
+    specifier: ^6.4.0
+    version: 6.4.0
   xstate:
     specifier: ^4.37.2
     version: 4.37.2
@@ -8276,6 +8279,10 @@ packages:
     resolution: {integrity: sha512-Hz/mrNwitNRh/HUAtM/VT/5VH+ygD6DV7mYKZAtHOrbs8U7lvPS6xf7EJKMF0uW1KJCl0H701g3ZGus+muE5vQ==}
     engines: {node: '>=0.10.0'}
     dev: true
+
+  /workerpool@6.4.0:
+    resolution: {integrity: sha512-i3KR1mQMNwY2wx20ozq2EjISGtQWDIfV56We+yGJ5yDs8jTwQiLLaqHlkBHITlCuJnYlVRmXegxFxZg7gqI++A==}
+    dev: false
 
   /wrap-ansi@7.0.0:
     resolution: {integrity: sha512-YVGIj2kamLSTxw6NsZjoBxfSwsn0ycdesmc4p+Q21c5zPuZ1pl+NfxVdxPtdHvmNVOQ6XSYG4AUtyt/Fi7D16Q==}

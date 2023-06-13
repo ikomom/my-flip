@@ -41,7 +41,7 @@ const { isLoading, execute, state } = useAsyncState(uploadFiles, {}, { immediate
 
 const progressEvent = ref<AxiosProgressEvent>()
 const status = ref('idle')
-function onFiles(files: HTMLInputElement['files']) {
+async function onFiles(files: HTMLInputElement['files']) {
   console.log('onFiles', files)
 
   if (formState.isChunk) {
@@ -81,6 +81,8 @@ function onFiles(files: HTMLInputElement['files']) {
       status.value = 'get Hash res'
       console.log('uFiles hash', res)
     })
+    for (const uFile of uFiles)
+      console.log('getInfo', await uFile.getTypeInfo())
 
     // execute(0, files, {
     //   fields: { a: 1, b2: 3 },
@@ -120,6 +122,6 @@ function onCancel() {
     />
   </div>
   <div v-else-if="progressEvent">
-    <ProgressList :name="progressEvent.name" :loaded="progressEvent.loaded" :total="progressEvent.total" />
+    <ProgressList name="tesdt" :loaded="progressEvent.loaded" :total="progressEvent.total" />
   </div>
 </template>

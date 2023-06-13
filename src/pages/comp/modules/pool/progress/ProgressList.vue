@@ -11,7 +11,7 @@ const total = computed(() => getSizeDes(props.total))
 
 <template>
   <div class="progress-list">
-    {{ percent }} {{ loaded }} {{ total }}
+    {{ name }} &nbsp;|&nbsp; {{ percent }} {{ loaded }} {{ total }}
   </div>
 </template>
 
