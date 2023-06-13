@@ -1,4 +1,5 @@
 // import WorkerUri from '../worker/fileMd5.worker?worker'
+import { cloneDeep } from 'lodash-es'
 import workerpool from 'workerpool'
 
 class Task {
@@ -15,28 +16,52 @@ class Task {
   }
 }
 
-function createPool() {
-  const queue: any[] = []
+function proxyLog(obj: any) {
+  return new Proxy<any>(obj, {
+    get(target, property) {
+      // console.log('[proxyLog get]', cloneDeep({ property }))
+      return Reflect.get(target, property)
+    },
+    set(target, property, value, receiver) {
+      if (property !== 'length')
+        console.log('[proxyLog set]', cloneDeep({ property, value }))
+
+      Reflect.set(target, property, value, receiver)
+      return true
+    },
+  })
+}
+function toPlain(obj: any) {
+  return JSON.parse(JSON.stringify(obj))
+}
+
+function createPool({ max = 4 } = {}) {
+  const queue: any[] = proxyLog([])
+  const runningQueue: any[] = []
 
   // const workMap = new WeakMap<any, any>()
-
-  for (let i = 0; i < 6; i++) {
-    const task = new Task(`task_${i}`)
-    queue.push(task)
-  }
+  //
 
   // workMap.set('1', () => {})
   // queue.push(worker1)
   // queue.push(worker2)
 
   function _processNext() {
+    while (runningQueue.length < max) {
+      const p = queue.pop()
+      if (p)
+        runningQueue.push(p)
 
+      else
+        break
+    }
+    // TODO: 运行队列，并等待返回
+    console.log({ runningQueue, queue: toPlain(queue) })
   }
 
   console.log({ queue })
   return {
-    queue,
-    exec(task: Task, args: any[]) {
+    exec(task: Task, args: any[] = []) {
       return new Promise((resolve, reject) => {
         queue.push({
           task,
@@ -51,10 +76,15 @@ function createPool() {
 }
 
 export function runTest() {
-  const { queue, exec } = createPool()
+  const { exec } = createPool()
+  for (let i = 0; i < 6; i++) {
+    const task = new Task(`task_${i}`)
+    exec(task, [i]).then((res) => {
+      console.log(`res_${i}`, res)
+    })
+  }
 }
 
-let index = 0
 const pool = workerpool.pool({
   // maxWorkers: 6,
   minWorkers: 2,
@@ -71,20 +101,16 @@ export function runWorkerPool() {
 
   pool
     .exec(add, [3, 4])
-    .then((result) => {
+    .then((result: number) => {
       console.log('result', result, workerpool) // outputs 7
     })
-    .catch((err) => {
+    .catch((err: Error) => {
       console.error(err)
     })
     .then(() => {
       setTimeout(() => {
-        if (index === 0) {
-          console.log('termiaml')
-
-          pool.terminate()
-          index++
-        }
+        console.log('termiaml')
+        pool.terminate()
       }, 5000)
     })
 }

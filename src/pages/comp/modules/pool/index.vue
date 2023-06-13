@@ -108,7 +108,7 @@ function onCancel() {
       <n-input-number v-model:value="formState.chunkSize" />
     </n-form-item>
   </n-form>
-  <n-button m-2 @click="runTest()">
+  <n-button m-2 @click="runTest(), false">
     运行测试
   </n-button>
   <n-button m-2 @click="runWorkerPool()">
