@@ -34,5 +34,10 @@ app.post('/upload', (req, res) => {
 app.post('/simple-upload', (req, res) => {
   commonFormParse(req, res)
 })
+app.get('/echo', (req, res) => {
+  setTimeout(() => {
+    res.json(req.query)
+  }, Math.random() * 3000)
+})
 
 app.listen(3000, () => console.log("listening port 3000"))

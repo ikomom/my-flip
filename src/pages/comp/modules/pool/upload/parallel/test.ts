@@ -29,12 +29,15 @@ class Task {
 
   start() {
     this._ready = false
-    return new Promise((resolve) => {
-      const random = 1000 * Math.random()
-      setTimeout(() => {
-        resolve(random)
-      }, random)
-    })
+    const random = 1000 * Math.random()
+    return fetch(`/api/echo?q=${random}`)
+
+    // return new Promise((resolve) => {
+    //   const random = 1000 * Math.random()
+    //   setTimeout(() => {
+    //     resolve(random)
+    //   }, random)
+    // })
   }
 
   terminal() {
@@ -118,8 +121,8 @@ function createPool({ max = 4 } = {}) {
 }
 
 export function runTest() {
-  const { exec } = createPool({ max: 2 })
-  for (let i = 0; i < 6; i++) {
+  const { exec } = createPool({ max: 6 })
+  for (let i = 0; i < 1000; i++) {
     const task = new Task(`task_${i}`)
     exec(task, [i]).then((res) => {
       console.log(`res_${i}`, res)
