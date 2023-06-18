@@ -67,3 +67,11 @@ export function getFormTemplate(str: string, reg = BRACKETS_RXP.dbLarge) {
 export function getRandom(min: number, max: number) {
   return Math.floor(Math.random() * (max - min + 1)) + min
 }
+
+export function sleep(num = 1000) {
+  return new Promise((resolve) => {
+    setTimeout(() => {
+      resolve(true)
+    }, num)
+  })
+}

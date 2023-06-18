@@ -8,6 +8,7 @@ const commonFormParse = (req, res) => {
   const multipart = new multiparty.Form();
   multipart.parse(req, async (err, fields, files) => {
     if (err) return
+    // 解析文件
     for (let file of files.file) {
       let dest =`${UPLOAD_DIR}/${file.originalFilename}`
       if (await fse.exists(dest)) {

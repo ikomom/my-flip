@@ -3,7 +3,7 @@ import workerpool from 'workerpool'
 
 enum TaskStatus {
   READY,
-  PENDING,
+  LOADING,
   SUCCESS,
   ERROR,
 }
@@ -15,6 +15,7 @@ enum TaskStatus {
 class Task {
   private _ready = false
   private _status: TaskStatus = TaskStatus.READY
+  private _process: Promise<any>
 
   constructor(public name: string) {
   }
@@ -27,21 +28,21 @@ class Task {
     this._status = status
   }
 
-  start() {
+  start(...args: any[]) {
     this._ready = false
     const random = 1000 * Math.random()
-    return fetch(`/api/echo?q=${random}`)
+    this._process = new Promise((resolve, reject) => {
+      fetch(`/api/echo?t=${args[0]}&q=${random}`)
+        .then(resolve)
+        .catch(reject)
+    })
 
-    // return new Promise((resolve) => {
-    //   const random = 1000 * Math.random()
-    //   setTimeout(() => {
-    //     resolve(random)
-    //   }, random)
-    // })
+    return this._process
   }
 
   terminal() {
     this._ready = true
+    this._process = null
   }
 }
 
@@ -54,7 +55,6 @@ function proxyLog(obj: any) {
     set(target, property, value, receiver) {
       // if (property !== 'length')
       //   console.log('[proxyLog set]', cloneDeep({ property, value }))
-
       Reflect.set(target, property, value, receiver)
       return true
     },
@@ -63,7 +63,7 @@ function proxyLog(obj: any) {
 function toPlain(obj: any) {
   return JSON.parse(JSON.stringify(obj))
 }
-interface QueueItem { task: Task; resolve: any; reject: any; args: any[] }
+interface QueueItem { task: Task; resolve: any; reject: any; args: any }
 function createPool({ max = 4 } = {}) {
   const queue: QueueItem[] = proxyLog([])
   let _max = max
@@ -88,13 +88,14 @@ function createPool({ max = 4 } = {}) {
         return
       // 释放通道
       _max--
-      item.task.setStatus(TaskStatus.PENDING)
-      item.task.start().then((res) => {
-        item.task.setStatus(TaskStatus.SUCCESS)
-        item.resolve(res)
+      const { task, resolve, reject, args } = item
+      task.setStatus(TaskStatus.LOADING)
+      task.start(...args).then((res) => {
+        task.setStatus(TaskStatus.SUCCESS)
+        resolve(res)
       }).catch((e) => {
-        item.task.setStatus(TaskStatus.ERROR)
-        item.reject(e)
+        task.setStatus(TaskStatus.ERROR)
+        reject(e)
       }).finally(() => {
         log('next', toPlain(queue))
         // 增加通道
