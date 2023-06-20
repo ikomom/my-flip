@@ -3,6 +3,8 @@ const multiparty = require("multiparty");
 const path = require("path");
 const UPLOAD_DIR = path.resolve(__dirname, ".", "temp");
 const app = require('express')()
+const cors = require('cors');
+app.use(cors())
 
 const commonFormParse = (req, res) => {
   const multipart = new multiparty.Form();
@@ -27,6 +29,8 @@ const commonFormParse = (req, res) => {
     res.json({ success: true })
   })
 }
+
+
 
 app.post('/upload', (req, res) => {
   commonFormParse(req, res)
