@@ -13,6 +13,18 @@ import BorderAnimate from '~/pages/css/border-animate.vue'
     </div>
   </n-space>
   <BfcTest />
+  <!--  <picture> -->
+  <!--    <source media="(max-width: 599px)" srcset="/images/eval-fairy/elva-480w-close-portrait.png"> -->
+  <!--    <source media="(min-width: 600px)" srcset="/images/eval-fairy/elva-800w.jpg"> -->
+  <!--    <img src="/images/eval-fairy/elva-800w.jpg" alt="Chris standing up holding his daughter Elva"> -->
+  <!--  </picture> -->
+  <img
+    srcset="/images/eval-fairy/elva-480w-close-portrait.png 480w, /images/eval-fairy/elva-fairy.png 800w"
+    sizes="(max-width: 599px) 180px, 800px"
+    src="/images/eval-fairy/elva-480w-close-portrait.png"
+    alt="Elva dressed as a fairy"
+    loading="lazy"
+  >
 </template>
 
 <style scoped lang="scss">

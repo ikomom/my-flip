@@ -79,7 +79,7 @@ async function onFiles(files: HTMLInputElement['files']) {
     console.log('uFiles', uFiles)
 
     Promise.all(uFiles.map(item => item.getHash())).then((...res) => {
-      status.value = 'get Hash res'
+      status.value = 'already get Hash res'
       console.log('uFiles hash', res)
     })
     for (const uFile of uFiles)

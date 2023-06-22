@@ -12,8 +12,12 @@
   <script>
     (function (){
       global = window
-    })()
+    })();
+    window.onerror = function(...args) {
+      console.error(args);
+    }
   </script>
+
   <script>
     (function() {
       const prefersDark = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches
@@ -23,5 +27,24 @@
     })()
   </script>
   <script type="module" src="/src/main.ts"></script>
+<!--  <script src="//cdn.bootcdn.net/ajax/libs/eruda/3.0.0/eruda.js" crossorigin="anonymous"></script>-->
+  <script defer>
+    try {
+      var script = document.createElement('script'); 
+      script.src="//cdn.jsdelivr.net/npm/eruda"; 
+      document.body.appendChild(script);
+      script.onload = function () {
+        eruda.init()
+     
+      }
+      script.onerror = function (e){
+        console.log('err',e)
+      }
+    }catch (e) {
+      console.log('err',e)
+      throw e;
+
+    }
+  </script> 
 </body>
 </html>

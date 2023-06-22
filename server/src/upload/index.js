@@ -42,7 +42,7 @@ app.post('/simple-upload', (req, res) => {
 app.get('/echo', (req, res) => {
   setTimeout(() => {
     res.json(req.query)
-  }, Math.random() * 3000)
+  }, Math.random() *13000)
 })
 
 app.listen(3000, () => console.log("listening port 3000"))

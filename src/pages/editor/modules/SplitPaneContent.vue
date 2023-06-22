@@ -4,6 +4,7 @@ import 'splitpanes/dist/splitpanes.css'
 import { throttle } from 'lodash-es'
 import TabBar from './TabBar.vue'
 import EConsole from '~/components/editor-ui/EConsole.vue'
+
 // import { astTest, compilerVue, parseModule } from '~/composables/editor/compiler/vueCompiler'
 import EditorFile from '~/composables/editor/EditorFile'
 import { useEditorInject } from '~/composables/editor/EditorCore'
@@ -13,7 +14,7 @@ const {
   $actions,
   activeFile,
   onShouldUpdateContent,
-  importMap,
+  // importMap,
 } = useEditorInject()
 
 const script = ref('')
@@ -22,6 +23,10 @@ const template = ref('')
 const scriptRef = ref()
 const templateRef = ref()
 
+const isSmallScreen = useMediaQuery('(max-width: 425px)')
+console.log(
+  'isSmallScreen', isSmallScreen.value,
+)
 onMounted(() => {
   $actions.addFile(new EditorFile('App.vue', '<div>{{helloWorld}} <Test/></div>', `import { ref } from 'vue';
 import Test from './Test.vue'
@@ -49,6 +54,7 @@ const onResize = throttle((e: any) => {
 </script>
 
 <template>
+  {{ isSmallScreen }}
   <Splitpanes
     class="default-theme ediotr-content"
     :push-other-panes="false"
