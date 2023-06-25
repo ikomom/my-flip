@@ -43,7 +43,7 @@ function setOpen() {
           <MenuItem v-for="menu in menus" :key="menu.path">
             <router-link
               s-link
-              :to="menu.path"
+              :to="{ state: { path: menu.path }, path: menu.path }"
               @click="toggleOpen(false)"
             >
               {{ menu.path }}

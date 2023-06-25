@@ -1,5 +1,3 @@
-/// <reference types="vitest" />
-
 import path from 'node:path'
 import { NaiveUiResolver, VueUseComponentsResolver } from 'unplugin-vue-components/resolvers'
 import { defineConfig } from 'vite'
