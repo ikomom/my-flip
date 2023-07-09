@@ -61,7 +61,7 @@ const menus = [
       {{ route.path }}
     </div>
     <div flex="~ gap1" font-mono justify-center>
-      <router-link btn to="/">
+      <router-link btn :to="{ path: '/', state: { index: true } }" mx-2>
         /
       </router-link>
       <SMenu :menus="menus" />

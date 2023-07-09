@@ -1,5 +1,3 @@
-/// <reference types="vitest" />
-
 import path from 'node:path'
 import { NaiveUiResolver, VueUseComponentsResolver } from 'unplugin-vue-components/resolvers'
 import { defineConfig } from 'vite'
@@ -11,13 +9,27 @@ import Unocss from 'unocss/vite'
 import VueMacros from 'unplugin-vue-macros/vite'
 import vueJsx from '@vitejs/plugin-vue-jsx'
 
+// import legacy from '@vitejs/plugin-legacy'
+
 export default defineConfig({
+  server: {
+    proxy: {
+      '/api': {
+        target: 'http://localhost:3000',
+        changeOrigin: true,
+        rewrite: (path: string) => path.replace(/^\/api/, ''),
+      },
+    },
+  },
   resolve: {
     alias: {
       '~/': `${path.resolve(__dirname, 'src')}/`,
     },
   },
   plugins: [
+    // legacy({
+    //   targets: ['defaults', 'not IE 11'],
+    // }),
     vueJsx(),
     VueMacros({
       plugins: {
@@ -54,7 +66,9 @@ export default defineConfig({
 
     // https://github.com/antfu/unocss
     // see unocss.config.ts for config
-    Unocss(),
+    Unocss({
+      hmrTopLevelAwait: false,
+    }),
   ],
   build: {
     rollupOptions: {

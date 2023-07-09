@@ -40,13 +40,15 @@ function useEditor(
   const shouldUpdateContent = createEventHook()
 
   // https://github.com/WICG/import-maps
-  const importMap = computed(() => `
+  const importMap = computed(() => {
+    return `
     {
       "imports": {
         ${core.packages.map(item => `"${item.name}": "${item.url}"`).join(',\n')}
       }
     }
-  `)
+  `
+  })
 
   watchEffect(() => {
     if (activeFile.value) {

@@ -10,3 +10,5 @@ node_modules
 components.d.ts
 auto-imports.d.ts
 mockServiceWorker.js
+
+temp

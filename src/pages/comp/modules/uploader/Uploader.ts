@@ -1,7 +1,7 @@
 import { VERIFY_FILE_API } from '~/pages/comp/modules/uploader/constant'
 import { ajax, ajax4Upload } from '~/pages/comp/modules/uploader/Request'
-import type { FileChunk } from '~/utils/fileUtils'
-import { calculateFileHash, createFileChunk } from '~/utils/fileUtils'
+import type { FileChunk } from '~/pages/comp/modules/uploader/fileUtils'
+import { calculateFileHash, createFileChunk } from '~/pages/comp/modules/uploader/fileUtils'
 
 type chunkListType = FileChunk[]
 
@@ -127,10 +127,10 @@ export default class Uploader {
       method: 'POST',
       url: this.uploaderUrl,
       data: formData,
-      onUploadProgress: e => this.onUploadProgressHandler(file, e),
+      // onUploadProgress: e => this.onUploadProgressHandler(file, e),
     }).then(() => {
       const endTime = new Date().getTime()
-      this.uploadTime = parseInt(String((endTime - startTime) / 10)) / 100
+      this.uploadTime = Number.parseInt(String((endTime - startTime) / 10)) / 100
       if (this.customCompleteHandler) {
         this.customCompleteHandler({
           uploadTime: this.uploadTime,

@@ -1,11 +1,13 @@
 // export type Task<Res> = () => Promise<Res>
-type TaskStatus = 'IDLE' | 'SUCCESS' | 'ERROR' | 'PENDING' | 'STOP'
-class Task {
+import type { TaskStatus } from '~/pages/comp/modules/pool/utils'
+
+export class Task {
   status: TaskStatus = 'IDLE'
   promise: () => Promise<any>
 
   constructor(promise: () => Promise<any>) {
     this.promise = promise
+    // this.status = ''
   }
 }
 
@@ -29,7 +31,8 @@ export class TaskPool<TaskRes = any> {
     const { min, max, taskList } = this
 
     while (min <= taskList.length && taskList.length < max) {
-
+      const task = this.taskList.pop()
+      task.promise()
     }
   }
 }

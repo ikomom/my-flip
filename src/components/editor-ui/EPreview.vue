@@ -3,7 +3,6 @@ import type { WatchStopHandle } from 'vue'
 import { PreviewProxy } from '~/composables/editor/PreviewProxy'
 import PreviewPage from '~/composables/editor/template/Preview.html?raw'
 import { exportKey, modulesKey, startProcessFile } from '~/composables/editor/compiler/vueCompiler'
-import { createBlobURL } from '~/utils/utils'
 import { MAIN_FILE, useEditorInject } from '~/composables/editor/EditorCore'
 
 const { core, importMap } = useEditorInject()
@@ -54,6 +53,7 @@ async function updateScripts() {
  */
 function createSandBox() {
   if (sandbox) {
+    console.log('destroy old')
     proxy.destroy()
     if (stopUpdateWatcher)
       stopUpdateWatcher()
@@ -75,16 +75,33 @@ function createSandBox() {
         }
        <\/script>`)
   // console.log('previewHtml', previewHtml)
-  sandbox.src = createBlobURL(previewHtml, 'text/html')
+  // sandbox.src = createBlobURL(previewHtml, 'text/html')
+  sandbox.srcdoc = previewHtml
+  sandbox.setAttribute('sandbox', [
+    'allow-forms',
+    'allow-modals',
+    'allow-pointer-lock',
+    'allow-popups',
+    'allow-same-origin',
+    'allow-scripts',
+    'allow-top-navigation-by-user-activation',
+  ].join(' '))
   previewContainer.value.appendChild(sandbox)
-
+  console.log('sandbox src', { src: sandbox.src, previewHtml })
   proxy = new PreviewProxy(sandbox, {
     onUnhandledRejection(event: any) {
       console.log('unhandledrejection', event)
     },
   })
+
   sandbox.addEventListener('load', () => {
+    console.log(
+      'sandbox loaded', sandbox, proxy,
+    )
     stopUpdateWatcher = watchEffect(updateScripts)
+  })
+  sandbox.addEventListener('error', (e) => {
+    console.error('sandbox err', e)
   })
 }
 

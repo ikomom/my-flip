@@ -1,0 +1,49 @@
+<!doctype html>
+<html lang="zh">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+</head>
+<body>
+  <div id="status">IDLE</div>
+  <button type="button" id="abort-btn" onclick="cancelPromise()">Abort</button>
+</body>
+<script>
+
+  const controller = new window.AbortController()
+  const signal = controller.signal
+  function cancelPromise() {
+    controller.abort()
+    console.log('cancelPromise', controller)
+  }
+
+  window.onload = () => {
+    const elem = document.querySelector('#status')
+  
+    const example = (s) => {
+      return new Promise((resolve, reject) => {
+        let timeout = setTimeout(() => {
+          elem.textContent = 'Promise resolved'
+          resolve('resolved')
+        }, 5000)
+        s.addEventListener('abort', () => {
+          elem.textContent = 'Promise aborted'
+          clearTimeout(timeout)
+          reject('Promise aborted')
+        })
+      })
+    }
+
+    example(signal)
+      .then(data => {
+        console.log(data)
+      }).catch(err => {
+      console.log("Catch: ", err)
+    })
+    document.getElementById('abort-btn').addEventListener('click', cancelPromise);
+
+  }
+</script>
+</html>

@@ -26,6 +26,15 @@
 </script>
   <div id="app"></div>
   <script>
+    (function (){
+      global = window
+    })();
+    window.onerror = function(...args) {
+      console.error(args);
+    }
+  </script>
+
+  <script>
     (function() {
       const prefersDark = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches
       const setting = localStorage.getItem('color-schema') || 'auto'
@@ -34,5 +43,38 @@
     })()
   </script>
   <script type="module" src="/src/main.ts"></script>
+<!--  <script src="//cdn.bootcdn.net/ajax/libs/eruda/3.0.0/eruda.js" crossorigin="anonymous"></script>-->
+  <script>
+    function IsPC() {
+      var userAgentInfo = navigator.userAgent;
+      console.log(navigator.userAgent);
+      var Agents = new Array("Android", "iPhone", "SymbianOS", "Windows Phone", "iPad", "iPod");
+      var flag = true;
+      for (var v = 0; v < Agents.length; v++) {
+        if (userAgentInfo.indexOf(Agents[v]) > 0) { flag = false; break; }
+      }
+      return flag;
+    }
+
+    if (!IsPC()) {
+      try {
+        var script = document.createElement('script');
+        script.src="//cdn.jsdelivr.net/npm/eruda";
+        document.body.appendChild(script);
+        script.onload = function () {
+          eruda.init()
+
+        }
+        script.onerror = function (e){
+          console.log('err',e)
+        }
+      }catch (e) {
+        console.log('err',e)
+        throw e;
+
+      }
+    }
+    
+  </script> 
 </body>
 </html>

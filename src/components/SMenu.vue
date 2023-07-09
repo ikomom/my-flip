@@ -12,7 +12,7 @@ function setOpen() {
 </script>
 
 <template>
-  <Menu as="div" class="relative inline-block text-left">
+  <Menu as="div" class="relative inline-block text-left ">
     <div>
       <MenuButton
         class="btn"
@@ -35,7 +35,7 @@ function setOpen() {
       <MenuItems
         z="9999"
         static
-        class="absolute right-0 mt-2 w-56 origin-top-right divide-y divide-gray-100 rounded-md bg-white dark:bg-dark shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none"
+        class="max-h-70vh overflow-auto absolute right-0 mt-2 w-56 origin-top-right divide-y divide-gray-100 rounded-md bg-white dark:bg-dark shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none"
         @mouseenter="setOpen"
         @mouseleave="toggleOpen(false)"
       >
@@ -43,7 +43,7 @@ function setOpen() {
           <MenuItem v-for="menu in menus" :key="menu.path">
             <router-link
               s-link
-              :to="menu.path"
+              :to="{ state: { path: menu.path }, path: menu.path }"
               @click="toggleOpen(false)"
             >
               {{ menu.path }}
