@@ -8,6 +8,7 @@ import AutoImport from 'unplugin-auto-import/vite'
 import Unocss from 'unocss/vite'
 import VueMacros from 'unplugin-vue-macros/vite'
 import vueJsx from '@vitejs/plugin-vue-jsx'
+import vueSetupExtend from "vite-plugin-vue-setup-extend";
 
 // import legacy from '@vitejs/plugin-legacy'
 
@@ -63,6 +64,7 @@ export default defineConfig({
       dts: true,
       resolvers: [NaiveUiResolver(), VueUseComponentsResolver()],
     }),
+    vueSetupExtend(),
 
     // https://github.com/antfu/unocss
     // see unocss.config.ts for config

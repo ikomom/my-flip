@@ -2,6 +2,7 @@
 import Uploader from './modules/uploader/index.vue'
 import Pool from './modules/pool/index.vue'
 import SimpleUploader from './modules/simpleUploader/index.vue'
+import GhostTextArea from './modules/ghostTextArea/index.vue'
 
 function onCopy() {
   navigator.clipboard.writeText('xxx xxxxxxxxxxxx')
@@ -10,6 +11,9 @@ function onCopy() {
 
 <template>
   <n-tabs>
+    <n-tab-pane name="0" tab="ghost textArea">
+      <GhostTextArea/>
+    </n-tab-pane>
     <n-tab-pane name="1" tab="pool uploader">
       <Pool />
     </n-tab-pane>
