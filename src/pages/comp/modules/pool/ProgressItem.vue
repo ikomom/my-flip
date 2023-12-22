@@ -14,7 +14,7 @@ const TaskStatusTypeColorMap: Record<TaskStatus, string> = {
 }
 function getRandomStatus() {
   const keys = Object.keys(TaskStatusTypeColorMap)
-  return keys[getRandom(0, keys.length - 1)]
+  return keys[getRandom(0, keys.length - 1)] as TaskStatus
 }
 </script>
 

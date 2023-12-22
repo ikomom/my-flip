@@ -3,7 +3,7 @@ import SplitPaneContent from './modules/SplitPaneContent.vue'
 import { sleep } from '~/utils/utils'
 import { EEditorProvider } from '~/composables/editor/EditorCore'
 
-await sleep(1000)
+// await sleep(1000)
 </script>
 
 <template>
