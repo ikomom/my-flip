@@ -1,8 +1,11 @@
 import prettier from 'prettier'
+
 // @ts-expect-error
 import parserJson from 'prettier/esm/parser-babel.mjs'
+
 // @ts-expect-error
 import parserHtml from 'prettier/esm/parser-html.mjs'
+
 // @ts-expect-error
 import parserTs from 'prettier/esm/parser-typescript.mjs'
 

@@ -1,6 +1,7 @@
 import * as htmlService from 'vscode-html-languageservice'
 import type { worker } from 'monaco-editor'
 import { htmlCompletionPlugins } from '../../plugins/index'
+
 // import type { worker } from './fillers/monaco-editor-core'
 
 export interface ICreateData {

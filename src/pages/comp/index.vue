@@ -12,7 +12,7 @@ function onCopy() {
 <template>
   <n-tabs>
     <n-tab-pane name="0" tab="ghost textArea">
-      <GhostTextArea/>
+      <GhostTextArea />
     </n-tab-pane>
     <n-tab-pane name="1" tab="pool uploader">
       <Pool />

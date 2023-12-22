@@ -105,7 +105,8 @@
       "no-console": "off",
       "no-unused-vars": "off",
       "no-cond-assign": "off",
-      "no-new-func": "off"
+      "no-new-func": "off",
+      "no-restricted-globals": "off"
     },
     "ignorePatterns": [
       "*.html",

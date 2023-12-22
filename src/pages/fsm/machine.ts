@@ -185,7 +185,7 @@ export const redditMachine
   initial: 'idle',
   context: {
     subreddit: null,
-  } as RedditMachineContext,
+  },
   states: {
     idle: {
       tags: 'go',

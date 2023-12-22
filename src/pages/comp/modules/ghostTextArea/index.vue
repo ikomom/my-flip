@@ -4,33 +4,32 @@ const ghostHTML = ref('') // 建议内容HTML
 const ghostContent = ref('') // 建议内容HTML
 const suggestions = ['你好啊', '怎么学编程', '111'] // 建议列表
 
-const handleInput = () => {
+function handleInput() {
   ghostContent.value = ''
-  ghostHTML.value = '' 
+  ghostHTML.value = ''
 
-  if (content.value === '') {
+  if (content.value === '')
     return
-  }
-  const suggestion = suggestions.find((item) => item.startsWith(content.value))
+
+  const suggestion = suggestions.find(item => item.startsWith(content.value))
   if (suggestion) {
     ghostContent.value = suggestion
-    ghostHTML.value = suggestion.replace(content.value, `<span>${content.value}</span>`) + ' →' // 显示内容替换
+    ghostHTML.value = `${suggestion.replace(content.value, `<span>${content.value}</span>`)} →` // 显示内容替换
   }
 }
 
-const handleTabKeydown = () => {
+function handleTabKeydown() {
   // 监听tab键按下，将输入框内容设置为建议内容，同时清空建议内容
   content.value = ghostContent.value
   ghostContent.value = ''
   ghostHTML.value = ''
 }
-
 </script>
 
 <template>
   <label class="container">
-    <textarea b-1 p-2 v-model="content" @input="handleInput" @keydown.tab.prevent="handleTabKeydown" />
-    <div class="ghost-content" v-html="ghostHTML"></div>
+    <textarea v-model="content" b-1 p-2 @input="handleInput" @keydown.tab.prevent="handleTabKeydown" />
+    <div class="ghost-content" v-html="ghostHTML" />
   </label>
 </template>
 
@@ -64,5 +63,4 @@ const handleTabKeydown = () => {
   }
 
 }
-
 </style>

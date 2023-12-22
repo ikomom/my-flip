@@ -36,7 +36,7 @@ jobs:
 
       - name: Build
         env:
-          NODE_OPTIONS: "--max_old_space_size=4096"
+          NODE_OPTIONS: --max_old_space_size=4096
         run: pnpm run build
 
       - name: typecheck
