@@ -1,0 +1,127 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport"
+        content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Add Element</title>
+  <style>
+    .container {
+      height: 90vh;
+      border: 1px solid;
+      overflow: auto;
+    }
+    button + button {
+      margin-left: 10px;
+      margin-bottom: 4px;
+    }
+  </style>
+</head>
+<body>
+  <button onclick="calc(renderList1, 100000)">renderList 1</button>
+  <button onclick="calc(renderList2, 100000)">renderList 2</button>
+  <button onclick="calc(renderList3, 100000)">renderList 3</button>
+  <button id="stop" onclick="clearAll(clearTimeout);clearAll(cancelAnimationFrame)">stop</button>
+  <div class="container"></div>
+</body>
+<script>
+  function getText(num) {
+    return Intl.NumberFormat().format(num)
+  }
+  
+  function calc(func, ...args) {
+    const name = func.prototype.constructor.name
+    console.time(name)
+    func.apply(window, args)
+    console.timeEnd(name)
+  }
+  
+  let timeSet = new Set([])
+  const container = document.querySelector('.container')
+
+  function clearAll(clearFunc) {
+    container.innerHTML = ''
+    timeSet.forEach(value => {
+      clearFunc(value)
+    })
+  }
+  
+  
+  function renderList1(num, limit = 10) {
+    const total = num
+    const page = 0;
+    const totalPage = Math.ceil(total / limit)
+
+    clearAll(clearTimeout)
+    const render = (offset) => {
+      if (offset >= totalPage) return;
+      console.time(offset)
+      // setTimeout是宏任务，那么就会依次执行任务队列里的任务
+      const time = setTimeout(() => {
+        for (let i = offset * limit; i < offset * limit + limit; i++) {
+          const el = document.createElement('div')
+          el.innerText = `${i} (${Math.random()})`
+          container.appendChild(el)
+        }
+        console.timeEnd(offset)
+        render(offset + 1)
+      })
+      timeSet.add(time)
+    }
+  
+    render(page)
+  }
+  function renderList2(num, limit = 10) {
+    const total = num
+    const page = 0;
+    const totalPage = Math.ceil(total / limit)
+
+    clearAll(cancelAnimationFrame)
+    const render = (offset) => {
+      if (offset >= totalPage) return;
+      console.time(offset)
+      // setTimeout是宏任务，那么就会依次执行任务队列里的任务
+      const time = requestAnimationFrame(() => {
+        for (let i = offset * limit; i < offset * limit + limit; i++) {
+          const el = document.createElement('div')
+          el.innerText = `${i} (${Math.random()})`
+          container.appendChild(el)
+        }
+        console.timeEnd(offset)
+        render(offset + 1)
+      })
+      timeSet.add(time)
+    }
+  
+    render(page)
+  }
+  function renderList3(num, limit = 10) {
+    const total = num
+    const page = 0;
+    const totalPage = Math.ceil(total / limit)
+
+    clearAll(cancelAnimationFrame)
+    const render = (offset) => {
+      if (offset >= totalPage) return;
+      console.time(offset)
+      const fragment = document.createDocumentFragment()
+      // setTimeout是宏任务，那么就会依次执行任务队列里的任务
+      const time = requestAnimationFrame(() => {
+        for (let i = offset * limit; i < offset * limit + limit; i++) {
+          const el = document.createElement('div')
+          el.innerText = `${i} (${Math.random()})`
+          fragment.appendChild(el)
+        }
+        container.appendChild(fragment)
+        console.timeEnd(offset)
+        render(offset + 1)
+      })
+      timeSet.add(time)
+    }
+  
+    render(page)
+  }
+  
+</script>
+</html>
