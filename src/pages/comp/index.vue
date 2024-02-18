@@ -3,14 +3,20 @@ import Uploader from './modules/uploader/index.vue'
 import Pool from './modules/pool/index.vue'
 import SimpleUploader from './modules/simpleUploader/index.vue'
 import GhostTextArea from './modules/ghostTextArea/index.vue'
+import FlexResForm from './modules/flexResForm/index.vue'
+import { toast } from '~/composables/notification'
 
 function onCopy() {
   navigator.clipboard.writeText('xxx xxxxxxxxxxxx')
+  toast.success('copy success')
 }
 </script>
 
 <template>
   <n-tabs>
+    <n-tab-pane name="flexRes" tab="flex responsive form">
+      <FlexResForm />
+    </n-tab-pane>
     <n-tab-pane name="0" tab="ghost textArea">
       <GhostTextArea />
     </n-tab-pane>
