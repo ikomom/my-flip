@@ -1,10 +1,18 @@
 <script lang="ts" setup>
 import Panorama from '~/pages/vr/threejs/Panorama.vue'
 import Demo from '~/pages/vr/threejs/Demo.vue'
+import SimpleCar from '~/pages/vr/threejs/SimpleCar.vue'
+import DetailCar from '~/pages/vr/threejs/DetailCar.vue'
 </script>
 
 <template>
   <n-tabs>
+    <n-tab-pane name="DetailCar" tab="DetailCar">
+      <DetailCar />
+    </n-tab-pane>
+    <n-tab-pane name="SimpleCar" tab="SimpleCar">
+      <SimpleCar />
+    </n-tab-pane>
     <n-tab-pane name="demo" tab="demo">
       <Demo />
     </n-tab-pane>
