@@ -47,6 +47,9 @@ dependencies:
   codemirror:
     specifier: ^6.0.1
     version: 6.0.1(@lezer/common@1.0.2)
+  dat.gui:
+    specifier: ^0.7.9
+    version: 0.7.9
   fundebug-javascript:
     specifier: ^2.8.8
     version: 2.8.8
@@ -148,6 +151,9 @@ devDependencies:
   '@types/chroma-js':
     specifier: ^2.4.0
     version: 2.4.0
+  '@types/dat.gui':
+    specifier: ^0.7.12
+    version: 0.7.12
   '@types/lodash-es':
     specifier: ^4.17.7
     version: 4.17.7
@@ -2667,6 +2673,10 @@ packages:
     resolution: {integrity: sha512-TF8aoF5cHcLO7W7403blM7L1T+6NF3XMyN3fxyUolq2uOcFeicG/khQg/dGxiCJWoAcmYulYN7LYSRKO54IXaA==}
     dev: false
 
+  /@types/dat.gui@0.7.12:
+    resolution: {integrity: sha512-el5dYeQZu2r6YW6Ft4rGtjr/dLe/uzXESMoie5UM6/weVShB1V8IRpXtTKrczd4qe7044fTKZS2l8d6EBFOkoA==}
+    dev: true
+
   /@types/debug@4.1.7:
     resolution: {integrity: sha512-9AonUzyTjXXhEOa0DnqpzZi6VHlqKMswga9EXjpXnnqxwLtdvPPtlO8evrI5D9S6asFRCQ6v+wpiUKbw+vKqyg==}
     dependencies:
@@ -4662,6 +4672,10 @@ packages:
     dependencies:
       graphlib: 2.1.8
       lodash: 4.17.21
+    dev: false
+
+  /dat.gui@0.7.9:
+    resolution: {integrity: sha512-sCNc1OHobc+Erc1HqiswYgHdVNpSJUlk/Hz8vzOCsER7rl+oF/4+v8GXFUyCgtXpoCX6+bnmg07DedLvBLwYKQ==}
     dev: false
 
   /data-urls@4.0.0:

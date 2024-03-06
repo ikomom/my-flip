@@ -52,7 +52,7 @@ export default defineConfig({
         'vue-router',
         '@vueuse/core',
       ],
-      dts: true,
+      dts: './types/auto-imports.d.ts',
       dirs: [
         './src/composables',
       ],
@@ -61,7 +61,7 @@ export default defineConfig({
 
     // https://github.com/antfu/vite-plugin-components
     Components({
-      dts: true,
+      dts: './types/components.d.ts',
       resolvers: [NaiveUiResolver(), VueUseComponentsResolver()],
     }),
     vueSetupExtend(),

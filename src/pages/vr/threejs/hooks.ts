@@ -4,10 +4,12 @@ import Stats from 'three/examples/jsm/libs/stats.module'
 import * as THREE from 'three'
 import type { MaybeRef } from '@vueuse/core'
 import { onBeforeUnmount } from 'vue'
+import * as dat from 'dat.gui'
 
 interface Props {
   width: number
   height: number
+  showGUI: MaybeRef<boolean>
   cameraPosition?: Partial<{ x: number; y: number; z: number }>
   mounted: (config: RenderConfig, three: typeof THREE) => (config: RenderConfig) => void
   unmounted: (config: RenderConfig, three: typeof THREE) => void
@@ -20,11 +22,13 @@ interface RenderConfig {
   scene: Scene
   camera: Camera
   renderer: Renderer
+  gui: dat.GUI
 }
 
 const defaultProps: Props = {
   width: 1300,
   height: 400,
+  showGUI: false,
   mounted: () => () => {
   },
   unmounted: () => {},
@@ -43,8 +47,16 @@ function createAndAppendDom() {
 export function useThreeJs(ref: MaybeRef<HTMLElement>, props?: Partial<Props>) {
   let scene: Scene, camera: Camera, renderer: Renderer, controls: OrbitControls, stats: Stats
 
+  const gui = new dat.GUI()
+
   const config = { ...defaultProps, ...props }
   let animateNumber: number
+
+  watch(() => config.showGUI, (value) => {
+    value ? gui.show() : gui.hide()
+  }, {
+    immediate: true,
+  })
 
   onMounted(() => {
     const dom = unref(ref)
@@ -56,14 +68,27 @@ export function useThreeJs(ref: MaybeRef<HTMLElement>, props?: Partial<Props>) {
     // x: r(red), y: g(green), z: b(blue)
     camera = new THREE.PerspectiveCamera(75, config.width / config.height, 0.1, 1000)
     camera.lookAt(0, 0, 0)
-    const { cameraPosition } = config
+    const { cameraPosition = {} } = config
     camera.position.set(cameraPosition.x ?? 0, cameraPosition.y ?? 0, cameraPosition.z ?? 2)
+
+    // 灯光
+    const light = new THREE.DirectionalLight(0xFFFFFF)// 平行光
+    light.position.set(2, 2, 2)
+    const ambient = new THREE.AmbientLight(0xFFFFFF, 0.2)// 环境光
+    const lightFolder = gui.addFolder('灯光')
+    lightFolder.add(light.position, 'x', -5, 5).name('灯光位置x')
+    lightFolder.add(light.position, 'y', -5, 5).name('灯光位置y')
+    lightFolder.add(light.position, 'z', -5, 5).name('灯光位置z')
+    lightFolder.add(ambient, 'intensity', 0, 1).name('环境光照的强度')
+    lightFolder.open()
+
+    scene.add(ambient, light)
 
     // 坐标系
     const axes = new THREE.AxesHelper(4)
     scene.add(axes)
     // 渲染器
-    renderer = new THREE.WebGLRenderer()
+    renderer = new THREE.WebGLRenderer({ antialias: true })
     renderer.setSize(config.width, config.height)
     dom.appendChild(renderer.domElement)
 
@@ -74,7 +99,7 @@ export function useThreeJs(ref: MaybeRef<HTMLElement>, props?: Partial<Props>) {
     // 镜头控制
     controls = new OrbitControls(camera, renderer.domElement)
 
-    const render = config.mounted({ time: { deltaTime: 0, offset: 0 }, camera, renderer, scene }, THREE)
+    const render = config.mounted({ time: { deltaTime: 0, offset: 0 }, camera, gui, renderer, scene }, THREE)
 
     const clock = new THREE.Clock()
     function tick() {
@@ -82,7 +107,7 @@ export function useThreeJs(ref: MaybeRef<HTMLElement>, props?: Partial<Props>) {
         offset: clock.getElapsedTime(),
         deltaTime: clock.getDelta(),
       }
-      render({ time, camera, renderer, scene })
+      render({ time, gui, camera, renderer, scene })
       // 渲染
       renderer.render(scene, camera)
       stats.update()
@@ -93,11 +118,13 @@ export function useThreeJs(ref: MaybeRef<HTMLElement>, props?: Partial<Props>) {
     tick()
 
     onBeforeUnmount(() => {
+      gui.destroy()
       config.unmounted({
         time: {
           offset: clock.getElapsedTime(),
           deltaTime: clock.getDelta(),
         },
+        gui,
         camera,
         renderer,
         scene,

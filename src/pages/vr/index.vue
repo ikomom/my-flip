@@ -3,10 +3,14 @@ import Panorama from '~/pages/vr/threejs/Panorama.vue'
 import Demo from '~/pages/vr/threejs/Demo.vue'
 import SimpleCar from '~/pages/vr/threejs/SimpleCar.vue'
 import DetailCar from '~/pages/vr/threejs/DetailCar.vue'
+import MaterialSet from '~/pages/vr/threejs/MaterialSet.vue'
 </script>
 
 <template>
   <n-tabs>
+    <n-tab-pane name="MaterialSet" tab="MaterialSet">
+      <MaterialSet />
+    </n-tab-pane>
     <n-tab-pane name="DetailCar" tab="DetailCar">
       <DetailCar />
     </n-tab-pane>

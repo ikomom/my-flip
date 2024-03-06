@@ -11,16 +11,16 @@ useThreeJs(container, {
     y: 2,
     z: 4,
   },
-  mounted: ({ scene, camera }, THREE) => {
+  mounted: ({ scene }, THREE) => {
     // console.log(config.time)
-    // camera.rotation.z = Math.PI / 2
     const material = new THREE.MeshNormalMaterial({
       // wireframe: true,
     })
 
     // 地面
+    const planeG = new THREE.PlaneGeometry(8, 6)
     const planeMesh = new THREE.Mesh(
-      new THREE.PlaneGeometry(8, 6),
+      planeG,
       new THREE.MeshBasicMaterial({ color: 0xCCCCCC, side: THREE.DoubleSide }),
     )
     planeMesh.rotation.x = Math.PI / 2
@@ -78,6 +78,7 @@ useThreeJs(container, {
     car.add(frontWheels, backWheels, body)
     car.rotation.z = Math.PI / 2
     car.rotation.x = -Math.PI
+
     scene.add(car, planeMesh)
 
     return ({ time }) => {
@@ -88,9 +89,13 @@ useThreeJs(container, {
     }
   },
 })
+const a = ref(0)
 </script>
 
 <template>
+  <button btn @click="a++">
+    {{ a }}
+  </button>
   <div ref="container" relative b="1" dark:b="1 #fff" inline-block p-2 />
 </template>
 

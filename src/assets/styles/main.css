@@ -13,3 +13,10 @@ html.dark {
 input {
   @apply dark:bg-transparent;
 }
+/* dat.gui 样式覆盖 */
+.dg .c select{
+  background: black;
+}
+.dg .c input {
+  line-height: normal;
+}
