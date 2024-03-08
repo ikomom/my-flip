@@ -1,15 +1,18 @@
-import type { Camera, Renderer, Scene } from 'three'
+import type { PerspectiveCamera, Scene } from 'three'
 import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls'
 import Stats from 'three/examples/jsm/libs/stats.module'
 import * as THREE from 'three'
 import type { MaybeRef } from '@vueuse/core'
 import { onBeforeUnmount } from 'vue'
 import * as dat from 'dat.gui'
+import type { WebGLRenderer } from 'three/src/renderers/WebGLRenderer'
+import MinMaxGUIHelper from '~/pages/vr/threejs/helper/MinMaxGUIHelper'
 
 interface Props {
   width: number
   height: number
   showGUI: MaybeRef<boolean>
+  showDefaultLight: MaybeRef<boolean>
   cameraPosition?: Partial<{ x: number; y: number; z: number }>
   mounted: (config: RenderConfig, three: typeof THREE) => (config: RenderConfig) => void
   unmounted: (config: RenderConfig, three: typeof THREE) => void
@@ -20,8 +23,8 @@ interface RenderConfig {
     deltaTime: number
   }
   scene: Scene
-  camera: Camera
-  renderer: Renderer
+  camera: PerspectiveCamera
+  renderer: WebGLRenderer
   gui: dat.GUI
 }
 
@@ -29,6 +32,7 @@ const defaultProps: Props = {
   width: 1300,
   height: 400,
   showGUI: false,
+  showDefaultLight: false,
   mounted: () => () => {
   },
   unmounted: () => {},
@@ -45,7 +49,7 @@ function createAndAppendDom() {
 }
 // cube.rotation.z = 45 / 180 * Math.PI // 角度转弧度公式，欧拉角
 export function useThreeJs(ref: MaybeRef<HTMLElement>, props?: Partial<Props>) {
-  let scene: Scene, camera: Camera, renderer: Renderer, controls: OrbitControls, stats: Stats
+  let scene: Scene, camera: PerspectiveCamera, renderer: WebGLRenderer, controls: OrbitControls, stats: Stats
 
   const gui = new dat.GUI()
 
@@ -57,6 +61,10 @@ export function useThreeJs(ref: MaybeRef<HTMLElement>, props?: Partial<Props>) {
   }, {
     immediate: true,
   })
+
+  function updateCamera() {
+    camera.updateProjectionMatrix()
+  }
 
   onMounted(() => {
     const dom = unref(ref)
@@ -70,7 +78,12 @@ export function useThreeJs(ref: MaybeRef<HTMLElement>, props?: Partial<Props>) {
     camera.lookAt(0, 0, 0)
     const { cameraPosition = {} } = config
     camera.position.set(cameraPosition.x ?? 0, cameraPosition.y ?? 0, cameraPosition.z ?? 2)
-
+    const cameraFolder = gui.addFolder('camera')
+    cameraFolder.add(camera, 'fov', 1, 180).onChange(updateCamera)
+    const minMaxGUIHelper = new MinMaxGUIHelper(camera, 'near', 'far', 0.1)
+    cameraFolder.add(minMaxGUIHelper, 'min', 0.1, 50, 0.1).name('near').onChange(updateCamera)
+    cameraFolder.add(minMaxGUIHelper, 'max', 0.1, 50, 0.1).name('far').onChange(updateCamera)
+    cameraFolder.open()
     // 灯光
     const light = new THREE.DirectionalLight(0xFFFFFF)// 平行光
     light.position.set(2, 2, 2)
@@ -81,8 +94,18 @@ export function useThreeJs(ref: MaybeRef<HTMLElement>, props?: Partial<Props>) {
     lightFolder.add(light.position, 'z', -5, 5).name('灯光位置z')
     lightFolder.add(ambient, 'intensity', 0, 1).name('环境光照的强度')
     lightFolder.open()
-
-    scene.add(ambient, light)
+    watch(() => config.showDefaultLight, (value) => {
+      if (value) {
+        scene.add(ambient, light)
+        lightFolder.show()
+      }
+      else {
+        scene.remove(ambient, light)
+        lightFolder.hide()
+      }
+    }, {
+      immediate: true,
+    })
 
     // 坐标系
     const axes = new THREE.AxesHelper(4)
@@ -90,6 +113,7 @@ export function useThreeJs(ref: MaybeRef<HTMLElement>, props?: Partial<Props>) {
     // 渲染器
     renderer = new THREE.WebGLRenderer({ antialias: true })
     renderer.setSize(config.width, config.height)
+
     dom.appendChild(renderer.domElement)
 
     // fps

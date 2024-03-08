@@ -4,10 +4,14 @@ import Demo from '~/pages/vr/threejs/Demo.vue'
 import SimpleCar from '~/pages/vr/threejs/SimpleCar.vue'
 import DetailCar from '~/pages/vr/threejs/DetailCar.vue'
 import MaterialSet from '~/pages/vr/threejs/MaterialSet.vue'
+import LightOverwrite from '~/pages/vr/threejs/LightOverwrite.vue'
 </script>
 
 <template>
   <n-tabs>
+    <n-tab-pane name="LightOverwrite" tab="LightOverwrite">
+      <LightOverwrite />
+    </n-tab-pane>
     <n-tab-pane name="MaterialSet" tab="MaterialSet">
       <MaterialSet />
     </n-tab-pane>

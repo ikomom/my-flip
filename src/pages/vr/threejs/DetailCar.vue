@@ -89,13 +89,9 @@ useThreeJs(container, {
     }
   },
 })
-const a = ref(0)
 </script>
 
 <template>
-  <button btn @click="a++">
-    {{ a }}
-  </button>
   <div ref="container" relative b="1" dark:b="1 #fff" inline-block p-2 />
 </template>
 
