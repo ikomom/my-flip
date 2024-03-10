@@ -1,7 +1,10 @@
 <script setup lang="ts">
 import { Menu, MenuButton, MenuItem, MenuItems } from '@headlessui/vue'
+import { useI18n } from 'vue-i18n'
 
 defineProps<{ menus: { path: string }[] }>()
+
+const { t } = useI18n()
 
 const [open, toggleOpen] = useToggle(false)
 
@@ -19,7 +22,7 @@ function setOpen() {
         @mouseenter="setOpen"
         @click="toggleOpen()"
       >
-        more <i i-carbon-chevron-down icon w-4 h-4 />
+        {{ t('menu.more') }} <i i-carbon-chevron-down icon w-4 h-4 />
       </MenuButton>
     </div>
 

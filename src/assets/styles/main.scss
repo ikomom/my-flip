@@ -1,0 +1,35 @@
+html,
+body,
+#app {
+  height: 100%;
+  margin: 0;
+  padding: 0;
+}
+
+html.dark {
+  background: #121212;
+
+  select option {
+    background: #121212;
+  }
+}
+html.cafe {
+  filter: sepia(0.9) hue-rotate(315deg) brightness(0.9);
+}
+
+html.contrast {
+  filter: contrast(2);
+}
+
+input {
+  @apply dark:bg-transparent;
+}
+/* dat.gui 样式覆盖 */
+.dg .c {
+  select{
+    background: black;
+  }
+  input {
+    line-height: normal;
+  }
+}
