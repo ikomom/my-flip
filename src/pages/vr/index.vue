@@ -6,10 +6,14 @@ import DetailCar from '~/pages/vr/threejs/DetailCar.vue'
 import MaterialSet from '~/pages/vr/threejs/MaterialSet.vue'
 import LightOverwrite from '~/pages/vr/threejs/LightOverwrite.vue'
 import SplitDemo from '~/pages/vr/threejs/SplitDemo.vue'
+import RoadScroll from '~/pages/vr/threejs/RoadScroll.vue'
 </script>
 
 <template>
   <n-tabs>
+    <n-tab-pane name="RoadScroll" tab="RoadScroll">
+      <RoadScroll />
+    </n-tab-pane>
     <n-tab-pane name="SplitDemo" tab="SplitDemo">
       <SplitDemo />
     </n-tab-pane>

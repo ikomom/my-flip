@@ -14,7 +14,7 @@ scene.background = new THREE.Color('black')
 const axes = new THREE.AxesHelper(40)
 scene.add(axes)
 // 相机1（带辅助线）
-const camera = new THREE.PerspectiveCamera(75, 2, 0.1, 1000)
+const camera = new THREE.PerspectiveCamera(75, 2, 6, 1000)
 const cameraHelper = new THREE.CameraHelper(camera)
 scene.add(cameraHelper)
 camera.position.set(0, 10, 30)
@@ -28,7 +28,7 @@ const camera2 = new THREE.PerspectiveCamera(
 )
 camera2.position.set(40, 10, 30)
 camera2.lookAt(0, 5, 0)
-
+// scene.add(new THREE.CameraHelper(camera2))
 /**
  * resize时重置视图
  * @param renderer
