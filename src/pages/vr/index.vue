@@ -7,10 +7,18 @@ import MaterialSet from '~/pages/vr/threejs/MaterialSet.vue'
 import LightOverwrite from '~/pages/vr/threejs/LightOverwrite.vue'
 import SplitDemo from '~/pages/vr/threejs/SplitDemo.vue'
 import RoadScroll from '~/pages/vr/threejs/RoadScroll.vue'
+import CarDemo from '~/pages/vr/threejs/file/CarDemo.vue'
+import GltfCity from '~/pages/vr/threejs/file/GltfCity.vue'
 </script>
 
 <template>
   <n-tabs>
+    <n-tab-pane name="GltfCity" tab="GltfCity">
+      <GltfCity />
+    </n-tab-pane>
+    <n-tab-pane name="CarDemo" tab="CarDemo">
+      <CarDemo />
+    </n-tab-pane>
     <n-tab-pane name="RoadScroll" tab="RoadScroll">
       <RoadScroll />
     </n-tab-pane>

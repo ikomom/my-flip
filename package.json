@@ -17,6 +17,7 @@
     "@codemirror/state": "^6.2.1",
     "@codemirror/theme-one-dark": "^6.1.2",
     "@headlessui/vue": "^1.7.14",
+    "@tweenjs/tween.js": "^23.1.1",
     "@vueuse/components": "^10.1.2",
     "@vueuse/core": "^10.1.2",
     "@xstate/fsm": "^2.0.0",

@@ -6,6 +6,7 @@
     "lib": ["DOM", "ESNext", "webworker"],
     "strict": true,
     "jsx": "preserve",
+    "noImplicitAny": false,
     "esModuleInterop": true,
     "skipLibCheck": true,
     "moduleResolution": "node",

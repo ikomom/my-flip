@@ -11,6 +11,7 @@ import MinMaxGUIHelper from '~/pages/vr/threejs/helper/MinMaxGUIHelper'
 interface Props {
   width: number
   height: number
+  maxFar: number
   showGUI: MaybeRef<boolean>
   showDefaultLight: MaybeRef<boolean>
   cameraPosition?: Partial<{ x: number; y: number; z: number }>
@@ -31,6 +32,7 @@ interface RenderConfig {
 const defaultProps: Props = {
   width: 1300,
   height: 400,
+  maxFar: 1000,
   showGUI: false,
   showDefaultLight: false,
   mounted: () => () => {
@@ -74,7 +76,7 @@ export function useThreeJs(ref: MaybeRef<HTMLElement>, props?: Partial<Props>) {
     scene = new THREE.Scene()
     // 镜头
     // x: r(red), y: g(green), z: b(blue)
-    camera = new THREE.PerspectiveCamera(75, config.width / config.height, 0.1, 1000)
+    camera = new THREE.PerspectiveCamera(75, config.width / config.height, 0.1, props.maxFar)
     camera.lookAt(0, 0, 0)
     const { cameraPosition = {} } = config
     camera.position.set(cameraPosition.x ?? 0, cameraPosition.y ?? 0, cameraPosition.z ?? 2)
@@ -82,7 +84,7 @@ export function useThreeJs(ref: MaybeRef<HTMLElement>, props?: Partial<Props>) {
     cameraFolder.add(camera, 'fov', 1, 180).onChange(updateCamera)
     const minMaxGUIHelper = new MinMaxGUIHelper(camera, 'near', 'far', 0.1)
     cameraFolder.add(minMaxGUIHelper, 'min', 0.1, 50, 0.1).name('near').onChange(updateCamera)
-    cameraFolder.add(minMaxGUIHelper, 'max', 0.1, 50, 0.1).name('far').onChange(updateCamera)
+    cameraFolder.add(minMaxGUIHelper, 'max', 0.1, props.maxFar, 0.1).name('far').onChange(updateCamera)
     cameraFolder.open()
     // 灯光
     const light = new THREE.DirectionalLight(0xFFFFFF)// 平行光

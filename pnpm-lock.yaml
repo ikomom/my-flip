@@ -20,6 +20,9 @@ dependencies:
   '@headlessui/vue':
     specifier: ^1.7.14
     version: 1.7.14(vue@3.3.4)
+  '@tweenjs/tween.js':
+    specifier: ^23.1.1
+    version: 23.1.1
   '@vueuse/components':
     specifier: ^10.1.2
     version: 10.1.2(vue@3.3.4)
@@ -2674,6 +2677,10 @@ packages:
   /@tweenjs/tween.js@18.6.4:
     resolution: {integrity: sha512-lB9lMjuqjtuJrx7/kOkqQBtllspPIN+96OvTCeJ2j5FEzinoAXTdAMFnDAQT1KVPRlnYfBrqxtqP66vDM40xxQ==}
     dev: true
+
+  /@tweenjs/tween.js@23.1.1:
+    resolution: {integrity: sha512-ZpboH7pCPPeyBWKf8c7TJswtCEQObFo3bOBYalm99NzZarATALYCo5OhbCa/n4RQyJyHfhkdx+hNrdL5ByFYDw==}
+    dev: false
 
   /@types/chai-subset@1.3.3:
     resolution: {integrity: sha512-frBecisrNGz+F4T6bcc+NLeolfiojh5FxW2klu669+8BARtyQv2C/GkNW6FUodVe4BroGMP/wER/YDGc7rEllw==}
