@@ -158,9 +158,9 @@ export function useThreeJs(ref: MaybeRef<HTMLElement>, props?: Partial<Props>) {
     })
   })
 
-  onBeforeUpdate(() => {
-    console.warn('update')
-  })
+  // onBeforeUpdate(() => {
+  //   console.warn('update')
+  // })
 
   onBeforeUnmount(() => {
     cancelAnimationFrame(animateNumber)
