@@ -45,6 +45,7 @@ useThreeJs(container, {
         const obj = new THREE.Object3D()
         car.getWorldPosition(obj.position)
         car.position.set(0, 0, 0)
+        // @ts-expect-error
         car.rotation.set(...fix.rot)
         obj.add(car)
         scene.add(obj)

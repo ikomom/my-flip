@@ -76,7 +76,7 @@ export function useThreeJs(ref: MaybeRef<HTMLElement>, props?: Partial<Props>) {
     scene = new THREE.Scene()
     // 镜头
     // x: r(red), y: g(green), z: b(blue)
-    camera = new THREE.PerspectiveCamera(75, config.width / config.height, 0.1, props.maxFar)
+    camera = new THREE.PerspectiveCamera(75, config.width / config.height, 0.01, props.maxFar)
     camera.lookAt(0, 0, 0)
     const { cameraPosition = {} } = config
     camera.position.set(cameraPosition.x ?? 0, cameraPosition.y ?? 0, cameraPosition.z ?? 2)

@@ -9,7 +9,7 @@ const container = ref()
 
 useThreeJs(container, {
   width: 1300,
-  height: 400,
+  height: 600,
   showDefaultLight: true,
   showGUI: true,
   mounted: ({ scene }, THREE) => {

@@ -9,10 +9,14 @@ import SplitDemo from '~/pages/vr/threejs/SplitDemo.vue'
 import RoadScroll from '~/pages/vr/threejs/RoadScroll.vue'
 import CarDemo from '~/pages/vr/threejs/file/CarDemo.vue'
 import GltfCity from '~/pages/vr/threejs/file/GltfCity.vue'
+import TextureDemo from '~/pages/vr/threejs/TextureDemo.vue'
 </script>
 
 <template>
   <n-tabs>
+    <n-tab-pane name="Texture" tab="Texture">
+      <TextureDemo />
+    </n-tab-pane>
     <n-tab-pane name="GltfCity" tab="GltfCity">
       <GltfCity />
     </n-tab-pane>
