@@ -52,6 +52,9 @@ const menus = [
   {
     path: '/comp',
   },
+  {
+    path: '/cesium',
+  },
 ]
 </script>
 
