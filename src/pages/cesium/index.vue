@@ -3,7 +3,7 @@ import {
   Cartesian2,
   Cartesian3,
   Math as CesiumMath,
-  Ion, SceneTransforms, Terrain, Viewer, GeoJsonDataSource,
+  Ion, SceneTransforms, Terrain, Viewer, GeoJsonDataSource, HeadingPitchRoll, Transforms,
 } from 'cesium'
 import 'cesium/Build/Cesium/Widgets/widgets.css'
 import ShapeFile from "~/pages/cesium/ShapeFile.vue";
@@ -22,45 +22,67 @@ onMounted(async () => {
   viewer = new Viewer('cesiumContainer', {
     terrain: Terrain.fromWorldTerrain(),
   })
-
+  const position = Cartesian3.fromDegrees(121, 24, 50000)
   // 在给定的经度、纬度和高度处将相机飞到旧金山。
   viewer.camera.flyTo({
-    destination: Cartesian3.fromDegrees(121, 24, 1200000),
+    destination: position,
     orientation: {
       heading: CesiumMath.toRadians(0.0),
       pitch: CesiumMath.toRadians(-90.0),
     },
   })
-  function addDynamicLabel({ position, title = '文本标记', id = 'label-0' }) {
-    const div = document.createElement('div')
-    div.id = id
-    div.style.position = 'absolute'
-    div.style.width = '100px'
-    div.style.height = '30px'
 
-    const divHTML = `<div style="width:100px;height:30px;background:rgba(255,122,0,0.4)">${title}</div> `
-    div.innerHTML = divHTML
-    viewer.cesiumWidget.container.appendChild(div)
+  const heading = CesiumMath.toRadians(135);
+  const pitch = 0;
+  const roll = 0;
+  const hpr = new HeadingPitchRoll(heading, pitch, roll);
+  const orientation =Transforms.headingPitchRollQuaternion(
+    position,
+    hpr
+  );
 
-    const vmPosition = Cartesian3.fromDegrees(
-      position[0],
-      position[1],
-      500,
-    )
-    viewer.scene.postRender.addEventListener((e) => {
-      // console.log('postRender')
-      const canvasHeight = viewer.scene.canvas.height
-      const windowPosition = new Cartesian2()
-      SceneTransforms.wgs84ToWindowCoordinates(
-        viewer.scene,
-        vmPosition,
-        windowPosition,
-      )
-      div.style.bottom = `${canvasHeight - windowPosition.y}px`
-      const elWidth = div.offsetWidth
-      div.style.left = `${windowPosition.x - elWidth / 2}px`
-    })
-  }
+  const entity = viewer.entities.add({
+    name: "Cesium_Air",
+    position: position,
+    orientation: orientation,
+    model: {
+      uri: "/map/Cesium_Air.glb",
+      minimumPixelSize: 128,
+      maximumScale: 20000,
+    },
+  });
+  viewer.trackedEntity = entity;
+
+  // function addDynamicLabel({ position, title = '文本标记', id = 'label-0' }) {
+  //   const div = document.createElement('div')
+  //   div.id = id
+  //   div.style.position = 'absolute'
+  //   div.style.width = '100px'
+  //   div.style.height = '30px'
+  //
+  //   const divHTML = `<div style="width:100px;height:30px;background:rgba(255,122,0,0.4)">${title}</div> `
+  //   div.innerHTML = divHTML
+  //   viewer.cesiumWidget.container.appendChild(div)
+  //
+  //   const vmPosition = Cartesian3.fromDegrees(
+  //     position[0],
+  //     position[1],
+  //     500,
+  //   )
+  //   viewer.scene.postRender.addEventListener((e) => {
+  //     // console.log('postRender')
+  //     const canvasHeight = viewer.scene.canvas.height
+  //     const windowPosition = new Cartesian2()
+  //     SceneTransforms.wgs84ToWindowCoordinates(
+  //       viewer.scene,
+  //       vmPosition,
+  //       windowPosition,
+  //     )
+  //     div.style.bottom = `${canvasHeight - windowPosition.y}px`
+  //     const elWidth = div.offsetWidth
+  //     div.style.left = `${windowPosition.x - elWidth / 2}px`
+  //   })
+  // }
   // addDynamicLabel({ position: [121, 24] })
   // const wmtsImageryProvider = new WebMapTileServiceImageryProvider({
   //   // url: 'http://localhost:8080/iserver/services/agscachev-Layers/wmts',
