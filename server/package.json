@@ -3,7 +3,8 @@
   "version": "1.0.0",
   "scripts": {
     "dev": "nodemon src/main.js",
-    "testNet": "nodemon src/testNet.js"
+    "testNet": "nodemon src/testNet.js",
+    "dev-video": "nodemon src/video/index.js"
   },
   "dependencies": {
     "cors": "^2.8.5",

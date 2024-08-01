@@ -55,6 +55,9 @@ const menus = [
   {
     path: '/cesium',
   },
+  {
+    path: '/video',
+  },
 ]
 </script>
 
