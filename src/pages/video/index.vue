@@ -134,7 +134,7 @@ onMounted(() => {
     <!-- 在source标签里写入我们的索引文件路径 -->
     <!--    <source src="http://127.0.0.1:8000/m3u8Index" type="application/x-mpegURL"> -->
     <!--    <source src="https://raw.githubusercontent.com/joevess/IPTV/main/home.m3u8" type="application/x-mpegURL"> -->
-    <source src="http://mobilelive-ds.ysp.cctv.cn/ysp/2013693901.m3u8" type="application/x-mpegURL">
+    <source src="//mobilelive-ds.ysp.cctv.cn/ysp/2013693901.m3u8" type="application/x-mpegURL">
     <!--    <source src="http://d2e1asnsl7br7b.cloudfront.net/7782e205e72f43aeb4a48ec97f66ebbe/index_4.m3u8" type="application/x-mpegURL"> -->
   </video>
   <!--  <video src="http://127.0.0.1:8000/flower" controls autoplay /> -->
