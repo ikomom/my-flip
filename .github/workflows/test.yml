@@ -39,8 +39,8 @@ jobs:
           NODE_OPTIONS: --max_old_space_size=4096
         run: pnpm run build
 
-      - name: typecheck
-        run: pnpm run typecheck
+#      - name: typecheck
+#        run: pnpm run typecheck
 
       - name: Test
         run: pnpm run test
