@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import * as shapefile from 'shapefile'
+import { defineEmits } from 'vue'
 
 const emits = defineEmits(['load'])
 
