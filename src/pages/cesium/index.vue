@@ -6,7 +6,6 @@ import {
 } from 'cesium'
 import 'cesium/Build/Cesium/Widgets/widgets.css'
 import * as Cesium from 'cesium'
-import ShapeFile from '~/pages/cesium/ShapeFile.vue'
 
 // @ts-expect-error
 window.CESIUM_BASE_URL = '/cesiumStatic'
@@ -234,6 +233,6 @@ function onload(result) {
 </script>
 
 <template>
-  <ShapeFile @load="onload" />
+  <!--  <ShapeFile @load="onload" /> -->
   <div id="cesiumContainer" style="height: 600px" />
 </template>
