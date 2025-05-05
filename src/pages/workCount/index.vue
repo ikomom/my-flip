@@ -166,7 +166,7 @@ async function isHoliday(m: Moment) {
 function getData() {
   loading.value = true
   return fetch('/jiaban.xlsx').then((res) => {
-    lastModified.value = moment(res.headers.get('last-modified')).format('YYYY-MM-DD HH:mm:ss')
+    lastModified.value = moment(res.headers.get('last-modified') || res.headers.get('date')).format('YYYY-MM-DD HH:mm:ss')
     return res
   }).then(res => res.arrayBuffer())
     .then(async (res) => {
