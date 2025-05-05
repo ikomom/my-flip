@@ -295,7 +295,7 @@ async function exportWord(fileName = 'word') {
   for (let i = 0; i < 12; i++)
     colums.push(convertInchesToTwip(0.5225))
 
-  const timeRange = `${moment(range[0]).format('YYYY年DD日MM')} - ${moment(range[1]).format('YYYY年DD日MM')}`
+  const timeRange = `${moment(range[0]).format('YYYY年DD月MM日')} - ${moment(range[1]).format('YYYY年DD月MM日')}`
   document = new Document({
     ...commSetting,
     sections: [
