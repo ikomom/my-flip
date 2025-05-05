@@ -26,7 +26,16 @@ const menus = [
     path: '/editor',
   },
   {
+    path: '/multiEditor',
+  },
+  {
+    path: '/mapbox',
+  },
+  {
     path: '/line-editor',
+  },
+  {
+    path: '/workCount',
   },
   {
     path: '/vr',
