@@ -166,7 +166,7 @@ async function isHoliday(m: Moment) {
 function getData() {
   loading.value = true
   return fetch('/jiaban.xlsx').then((res) => {
-    lastModified.value = moment(res.headers.get('last-modified') || res.headers.get('date')).format('YYYY-MM-DD HH:mm:ss')
+    lastModified.value = res.headers.get('last-modified') ? moment(res.headers.get('last-modified')).format('YYYY-MM-DD HH:mm:ss') : ''
     return res
   }).then(res => res.arrayBuffer())
     .then(async (res) => {
@@ -289,7 +289,9 @@ function sortByKey<T>(array: T[], key: keyof T) {
       </NButton>
       <CreateDoc :data="groupCurRenderData" :range="range" />
     </NSpace>
-    <div>数据更新时间：{{ lastModified }}</div>
+    <div v-if="lastModified">
+      数据更新时间：{{ lastModified }}
+    </div>
     <n-tabs type="line" animated>
       <n-tab-pane name="group" tab="聚合">
         <n-spin :spinning="loading">
