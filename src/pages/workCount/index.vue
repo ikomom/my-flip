@@ -297,7 +297,7 @@ function sortByKey<T>(array: T[], key: keyof T) {
       </NButton>
       <CreateDoc :data="groupCurRenderData" :range="range" />
     </NSpace>
-    <div v-if="lastModified">
+    <div>
       数据更新时间：{{ lastModified || '2025-05-19 12:29:21' }}
       <span class="text-blue"> (数据发送时间在0-5点的会自动修正到前一天)</span>
     </div>
