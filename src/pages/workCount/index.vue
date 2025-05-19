@@ -86,12 +86,14 @@ function extractDates(text) {
 
   return dates
 }
+const isDev = import.meta.env.MODE === 'development'
+const isPassed = ref(isDev)
 
-const isPassed = ref(false)
-
-const str = prompt('请输入密码')
-console.log('str', str)
-isPassed.value = str === moment().format('YYYYMMDD')
+if (!isDev) {
+  const str = prompt('请输入密码')
+  console.log('str', str)
+  isPassed.value = str === moment().format('YYYYMMDD')
+}
 
 const loading = ref<boolean>(false)
 const lastModified = ref<string>('')
@@ -173,7 +175,7 @@ function getData() {
       const workbook = XLSX.read(res, { type: 'array' })
       const data: any = XLSX.utils.sheet_to_json(workbook.Sheets.Sheet1)
       // const data = getSheetData(XLSX.utils.sheet_to_json(workbook.Sheets.Sheet1, { header: 1 }), sheetData.Sheets.Sheet1['!merges'])
-      const test = moment('2024-10-4')
+      // const test = moment('2024-10-4')
       const nData = [
       // {
       //   id: 0,
@@ -190,10 +192,14 @@ function getData() {
           let name = item.Remark.split('电信五所-')[1] || item.Remark.split('电信五所–')[1] || mapRemark[item.Remark] || item.Remark
           if (item.Remark === 'O')
             name = '吴良浩'
-
-          const overtime = moment(Number(`${item.CreateTime}` + '000'))
-          const other = extractDates(item.StrContent)
           const reason = item.StrContent.replaceAll('\n', '')
+
+          const tempOvertime = moment(Number(`${item.CreateTime}` + '000'))
+          const overtime = (tempOvertime.hour() < 6 && !reason.includes('补'))
+            ? tempOvertime.add(-1, 'day').set('hour', 23).set('minute', 59).set('seconds', 59)
+            : tempOvertime
+
+          const other = extractDates(item.StrContent)
           if (other.length) {
             for (const i of other) {
               id++
@@ -204,6 +210,7 @@ function getData() {
                 weekDay: weekdays[c.weekday()],
                 count: await isHoliday(c) ? 3 : 1,
                 name,
+                // name: `${name}--${c.hour()}`,
                 reason,
               // other,
               })
@@ -215,6 +222,7 @@ function getData() {
               id,
               overtime: overtime.format('YYYY-MM-DD HH:mm:ss'),
               name,
+              // name: `${name}--${overtime.hour()}`,
               weekDay: weekdays[overtime.weekday()],
               count: await isHoliday(overtime) ? 3 : 1,
               reason,
@@ -290,7 +298,8 @@ function sortByKey<T>(array: T[], key: keyof T) {
       <CreateDoc :data="groupCurRenderData" :range="range" />
     </NSpace>
     <div v-if="lastModified">
-      数据更新时间：{{ lastModified }}
+      数据更新时间：{{ lastModified || '2025-05-19 12:29:21' }}
+      <span class="text-blue"> (数据发送时间在0-5点的会自动修正到前一天)</span>
     </div>
     <n-tabs type="line" animated>
       <n-tab-pane name="group" tab="聚合">

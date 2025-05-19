@@ -1,12 +1,12 @@
 <script setup lang="ts">
-import { darkTheme, lightTheme } from 'naive-ui'
+import { darkTheme, lightTheme, zhCN } from 'naive-ui'
 import { TheImageContainer } from '~/composables/image'
 
 const theme = computed(() => isDark.value ? darkTheme : lightTheme)
 </script>
 
 <template>
-  <n-config-provider :theme="theme">
+  <n-config-provider :locale="zhCN" :date-locale="dateZhCN" :theme="theme">
     <n-message-provider>
       <the-nav />
       <main font-sans p="x-4 y-10" text="gray-700 dark:gray-200">
