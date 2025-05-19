@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import * as XLSX from 'xlsx'
-import { get, groupBy, set } from 'lodash-es'
+import { get, groupBy, set, uniqBy } from 'lodash-es'
 import dayjs from 'dayjs'
 import type { Moment } from 'moment'
 import moment from 'moment'
@@ -115,13 +115,14 @@ const allCount = computed(() => {
 const groupCurRenderData = computed(() => {
   const g = groupBy(curRenderData.value, 'name')
   const obj = []
+  let allCount = 0
   for (const gKey in g) {
     const gObj = {
       name: gKey,
       aCount: 0,
       data: {},
     }
-    g[gKey].forEach((item) => {
+    uniqBy(g[gKey], e => moment(e.overtime).format('YYYY-MM-DD')).forEach((item) => {
       const [year, month, day] = moment(item.overtime).format('YYYY MM DD').split(' ')
       const path = ['data', year, month].join('.')
       set(gObj, path, { ...get(gObj, path, {}), [day]: item.count })
@@ -129,10 +130,11 @@ const groupCurRenderData = computed(() => {
     })
     gObj.data = convertToArrays(gObj.data)
     obj.push(gObj)
+    allCount += gObj.aCount
   }
   obj.sort((a, b) => -Number(a.aCount) + Number(b.aCount))
   console.log('obbbb', obj, g)
-  return obj
+  return { obj, allCount }
 })
 interface NestedObject {
   [key: string]: NestedObject | number
@@ -289,13 +291,13 @@ function sortByKey<T>(array: T[], key: keyof T) {
 <template>
   <template v-if="isPassed">
     <NSpace mb-2 align="center">
-      总计 {{ allCount }} 次
+      总计 {{ groupCurRenderData.allCount }} 次
       <NSelect v-model:value="selectKey" :options="selectKeys" multiple style="min-width: 150px" filterable clearable placeholder="请选择人" />
       <NDatePicker v-model:value="range" type="daterange" />
       <NButton @click="downloadTableNew">
         下载
       </NButton>
-      <CreateDoc :data="groupCurRenderData" :range="range" />
+      <CreateDoc :data="groupCurRenderData.obj" :range="range" />
     </NSpace>
     <div>
       数据更新时间：{{ lastModified || '2025-05-19 12:29:21' }}
@@ -305,7 +307,7 @@ function sortByKey<T>(array: T[], key: keyof T) {
       <n-tab-pane name="group" tab="聚合">
         <n-spin :spinning="loading">
           <n-grid cols="1 s:2 m:3 l:3 xl:4 2xl:6" responsive="screen" :x-gap="12" :y-gap="12" style="min-height: 360px">
-            <n-gi v-for="(arr, index) in groupCurRenderData" :key="index">
+            <n-gi v-for="(arr, index) in groupCurRenderData.obj" :key="index">
               <n-card :id="arr.name" embedded h-full>
                 <div font-bold text-lg mb-1 flex justify-between>
                   {{ arr.name }} ({{ arr.aCount }} 次)
