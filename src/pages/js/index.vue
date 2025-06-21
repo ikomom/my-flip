@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import { runQuene } from './QueueTest'
 import { cloneDeep, compareKeys, timeCount } from '~/pages/js/DeepClone'
 
 const source: any = {
@@ -20,7 +21,12 @@ timeCount(() => compareKeys(source, res))
 </script>
 
 <template>
-  <div>1</div>
+  <div>
+    1
+    <n-button @click="() => runQuene()">
+      run quene
+    </n-button>
+  </div>
 </template>
 
 <style scoped>
