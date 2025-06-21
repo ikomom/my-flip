@@ -37,13 +37,12 @@ const mapRemark = {
 function extractDates(text) {
   // 正则表达式，用于匹配“补”字后面的日期，月份和日期分开匹配
   // const pattern = /补(\d{1,2})月(\d{1,2})日|\d{1,2}\.\d{1,2}/g
-  const pattern = /补(\s?)+(\d{1,2})月(\d{1,2})日?|补(\s?)+(\d{1,2})\.(\d{1,2})|补(\s?)+(\d{2,4})/g
+  const pattern = /补(\s?)+(\d{1,2})(\s?)+月(\s?)+(\d{1,2})(\s?)+日?|补(\s?)+(\d{1,2})\.(\d{1,2})|补(\s?)+(\d{2,4})/g
   let match
   const dates = []
-
   // 循环查找所有匹配的日期
   while ((match = pattern.exec(text)) !== null) {
-    // 检查是否是“月日”格式
+    match = match.map(item => item?.trim()).filter(Boolean)
     if (match[1] && match[2]) {
       // 分别提取月份和日期
       const month = Number(match[1])
@@ -106,7 +105,7 @@ const selectKeys = computed(() => {
   return Object.keys(groupBy(curSheetData.value, 'name')).map(i => ({ label: i, value: i }))
 })
 const curRenderData = computed(() => {
-  return curSheetData.value.filter(item => selectKey.value.length ? selectKey.value.includes(item.name) : true).filter(item => moment(item.overtime).isBetween(range.value[0], range.value[1]))
+  return curSheetData.value.filter(item => selectKey.value.length ? selectKey.value.includes(item.name) : true).filter(item => moment(item.overtime).isBetween(range.value[0], moment(range.value[1]).set('hour', 23).set('minute', 59).set('second', 59).toDate().getTime()))
 })
 const allCount = computed(() => {
   return curRenderData.value.reduce((pre, cur) => pre + cur.count, 0)
@@ -197,7 +196,8 @@ function getData() {
           const reason = item.StrContent.replaceAll('\n', '')
 
           const tempOvertime = moment(Number(`${item.CreateTime}` + '000'))
-          const overtime = (tempOvertime.hour() < 6 && !reason.includes('补'))
+          // TODO: bug修正  补的那天如果晚上又报加班了，那加班天数会重叠
+          const overtime = (tempOvertime.hour() < 12 && !reason.includes('补'))
             ? tempOvertime.add(-1, 'day').set('hour', 23).set('minute', 59).set('seconds', 59)
             : tempOvertime
 
@@ -301,7 +301,7 @@ function sortByKey<T>(array: T[], key: keyof T) {
     </NSpace>
     <div>
       数据更新时间：{{ lastModified || '2025-05-19 12:29:21' }}
-      <span class="text-blue"> (数据发送时间在0-5点的会自动修正到前一天)</span>
+      <span class="text-blue"> (数据发送时间在0-12点的会自动修正到前一天)</span>
     </div>
     <n-tabs type="line" animated>
       <n-tab-pane name="group" tab="聚合">
